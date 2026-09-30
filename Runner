@@ -1,0 +1,20 @@
+-- ดึงพิกัดตัวละคร
+local p = game.Players.LocalPlayer
+local char = p.Character or p.CharacterAdded:Wait()
+local root = char:FindFirstChild("HumanoidRootPart")
+if not root then return end
+
+local pos = root.Position
+local posText = string.format("X: %.2f, Y: %.2f, Z: %.2f", pos.X, pos.Y, pos.Z)
+
+-- คัดลอกใส่คลิปบอร์ด (Roblox style)
+setclipboard(posText)
+
+-- แจ้งในเกม
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "📌 พิกัด",
+    Text = "คัดลอกแล้ว: " .. posText,
+    Duration = 3
+})
+
+print("✅ " .. posText)
