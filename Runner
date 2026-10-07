@@ -1,5 +1,5 @@
 -- ============================================================
--- RUNLUA UI LIBRARY  v2.4  (FULL LIBRARY + PILL-MIRRORED DRAG)
+-- RUNLUA UI LIBRARY  v2.5  (FULL LIBRARY + MOBILE-ONLY HEADER DRAG)
 -- ============================================================
 
 if _G.RUNLUA_HUB_ACTIVE and _G.RUNLUA_HUB_CLEANUP then
@@ -270,13 +270,11 @@ local function track(conn)
 end
 
 local function cleanupAll()
-    state.uiAlive = false
     for _, c in ipairs(Connections) do
         pcall(function() c:Disconnect() end)
     end
     table.clear(Connections)
 end
-_G.RUNLUA_HUB_CLEANUP = cleanupAll
 
 local function getSafeInset()
     local ok, inset = pcall(function() return GuiService:GetGuiInset() end)
@@ -514,30 +512,25 @@ local function Notify(opts)
 end
 
 -- ============================================================
--- UNIVERSAL DRAGGABLE  (v2.4 — MIRROR PILL LOGIC 1:1)
+-- UNIVERSAL DRAGGABLE v2.5 — MOBILE ONLY + STABLE MULTI-TOUCH
+--   • รองรับเฉพาะ Touch (ตัด PC right-click ออก)
+--   • ล็อค InputObject ตัวแรกที่กด → นิ้วอื่นไม่แทรก
+--   • ตรวจ hit test เฉพาะ handle (header) + ข้ามปุ่ม GuiButton
 -- ============================================================
 
 local function MakeDraggable(frame, handle)
     handle = handle or frame
 
     local drag = {
-        dragging      = false,
-        activeInput   = nil,
-        dragMode      = nil,          -- "touch" | "mouse"
-        dragStart     = nil,
-        startPos      = nil,
-        startAbsPos   = Vector2.new(0, 0),
-        movedDistance = 0,
+        activeInput = nil,   -- InputObject ตัวแรก (finger lock)
+        dragStart   = nil,   -- ตำแหน่งเริ่มต้น (Vector3)
+        startPos    = nil,   -- UDim2 ของ frame ตอนเริ่ม
     }
 
     local function resetDrag()
-        drag.dragging      = false
-        drag.activeInput   = nil
-        drag.dragMode      = nil
-        drag.dragStart     = nil
-        drag.startPos      = nil
-        drag.startAbsPos   = Vector2.new(0, 0)
-        drag.movedDistance = 0
+        drag.activeInput = nil
+        drag.dragStart   = nil
+        drag.startPos    = nil
     end
 
     local function isPointInHandle(pos)
@@ -547,40 +540,41 @@ local function MakeDraggable(frame, handle)
            and pos.Y >= ap.Y and pos.Y <= (ap.Y + as.Y)
     end
 
-    track(UserInputService.InputBegan:Connect(function(input)
-        if not frame or not frame.Parent then return end
-        if drag.dragging then return end
+    -- เช็คว่าจุดที่แตะทับ GuiButton ลูกของ header ไหม (min/close)
+    local function isPointOverButton(pos)
+        for _, child in ipairs(handle:GetDescendants()) do
+            if child:IsA("GuiButton") and child.Visible and child.Active ~= false then
+                local ap = child.AbsolutePosition
+                local as = child.AbsoluteSize
+                if pos.X >= ap.X and pos.X <= ap.X + as.X
+                and pos.Y >= ap.Y and pos.Y <= ap.Y + as.Y then
+                    return true
+                end
+            end
+        end
+        return false
+    end
 
-        local isTouch      = input.UserInputType == Enum.UserInputType.Touch
-        local isMouseRight = input.UserInputType == Enum.UserInputType.MouseButton2
-        if not (isTouch or isMouseRight) then return end
+    track(UserInputService.InputBegan:Connect(function(input, gp)
+        if gp then return end
+        if not frame or not frame.Parent then return end
+        if drag.activeInput then return end                 -- มีนิ้วลากอยู่แล้ว → ไม่รับนิ้วใหม่
+        if input.UserInputType ~= Enum.UserInputType.Touch then return end
 
         local pos = Vector2.new(input.Position.X, input.Position.Y)
         if not isPointInHandle(pos) then return end
+        if isPointOverButton(pos) then return end           -- กดปุ่ม min/close → ไม่ลาก
 
-        drag.dragging      = true
-        drag.activeInput   = input
-        drag.dragMode      = isTouch and "touch" or "mouse"
-        drag.dragStart     = input.Position
-        drag.startPos      = frame.Position
-        drag.startAbsPos   = pos
-        drag.movedDistance = 0
+        drag.activeInput = input                           -- ล็อคเฉพาะ InputObject นี้
+        drag.dragStart   = input.Position
+        drag.startPos    = frame.Position
     end))
 
-    track(UserInputService.InputChanged:Connect(function(input)
-        if not drag.dragging then return end
-        if not drag.dragMode then return end
-
-        local it = input.UserInputType
-        local valid = (drag.dragMode == "touch" and it == Enum.UserInputType.Touch)
-                   or (drag.dragMode == "mouse" and it == Enum.UserInputType.MouseMovement)
-        if not valid then return end
-
-        local currentPos = Vector2.new(input.Position.X, input.Position.Y)
-        local deltaMove = (currentPos - drag.startAbsPos).Magnitude
-        if deltaMove > drag.movedDistance then
-            drag.movedDistance = deltaMove
-        end
+    track(UserInputService.InputChanged:Connect(function(input, gp)
+        if gp then return end
+        if not drag.activeInput then return end
+        if input ~= drag.activeInput then return end        -- ★ นิ้วอื่นส่ง event มา → ignore ทันที
+        if input.UserInputType ~= Enum.UserInputType.Touch then return end
 
         local vp    = getViewport()
         local inset = getSafeInset()
@@ -596,20 +590,16 @@ local function MakeDraggable(frame, handle)
         newX = math.clamp(newX, halfW, vp.X - halfW)
         newY = math.clamp(newY, inset.Y + halfH, vp.Y - halfH)
 
-        frame.Position = UDim2.new(0, newX, 0, newY)
+        frame.Position = UDim2.new(0, newX, 0, newY)        -- ตรงตามนิ้ว ไม่มี easing → ไม่กระตุก
     end))
 
     track(UserInputService.InputEnded:Connect(function(input)
-        if not drag.dragging then return end
-        if not drag.dragMode then return end
-
-        local it = input.UserInputType
-        local valid = (drag.dragMode == "touch" and it == Enum.UserInputType.Touch)
-                   or (drag.dragMode == "mouse" and it == Enum.UserInputType.MouseButton2)
-        if not valid then return end
-
+        if not drag.activeInput then return end
+        if input ~= drag.activeInput then return end        -- ปล่อยนิ้วอื่น → ไม่สน
         resetDrag()
     end))
+
+    track(screenGui.Destroying:Connect(resetDrag))
 end
 
 -- ============================================================
@@ -1722,63 +1712,11 @@ track(closeBtn.MouseLeave:Connect(function()
     end
 end))
 
+-- ✅ MOBILE ONLY: ลากได้จาก header (แถบด้านบน) เท่านั้น
 MakeDraggable(mainFrame, header)
 
 -- ============================================================
--- TOGGLE PILL (FLOATING LOGO)
--- ============================================================
-
-local pillFrame = Instance.new("Frame")
-pillFrame.Name = "PillToggle"
-pillFrame.Size = UDim2.fromOffset(42, 42)
-pillFrame.Position = UDim2.new(0.05, 0, 0.15, 0)
-pillFrame.BackgroundColor3 = Theme.Background
-pillFrame.BorderSizePixel = 0
-pillFrame.Visible = false
-pillFrame.Parent = screenGui
-
-Instance.new("UICorner", pillFrame).CornerRadius = UDim.new(1, 0)
-
-local pillStroke = Instance.new("UIStroke")
-pillStroke.Color = Theme.Accent
-pillStroke.Thickness = 1.5
-pillStroke.Parent = pillFrame
-
-local pillLogo = Instance.new("ImageLabel")
-pillLogo.Size = UDim2.new(1, -6, 1, -6)
-pillLogo.Position = UDim2.fromOffset(3, 3)
-pillLogo.BackgroundTransparency = 1
-pillLogo.ScaleType = Enum.ScaleType.Crop
-pillLogo.Parent = pillFrame
-Instance.new("UICorner", pillLogo).CornerRadius = UDim.new(1, 0)
-
-loadLogoImage(pillLogo)
-
-MakeDraggable(pillFrame, pillFrame)
-
-local pillClick = Instance.new("TextButton")
-pillClick.Size = UDim2.new(1, 0, 1, 0)
-pillClick.BackgroundTransparency = 1
-pillClick.Text = ""
-pillClick.Parent = pillFrame
-
-track(pillClick.Activated:Connect(function()
-    pillFrame.Visible = false
-    openWindow()
-end))
-
-track(minBtn.Activated:Connect(function()
-    mainFrame.Visible = false
-    pillFrame.Visible = true
-end))
-
-track(closeBtn.Activated:Connect(function()
-    cleanupAll()
-    screenGui:Destroy()
-end))
-
--- ============================================================
--- SIDEBAR & CONTENT CONTAINERS
+-- SIDEBAR
 -- ============================================================
 
 sidebar = Instance.new("Frame")
@@ -1788,7 +1726,13 @@ sidebar.Position = UDim2.new(0, 8, 0, Config.HeaderHeight + 4)
 sidebar.BackgroundColor3 = Theme.Surface
 sidebar.BorderSizePixel = 0
 sidebar.Parent = mainFrame
-Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 8)
+Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 9)
+
+local sideStroke = Instance.new("UIStroke")
+sideStroke.Color = Theme.Border
+sideStroke.Thickness = 1
+sideStroke.Transparency = 0.6
+sideStroke.Parent = sidebar
 
 local sidebarLayout = Instance.new("UIListLayout")
 sidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -1802,172 +1746,410 @@ sidebarPadding.PaddingLeft = UDim.new(0, 5)
 sidebarPadding.PaddingRight = UDim.new(0, 5)
 sidebarPadding.Parent = sidebar
 
+-- ============================================================
+-- CONTENT
+-- ============================================================
+
 content = Instance.new("Frame")
 content.Name = "Content"
+content.BackgroundTransparency = 1
 content.Size = UDim2.new(1, -(Config.SidebarWidth + 24), 1, -(Config.HeaderHeight + 12))
 content.Position = UDim2.new(0, Config.SidebarWidth + 16, 0, Config.HeaderHeight + 4)
-content.BackgroundTransparency = 1
+content.ClipsDescendants = false
 content.Parent = mainFrame
 
--- ============================================================
--- TAB SYSTEM & WINDOW API
--- ============================================================
+local pagesFolder = Instance.new("Folder")
+pagesFolder.Name = "Pages"
+pagesFolder.Parent = content
 
+local tabCounter = 0
 local activeTab = nil
 
-local function createTab(tabName, iconDraw)
-    iconDraw = iconDraw or Icons.Home
+local function selectTab(tab)
+    if not tab or activeTab == tab then return end
+    for _, t in ipairs(Tabs) do
+        if t.Page then t.Page.Visible = (t == tab) end
+        local btn, ind, lbl, iconHolder = t.Button, t.Indicator, t.Label, t.IconHolder
 
-    local tabBtn = Instance.new("TextButton")
-    tabBtn.Name = "Tab_" .. tabName
-    tabBtn.Size = UDim2.new(1, 0, 0, 28)
-    tabBtn.BackgroundColor3 = Theme.SurfaceAlt
-    tabBtn.Text = ""
-    tabBtn.AutoButtonColor = false
-    tabBtn.Parent = sidebar
-    Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 6)
+        if t == tab then
+            TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.Accent }):Play()
+            TweenService:Create(ind, TweenInfo.new(Config.AnimFast), { BackgroundTransparency = 0 }):Play()
+            lbl.TextColor3 = Theme.White
+            tintIconHolder(iconHolder, Theme.White, true)
+        else
+            TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.SurfaceAlt }):Play()
+            TweenService:Create(ind, TweenInfo.new(Config.AnimFast), { BackgroundTransparency = 1 }):Play()
+            lbl.TextColor3 = Theme.TextMuted
+            tintIconHolder(iconHolder, Theme.TextMuted, false)
+        end
+    end
+    activeTab = tab
+end
 
-    local tabStroke = Instance.new("UIStroke")
-    tabStroke.Color = Theme.Border
-    tabStroke.Thickness = 1
-    tabStroke.Transparency = 0.6
-    tabStroke.Parent = tabBtn
+local function CreateTab(opts)
+    opts = opts or {}
+    local name = opts.Name or "แท็บ"
+    local iconDraw = opts.Icon or Icons.Home
 
-    local iconHolder = Instance.new("Frame")
-    iconHolder.Size = UDim2.fromOffset(16, 16)
-    iconHolder.Position = UDim2.new(0, 8, 0.5, -8)
-    iconHolder.BackgroundTransparency = 1
-    iconHolder.Parent = tabBtn
-    iconDraw(iconHolder, Theme.TextMuted)
+    tabCounter = tabCounter + 1
+    local thisIndex = tabCounter
 
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, -30, 1, 0)
-    label.Position = UDim2.new(0, 28, 0, 0)
-    label.BackgroundTransparency = 1
-    label.Text = tabName
-    label.TextColor3 = Theme.TextMuted
-    label.Font = Fonts.Medium
-    label.TextSize = 11
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.TextTruncate = Enum.TextTruncate.AtEnd
-    label.Parent = tabBtn
+    local page = Instance.new("ScrollingFrame")
+    page.Name = name .. "Page"
+    page.Size = UDim2.new(1, 0, 1, 0)
+    page.BackgroundTransparency = 1
+    page.BorderSizePixel = 0
+    page.ScrollBarThickness = 3
+    page.ScrollBarImageColor3 = Theme.Accent
+    page.CanvasSize = UDim2.new(0, 0, 0, 0)
+    page.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    page.Visible = false
+    page.Parent = pagesFolder
 
-    local pageScroll = Instance.new("ScrollingFrame")
-    pageScroll.Name = "Page_" .. tabName
-    pageScroll.Size = UDim2.new(1, 0, 1, 0)
-    pageScroll.BackgroundTransparency = 1
-    pageScroll.BorderSizePixel = 0
-    pageScroll.ScrollBarThickness = 3
-    pageScroll.ScrollBarImageColor3 = Theme.Accent
-    pageScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-    pageScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    pageScroll.Visible = false
-    pageScroll.Parent = content
+    local pagePadding = Instance.new("UIPadding")
+    pagePadding.PaddingTop = UDim.new(0, 4)
+    pagePadding.PaddingBottom = UDim.new(0, 6)
+    pagePadding.PaddingLeft = UDim.new(0, 4)
+    pagePadding.PaddingRight = UDim.new(0, 6)
+    pagePadding.Parent = page
 
     local pageLayout = Instance.new("UIListLayout")
     pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    pageLayout.Padding = UDim.new(0, Config.RowSpacing)
-    pageLayout.Parent = pageScroll
+    pageLayout.Padding = UDim.new(0, 5)
+    pageLayout.Parent = page
 
-    local pagePadding = Instance.new("UIPadding")
-    pagePadding.PaddingRight = UDim.new(0, 6)
-    pagePadding.PaddingLeft = UDim.new(0, 2)
-    pagePadding.PaddingTop = UDim.new(0, 2)
-    pagePadding.PaddingBottom = UDim.new(0, 6)
-    pagePadding.Parent = pageScroll
+    local btn = Instance.new("TextButton")
+    btn.Name = "Tab_" .. name
+    btn.Size = UDim2.new(1, 0, 0, 32)
+    btn.BackgroundColor3 = Theme.SurfaceAlt
+    btn.Text = ""
+    btn.AutoButtonColor = false
+    btn.LayoutOrder = thisIndex
+    btn.Parent = sidebar
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
 
-    local tabData = {
-        Btn        = tabBtn,
-        Label      = label,
-        IconHolder = iconHolder,
-        Page       = pageScroll,
+    local indicator = Instance.new("Frame")
+    indicator.Name = "Indicator"
+    indicator.Size = UDim2.new(0, 3, 0.5, 0)
+    indicator.Position = UDim2.new(0, 0, 0.25, 0)
+    indicator.BackgroundColor3 = Theme.AccentLight
+    indicator.BorderSizePixel = 0
+    indicator.BackgroundTransparency = 1
+    indicator.Parent = btn
+    Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
+
+    local iconHolder = Instance.new("Frame")
+    iconHolder.Size = UDim2.fromOffset(16, 16)
+    iconHolder.Position = UDim2.new(0, 10, 0.5, -8)
+    iconHolder.BackgroundTransparency = 1
+    iconHolder.Parent = btn
+    iconDraw(iconHolder, Theme.TextMuted)
+
+    local label = Instance.new("TextLabel")
+    label.BackgroundTransparency = 1
+    label.Position = UDim2.new(0, 32, 0, 0)
+    label.Size = UDim2.new(1, -36, 1, 0)
+    label.Text = name
+    label.TextColor3 = Theme.TextMuted
+    label.TextSize = 11
+    label.Font = Fonts.Medium
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.TextTruncate = Enum.TextTruncate.AtEnd
+    label.Parent = btn
+
+    local tab = {
+        Name = name, Index = thisIndex, Page = page,
+        Button = btn, Indicator = indicator, Label = label, IconHolder = iconHolder,
     }
-    table.insert(Tabs, tabData)
+    table.insert(Tabs, tab)
 
-    local function selectTab()
-        for _, t in ipairs(Tabs) do
-            t.Page.Visible = false
-            t.Btn.BackgroundColor3 = Theme.SurfaceAlt
-            t.Label.TextColor3 = Theme.TextMuted
-            tintIconHolder(t.IconHolder, Theme.TextMuted, false)
+    track(btn.MouseEnter:Connect(function()
+        if activeTab ~= tab and not IS_MOBILE then
+            TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.SurfaceHover }):Play()
         end
+    end))
+    track(btn.MouseLeave:Connect(function()
+        if activeTab ~= tab and not IS_MOBILE then
+            TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.SurfaceAlt }):Play()
+        end
+    end))
+    track(btn.Activated:Connect(function()
+        selectTab(tab)
+    end))
 
-        pageScroll.Visible = true
-        tabBtn.BackgroundColor3 = Theme.SurfaceHover
-        label.TextColor3 = Theme.Text
-        tintIconHolder(iconHolder, Theme.Accent, true)
-        activeTab = tabData
-    end
-
-    track(tabBtn.Activated:Connect(selectTab))
-
-    if #Tabs == 1 then
-        selectTab()
-    end
-
-    local tabApi = {}
-
-    function tabApi:AddSection(opts)
-        return Components.CreateSection(pageScroll, opts)
-    end
-
-    function tabApi:AddToggle(opts)
-        return Components.CreateToggle(pageScroll, opts)
-    end
-
-    function tabApi:AddButton(opts)
-        return Components.CreateButton(pageScroll, opts)
-    end
-
-    function tabApi:AddSlider(opts)
-        return Components.CreateSlider(pageScroll, opts)
-    end
-
-    function tabApi:AddInput(opts)
-        return Components.CreateInput(pageScroll, opts)
-    end
-
-    function tabApi:AddKeybind(opts)
-        return Components.CreateKeybind(pageScroll, opts)
-    end
-
-    function tabApi:AddDropdown(opts)
-        return Components.CreateDropdown(pageScroll, opts)
-    end
-
-    function tabApi:AddLabel(opts)
-        return Components.CreateLabel(pageScroll, opts)
-    end
-
-    function tabApi:AddParagraph(opts)
-        return Components.CreateParagraph(pageScroll, opts)
-    end
-
-    function tabApi:AddDivider(order)
-        return Components.CreateDivider(pageScroll, order)
-    end
-
-    function tabApi:AddPlayerList(opts)
-        return Components.CreatePlayerList(pageScroll, opts)
-    end
-
-    return tabApi
+    return tab
 end
 
-track(workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(updateResponsive))
+-- ============================================================
+-- TOGGLE PILL  (ไม่แก้ — คงเดิม)
+-- ============================================================
+
+local pillSize    = 54
+local pillSizeMin = 46
+
+local TogglePill = Instance.new("ImageButton")
+TogglePill.Name = "TogglePill"
+TogglePill.BackgroundTransparency = 1
+TogglePill.BorderSizePixel = 0
+TogglePill.ClipsDescendants = false
+TogglePill.ZIndex = 100
+TogglePill.AutoButtonColor = false
+TogglePill.Active = false
+TogglePill.AnchorPoint = Vector2.new(0.5, 0.5)
+TogglePill.Position = UDim2.new(0.1, 20, 0.25, 25)
+TogglePill.Size = UDim2.fromOffset(54, 54)
+TogglePill.Visible = true
+TogglePill.Parent = screenGui
+TogglePill.ImageTransparency = 0.05
+TogglePill.ScaleType = Enum.ScaleType.Crop
+Instance.new("UICorner", TogglePill).CornerRadius = UDim.new(0, 12)
+
+local pillStroke = Instance.new("UIStroke")
+pillStroke.Color = Color3.fromRGB(0, 191, 255)
+pillStroke.Thickness = 2.5
+pillStroke.Parent = TogglePill
+
+loadLogoImage(TogglePill)
+
+local pillToggleWindow
+local pill = {
+    dragging = false,
+    activeInput = nil,
+    dragMode = nil,
+    dragStart = nil,
+    startPos = nil,
+    startAbsPos = Vector2.new(0, 0),
+    movedDistance = 0,
+    lastToggle = 0,
+}
+local pillClickGuard = false
+
+local function resetPillDrag()
+    pill.dragging      = false
+    pill.activeInput   = nil
+    pill.dragMode      = nil
+    pill.dragStart     = nil
+    pill.startPos      = nil
+    pill.startAbsPos   = Vector2.new(0, 0)
+    pill.movedDistance = 0
+end
+
+local function isPointInPill(pos)
+    local ap = TogglePill.AbsolutePosition
+    local as = TogglePill.AbsoluteSize
+    return pos.X >= ap.X and pos.X <= (ap.X + as.X)
+       and pos.Y >= ap.Y and pos.Y <= (ap.Y + as.Y)
+end
+
+pillToggleWindow = function()
+    local now = os.clock()
+    if now - pill.lastToggle < Config.ToggleDebounce then return end
+    pill.lastToggle = now
+    if mainFrame.Visible then hideWindow() else showWindow() end
+end
+
+track(UserInputService.InputBegan:Connect(function(input)
+    if not TogglePill.Visible then return end
+    if pill.dragging then return end
+
+    local isTouch      = input.UserInputType == Enum.UserInputType.Touch
+    local isMouseLeft  = input.UserInputType == Enum.UserInputType.MouseButton1
+    local isMouseRight = input.UserInputType == Enum.UserInputType.MouseButton2
+
+    if not (isTouch or isMouseLeft or isMouseRight) then return end
+
+    local pos = Vector2.new(input.Position.X, input.Position.Y)
+    if not isPointInPill(pos) then return end
+
+    if isMouseLeft then
+        if not pillClickGuard then
+            pillClickGuard = true
+            pcall(function() if pillToggleWindow then pillToggleWindow() end end)
+            task.delay(Config.ToggleDebounce, function() pillClickGuard = false end)
+        end
+        return
+    end
+
+    pill.dragging      = true
+    pill.activeInput   = input
+    pill.dragMode      = isTouch and "touch" or "mouse"
+    pill.dragStart     = input.Position
+    pill.startPos      = TogglePill.Position
+    pill.startAbsPos   = pos
+    pill.movedDistance = 0
+
+    TweenService:Create(TogglePill, TweenInfo.new(0.1), {
+        Size = UDim2.fromOffset(pillSizeMin, pillSizeMin)
+    }):Play()
+end))
+
+track(UserInputService.InputChanged:Connect(function(input)
+    if not pill.dragging then return end
+
+    local it = input.UserInputType
+    local valid = (pill.dragMode == "touch" and it == Enum.UserInputType.Touch)
+               or (pill.dragMode == "mouse" and it == Enum.UserInputType.MouseMovement)
+    if not valid then return end
+
+    local currentPos = Vector2.new(input.Position.X, input.Position.Y)
+    local deltaMove = (currentPos - pill.startAbsPos).Magnitude
+    if deltaMove > pill.movedDistance then pill.movedDistance = deltaMove end
+
+    local vp = getViewport()
+    local inset = getSafeInset()
+    local startX = pill.startPos.X.Scale * vp.X + pill.startPos.X.Offset
+    local startY = pill.startPos.Y.Scale * vp.Y + pill.startPos.Y.Offset
+
+    local delta = input.Position - pill.dragStart
+    local newX, newY = startX + delta.X, startY + delta.Y
+
+    local half = TogglePill.AbsoluteSize.X / 2
+    newX = math.clamp(newX, half, vp.X - half)
+    newY = math.clamp(newY, inset.Y + half, vp.Y - half)
+
+    TogglePill.Position = UDim2.new(0, newX, 0, newY)
+end))
+
+track(UserInputService.InputEnded:Connect(function(input)
+    if not pill.dragging then return end
+
+    local it = input.UserInputType
+    local valid = (pill.dragMode == "touch" and it == Enum.UserInputType.Touch)
+               or (pill.dragMode == "mouse" and it == Enum.UserInputType.MouseButton2)
+    if not valid then return end
+
+    local wasTouch = pill.dragMode == "touch"
+    local dragged  = pill.movedDistance > Config.DragThreshold
+
+    TweenService:Create(TogglePill, TweenInfo.new(0.15, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Size = UDim2.fromOffset(pillSize, pillSize)
+    }):Play()
+
+    resetPillDrag()
+
+    if wasTouch and not dragged and not pillClickGuard then
+        pillClickGuard = true
+        pcall(function() if pillToggleWindow then pillToggleWindow() end end)
+        task.delay(Config.ToggleDebounce, function() pillClickGuard = false end)
+    end
+end))
+
+screenGui.Destroying:Connect(function()
+    resetPillDrag()
+end)
+
+function showWindow()
+    mainFrame.Visible = true
+    TogglePill.Visible = true
+    openWindow()
+end
+
+function hideWindow()
+    mainFrame.Visible = false
+    TogglePill.Visible = true
+end
+
+track(minBtn.Activated:Connect(function() hideWindow() end))
+
+track(closeBtn.Activated:Connect(function()
+    pcall(function() if fullCleanup then fullCleanup() end end)
+end))
+
+-- ============================================================
+-- CLEANUP
+-- ============================================================
+
+fullCleanup = function()
+    if not state.uiAlive then return end
+    state.uiAlive = false
+
+    pcall(cleanupAll)
+
+    table.clear(notifQueue)
+    notifRunning = false
+
+    if screenGui and screenGui.Parent then
+        pcall(function() screenGui:Destroy() end)
+    end
+
+    _G.RUNLUA_HUB_ACTIVE = false
+    _G.RUNLUA_HUB_CLEANUP = nil
+end
+
+_G.RUNLUA_HUB_CLEANUP = fullCleanup
+
+track(screenGui.Destroying:Connect(fullCleanup))
+
+if CoreGui then
+    track(CoreGui.DescendantRemoving:Connect(function(obj)
+        if obj == screenGui then fullCleanup() end
+    end))
+end
+
+-- ============================================================
+-- INIT
+-- ============================================================
+
 updateResponsive()
 
--- API สำหรับเปิดใช้งาน Library
-local Library = {
-    Icons = Icons,
-    Notify = Notify,
-    CreateTab = createTab,
-    Destroy = function()
-        cleanupAll()
-        screenGui:Destroy()
+track((getCamera() or workspace):GetPropertyChangedSignal("ViewportSize"):Connect(function()
+    updateResponsive()
+end))
+
+local camConn = nil
+local function rewireCamera()
+    if camConn then camConn:Disconnect() end
+    local cam = getCamera()
+    if cam then
+        camConn = cam:GetPropertyChangedSignal("ViewportSize"):Connect(updateResponsive)
+        updateResponsive()
     end
+end
+rewireCamera()
+track(workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(rewireCamera))
+
+Notify({
+    Title = "RUNLUA HUB",
+    Message = IS_MOBILE and "แตะโลโก้เพื่อเปิด/ปิด • ลากที่แถบด้านบน" or "คลิกซ้ายเปิด/ปิด • ลากที่แถบด้านบน",
+    Duration = 3.5,
+    Color = Theme.Accent,
+    Icon = Icons.Home,
+})
+
+-- ============================================================
+-- LIBRARY API
+-- ============================================================
+
+local Library = {
+    Theme       = Theme,
+    Config      = Config,
+    Icons       = Icons,
+    Tabs        = Tabs,
+
+    Notify      = Notify,
+
+    CreateTab         = CreateTab,
+    CreateSection     = Components.CreateSection,
+    CreateDivider     = Components.CreateDivider,
+    CreateToggle      = Components.CreateToggle,
+    CreateButton      = Components.CreateButton,
+    CreateSlider      = Components.CreateSlider,
+    CreateInput       = Components.CreateInput,
+    CreateKeybind     = Components.CreateKeybind,
+    CreateDropdown    = Components.CreateDropdown,
+    CreateLabel       = Components.CreateLabel,
+    CreateParagraph   = Components.CreateParagraph,
+    CreatePlayerList  = Components.CreatePlayerList,
+
+    SelectTab = selectTab,
+    Show      = showWindow,
+    Hide      = hideWindow,
+    Destroy   = fullCleanup,
+
+    IsMobile  = IS_MOBILE,
+    ScreenGui = screenGui,
+    MainFrame = mainFrame,
 }
 
-Notify({ Title = "RUNLUA HUB v2.4", Message = "โหลดสคริปต์เรียบร้อยแล้ว!", Duration = 3 })
-
+_G.RUNLUA_HUB = Library
 return Library
