@@ -1,8 +1,8 @@
 --[[
     ╔══════════════════════════════════════════════════════╗
     ║   GK HUB  •  Universal UI Library                    ║
-    ║   Icon Edition  •  Dark + Blue Neon (#0091FF)        ║
-    ║   All controls use image icons - no emoji / special  ║
+    ║   Dark + Blue Neon (#0091FF)                         ║
+    ║   Logo : rbxassetid://89005639478352                 ║
     ╚══════════════════════════════════════════════════════╝
 ]]
 
@@ -20,7 +20,7 @@ local UIS = UserInputService
 local TS  = TweenService
 
 --============================================================
--- THEME  (สไตล์ GK HUB เดิม)
+-- THEME
 --============================================================
 local THEME = {
     Bg         = Color3.fromRGB(15, 15, 15),
@@ -39,19 +39,24 @@ local THEME = {
     Border     = Color3.fromRGB(45, 60, 80),
 }
 
-local TRANSPARENCY = 0.7         -- ความโปร่งแสงหลัก (เหมือนต้นฉบับ)
+local TRANSPARENCY = 0.7
 local STROKE_COLOR = Color3.fromRGB(0, 162, 255)
 local CORNER_R     = 8
-local DEFAULT_ICON = "rbxassetid://89005639478352"   -- ไอคอน GK HUB เดิม
+
+-- ★★★ โลโก้ GK (ไอคอนเดียวกับที่สคริปต้นฉบับใช้) ★★★
+local GK_LOGO_ID   = 89005639478352
 
 local FAST   = TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
 local NORM   = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
 local SPRING = TweenInfo.new(0.35, Enum.EasingStyle.Back,  Enum.EasingDirection.Out)
 
 --============================================================
--- ICON REGISTRY
+-- ICON REGISTRY (ระบบโหลดรูปเดิม 100%)
 --============================================================
 local ICON_IDS = {
+    -- โลโก้ GK
+    GK              = GK_LOGO_ID,
+
     Home            = 81381827579989,
     Settings        = 135274678904780,
     ThreeLines      = 15567843411,
@@ -169,6 +174,7 @@ local function ApplyIcon(imageLabel, id)
     if not cid then return end
     local numId = tonumber(cid) or cid
 
+    -- ใส่ fallback ก่อน (rbxthumb) เพื่อให้เห็นภาพทันที
     SafeImage(imageLabel, FallbackUrl(cid))
 
     local rec = IconRegistry[numId]
@@ -180,6 +186,7 @@ local function ApplyIcon(imageLabel, id)
     end
 end
 
+-- Preload ทุกไอคอน (รวมโลโก้ GK)
 for _, id in pairs(ICON_IDS) do
     local cid = tostring(id):match("%d+")
     if cid then
@@ -226,21 +233,22 @@ local function New(class, props, parent)
     return inst
 end
 
+-- ปุ่มไอคอน (ใช้ ImageButton + ImageLabel ข้างใน)
 local function IconButton(parent, iconId, size, color)
     local btn = New("ImageButton", {
-        Size = UDim2.fromOffset(size or 24, size or 24),
-        BackgroundColor3 = THEME.Panel2,
+        Size = UDim2.fromOffset(size or 22, size or 22),
+        BackgroundColor3 = THEME.Panel,
         BackgroundTransparency = TRANSPARENCY,
         BorderSizePixel = 0,
         AutoButtonColor = false,
         Image = "",
     }, parent)
-    AddCorner(btn, math.floor((size or 24) / 3))
+    AddCorner(btn, 6)
     AddStroke(btn, THEME.Border, 1)
 
     local img = New("ImageLabel", {
-        Size = UDim2.fromScale(0.6, 0.6),
-        Position = UDim2.fromScale(0.2, 0.2),
+        Size = UDim2.fromScale(0.65, 0.65),
+        Position = UDim2.fromScale(0.175, 0.175),
         BackgroundTransparency = 1,
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = color or THEME.Text,
@@ -291,7 +299,8 @@ end
 local Library = {}
 Library.Theme   = THEME
 Library.Icons   = ICON_IDS
-Library.Version = "2.0.0"
+Library.Logo    = GK_LOGO_ID
+Library.Version = "2.1.0"
 
 local NotifyHolder
 
@@ -303,10 +312,11 @@ function Library:Notify(opts)
     local text  = opts.Text or ""
     local dur   = opts.Duration or 3
     local color = opts.Color or THEME.Blue
-    local icon  = opts.Icon or ICON_IDS.Home
+    -- ★ default ไอคอน = โลโก้ GK
+    local icon  = opts.Icon or GK_LOGO_ID
 
     local Notif = New("Frame", {
-        Size = UDim2.new(0, 270, 0, 56),
+        Size = UDim2.new(0, 280, 0, 58),
         BackgroundColor3 = THEME.Panel,
         BackgroundTransparency = 0.15,
         BorderSizePixel = 0,
@@ -323,9 +333,10 @@ function Library:Notify(opts)
     }, Notif)
     AddCorner(Accent, 2)
 
+    -- ★ ใช้โลโก้ GK
     local Ico = New("ImageLabel", {
-        Size = UDim2.fromOffset(24, 24),
-        Position = UDim2.new(0, 16, 0.5, -12),
+        Size = UDim2.fromOffset(26, 26),
+        Position = UDim2.new(0, 16, 0.5, -13),
         BackgroundTransparency = 1,
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = color,
@@ -333,8 +344,8 @@ function Library:Notify(opts)
     ApplyIcon(Ico, icon)
 
     local TL = New("TextLabel", {
-        Size = UDim2.new(1, -58, 0, 16),
-        Position = UDim2.new(0, 48, 0, 8),
+        Size = UDim2.new(1, -60, 0, 16),
+        Position = UDim2.new(0, 50, 0, 8),
         BackgroundTransparency = 1,
         Font = Enum.Font.GothamBold,
         TextSize = 12,
@@ -344,8 +355,8 @@ function Library:Notify(opts)
     }, Notif)
 
     local BL = New("TextLabel", {
-        Size = UDim2.new(1, -58, 0, 24),
-        Position = UDim2.new(0, 48, 0, 24),
+        Size = UDim2.new(1, -60, 0, 26),
+        Position = UDim2.new(0, 50, 0, 24),
         BackgroundTransparency = 1,
         Font = Enum.Font.Gotham,
         TextSize = 10,
@@ -356,7 +367,6 @@ function Library:Notify(opts)
         TextYAlignment = Enum.TextYAlignment.Top,
     }, Notif)
 
-    -- slide-in
     Notif.Position = UDim2.new(1, 40, 0, 0)
     TS:Create(Notif, NORM, { Position = UDim2.new(0, 0, 0, 0) }):Play()
 
@@ -381,17 +391,16 @@ function Library:CreateWindow(cfg)
     cfg = cfg or {}
     local title    = cfg.Title or "GK HUB"
     local subtitle = cfg.Subtitle or "Universal Script"
-    local iconId   = cfg.Icon or DEFAULT_ICON
+    -- ★ default โลโก้ = GK ไม่ใช่บ้าน
+    local logoId   = cfg.Logo or GK_LOGO_ID
     local loadText = cfg.LoadingText or "กำลังโหลด GK HUB..."
 
-    -- parent
     local parent = CoreGui
     if type(gethui) == "function" then
         local ok, hui = pcall(gethui)
         if ok and hui then parent = hui end
     end
 
-    -- cleanup
     for _, o in ipairs(parent:GetChildren()) do
         if o:IsA("ScreenGui") and o.Name == "GK_HUB_LIB" then
             pcall(function() o:Destroy() end)
@@ -406,7 +415,7 @@ function Library:CreateWindow(cfg)
     }, parent)
 
     --========================================================
-    -- LOADING FRAME
+    -- LOADING FRAME (ใช้โลโก้ GK)
     --========================================================
     local LoadFrame = New("Frame", {
         Name = "LoadFrame",
@@ -421,17 +430,17 @@ function Library:CreateWindow(cfg)
     local LoadStroke = AddStroke(LoadFrame, STROKE_COLOR, 1.5)
 
     local LoadIcon = New("ImageLabel", {
-        Size = UDim2.fromOffset(28, 28),
-        Position = UDim2.new(0, 16, 0.5, -14),
+        Size = UDim2.fromOffset(30, 30),
+        Position = UDim2.new(0, 16, 0.5, -15),
         BackgroundTransparency = 1,
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = THEME.BlueBright,
     }, LoadFrame)
-    ApplyIcon(LoadIcon, iconId)
+    ApplyIcon(LoadIcon, logoId)   -- ★ GK Logo
 
     local LoadText = New("TextLabel", {
-        Size = UDim2.new(1, -60, 1, 0),
-        Position = UDim2.new(0, 52, 0, 0),
+        Size = UDim2.new(1, -64, 1, 0),
+        Position = UDim2.new(0, 54, 0, 0),
         BackgroundTransparency = 1,
         Font = Enum.Font.GothamBold,
         Text = loadText,
@@ -440,7 +449,6 @@ function Library:CreateWindow(cfg)
         TextXAlignment = Enum.TextXAlignment.Left,
     }, LoadFrame)
 
-    -- loading bar
     local LoadBarBg = New("Frame", {
         Size = UDim2.new(1, -24, 0, 3),
         Position = UDim2.new(0, 12, 1, -10),
@@ -468,7 +476,7 @@ function Library:CreateWindow(cfg)
         Name = "NotifyHolder",
         AnchorPoint = Vector2.new(1, 0),
         Position = UDim2.new(1, -20, 0, 20),
-        Size = UDim2.new(0, 280, 1, -40),
+        Size = UDim2.new(0, 290, 1, -40),
         BackgroundTransparency = 1,
     }, ScreenGui)
     New("UIListLayout", {
@@ -478,7 +486,7 @@ function Library:CreateWindow(cfg)
     }, NotifyHolder)
 
     --========================================================
-    -- TOGGLE PILL  (ปุ่มลอยเปิด/ปิด UI)
+    -- TOGGLE PILL  (★ ใช้โลโก้ GK)
     --========================================================
     local TogglePill = New("ImageButton", {
         Name = "TogglePill",
@@ -487,6 +495,7 @@ function Library:CreateWindow(cfg)
         Size = UDim2.fromOffset(45, 45),
         BackgroundColor3 = THEME.Panel,
         BackgroundTransparency = TRANSPARENCY,
+        BorderSizePixel = 0,
         AutoButtonColor = false,
         Image = "",
         Visible = false,
@@ -495,14 +504,15 @@ function Library:CreateWindow(cfg)
     AddCorner(TogglePill, 8)
     AddStroke(TogglePill, STROKE_COLOR, 1.5)
 
+    -- ★★★ ไอคอน = โลโก้ GK ★★★
     local PillIcon = New("ImageLabel", {
-        Size = UDim2.fromScale(0.7, 0.7),
-        Position = UDim2.fromScale(0.15, 0.15),
+        Size = UDim2.fromScale(0.75, 0.75),
+        Position = UDim2.fromScale(0.125, 0.125),
         BackgroundTransparency = 1,
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = THEME.BlueBright,
     }, TogglePill)
-    ApplyIcon(PillIcon, iconId)
+    ApplyIcon(PillIcon, logoId)
 
     local pillDragging, pillStart, pillStartPos, pillMoved = false, nil, nil, false
     local PILL_THRESHOLD = 6
@@ -549,7 +559,7 @@ function Library:CreateWindow(cfg)
     AddStroke(Main, STROKE_COLOR, 1.5)
 
     --========================================================
-    -- HEADER
+    -- HEADER  (★ ใช้โลโก้ GK ไม่ใช่บ้าน)
     --========================================================
     local Header = New("Frame", {
         Name = "Header",
@@ -567,7 +577,7 @@ function Library:CreateWindow(cfg)
         ScaleType = Enum.ScaleType.Fit,
         ImageColor3 = THEME.BlueBright,
     }, Header)
-    ApplyIcon(HeaderIcon, iconId)
+    ApplyIcon(HeaderIcon, logoId)     -- ★ GK Logo
 
     local HeaderTitle = New("TextLabel", {
         Size = UDim2.new(1, -110, 1, 0),
@@ -580,11 +590,11 @@ function Library:CreateWindow(cfg)
         TextXAlignment = Enum.TextXAlignment.Left,
     }, Header)
 
-    -- ปุ่มย่อ
+    -- ปุ่มย่อ (ใช้ ThreeLines)
     local MinBtn, MinIcon = IconButton(Header, ICON_IDS.ThreeLines, 22, THEME.White)
     MinBtn.Position = UDim2.new(1, -52, 0.5, -11)
 
-    -- ปุ่มปิด
+    -- ปุ่มปิด (ใช้ reset)
     local CloseBtn, CloseIcon = IconButton(Header, ICON_IDS.reset, 22, THEME.Red)
     CloseBtn.Position = UDim2.new(1, -28, 0.5, -11)
 
@@ -603,10 +613,10 @@ function Library:CreateWindow(cfg)
         TS:Create(CloseBtn, FAST, { BackgroundColor3 = THEME.Panel }):Play()
     end)
 
-    -- ปุ่มย่อ: ย่อ/ขยายหน้าต่าง
     local minimized = false
     local fullSize = UDim2.fromOffset(560, 380)
     local minSize  = UDim2.fromOffset(560, 28)
+
     MinBtn.MouseButton1Click:Connect(function()
         minimized = not minimized
         TS:Create(Main, NORM, { Size = minimized and minSize or fullSize }):Play()
@@ -653,10 +663,8 @@ function Library:CreateWindow(cfg)
         BackgroundTransparency = 1,
     }, Main)
 
-    -- drag
     MakeDraggable(Main, Header)
 
-    -- pill end
     UIS.InputEnded:Connect(function(input)
         if pillDragging and (input.UserInputType == Enum.UserInputType.MouseButton1
             or input.UserInputType == Enum.UserInputType.Touch) then
@@ -790,9 +798,7 @@ function Library:CreateWindow(cfg)
                 TS:Create(Btn, FAST, { BackgroundColor3 = THEME.Panel3 }):Play()
             end
         end)
-        Btn.MouseButton1Click:Connect(function()
-            SelectTab(tabName)
-        end)
+        Btn.MouseButton1Click:Connect(function() SelectTab(tabName) end)
 
         Tabs[tabName] = {
             Btn = Btn, Stroke = BtnStroke,
@@ -803,18 +809,14 @@ function Library:CreateWindow(cfg)
         if not ActiveTab then SelectTab(tabName) end
 
         --====================================================
-        -- TAB API
+        -- TAB API (ส่วนควบคุมทั้งหมด)
         --====================================================
         local Tab = {}
         Tab.Page = Page
 
-        --====================================================
-        -- SECTION
-        --====================================================
         function Tab:CreateSection(sectionTitle)
             local PageOrder = #Page:GetChildren() * 10
 
-            -- Section Header (แถบหัวข้อแบบ GK HUB เดิม: ข้อความกลาง)
             local SecHeader = New("Frame", {
                 Size = UDim2.new(0.95, 0, 0, 22),
                 BackgroundColor3 = THEME.Panel2,
@@ -833,7 +835,7 @@ function Library:CreateWindow(cfg)
             }, SecHeader)
             AddCorner(Accent, 2)
 
-            local SecTitle = New("TextLabel", {
+            New("TextLabel", {
                 Size = UDim2.new(1, -20, 1, 0),
                 Position = UDim2.new(0, 16, 0, 0),
                 BackgroundTransparency = 1,
@@ -844,22 +846,18 @@ function Library:CreateWindow(cfg)
                 TextXAlignment = Enum.TextXAlignment.Left,
             }, SecHeader)
 
-            -- Container (ที่วาง control)
             local Container = New("Frame", {
                 Size = UDim2.new(0.95, 0, 0, 0),
                 BackgroundTransparency = 1,
                 AutomaticSize = Enum.AutomaticSize.Y,
                 LayoutOrder = PageOrder + 1,
             }, Page)
-            local CLayout = New("UIListLayout", {
+            New("UIListLayout", {
                 Padding = UDim.new(0, 4),
                 SortOrder = Enum.SortOrder.LayoutOrder,
                 HorizontalAlignment = Enum.HorizontalAlignment.Center,
             }, Container)
 
-            --================================================
-            -- ROW
-            --================================================
             local function MakeRow(name, rightWidth)
                 local Row = New("Frame", {
                     Size = UDim2.new(1, 0, 0, 26),
@@ -870,7 +868,7 @@ function Library:CreateWindow(cfg)
                 AddCorner(Row, 4)
                 local RowStroke = AddStroke(Row, THEME.Border, 1)
 
-                local RL = New("TextLabel", {
+                New("TextLabel", {
                     Size = UDim2.new(1, -(rightWidth or 120) - 12, 1, 0),
                     Position = UDim2.new(0, 10, 0, 0),
                     BackgroundTransparency = 1,
@@ -891,17 +889,14 @@ function Library:CreateWindow(cfg)
                     TS:Create(RowStroke, FAST, { Color = THEME.Border }):Play()
                 end)
 
-                return Row, RL, RowStroke
+                return Row, RowStroke
             end
 
             local API = {}
 
-            --============================================
-            -- LABEL
-            --============================================
             function API:CreateLabel(text)
                 local L = New("TextLabel", {
-                    Size = UDim2.new(0.95, 0, 0, 20),
+                    Size = UDim2.new(1, 0, 0, 20),
                     BackgroundTransparency = 1,
                     Text = text,
                     Font = Enum.Font.Gotham,
@@ -915,21 +910,14 @@ function Library:CreateWindow(cfg)
                 return L
             end
 
-            --============================================
-            -- DIVIDER
-            --============================================
             function API:CreateDivider()
-                local D = New("Frame", {
-                    Size = UDim2.new(0.95, 0, 0, 1),
+                return New("Frame", {
+                    Size = UDim2.new(1, 0, 0, 1),
                     BackgroundColor3 = THEME.Border,
                     BorderSizePixel = 0,
                 }, Container)
-                return D
             end
 
-            --============================================
-            -- BUTTON
-            --============================================
             function API:CreateButton(cfgB)
                 cfgB = cfgB or {}
                 local Row = MakeRow(cfgB.Name or "Button", 80)
@@ -982,9 +970,6 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- TOGGLE
-            --============================================
             function API:CreateToggle(cfgT)
                 cfgT = cfgT or {}
                 local state = cfgT.Default and true or false
@@ -1012,19 +997,13 @@ function Library:CreateWindow(cfg)
 
                 local function setState(v, silent)
                     state = v and true or false
-                    TS:Create(Toggle, NORM, {
-                        BackgroundColor3 = state and THEME.Blue or THEME.Panel,
-                    }):Play()
-                    TS:Create(TStroke, NORM, {
-                        Color = state and THEME.BlueBright or THEME.Border,
-                    }):Play()
+                    TS:Create(Toggle, NORM, { BackgroundColor3 = state and THEME.Blue or THEME.Panel }):Play()
+                    TS:Create(TStroke, NORM, { Color = state and THEME.BlueBright or THEME.Border }):Play()
                     TS:Create(Knob, SPRING, {
                         Position = state and UDim2.new(1, -17, 0.5, -7)
                                           or UDim2.new(0, 3, 0.5, -7),
                     }):Play()
-                    if not silent and cfgT.Callback then
-                        task.spawn(cfgT.Callback, state)
-                    end
+                    if not silent and cfgT.Callback then task.spawn(cfgT.Callback, state) end
                 end
 
                 Toggle.MouseButton1Click:Connect(function() setState(not state) end)
@@ -1036,9 +1015,6 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- SLIDER
-            --============================================
             function API:CreateSlider(cfgS)
                 cfgS = cfgS or {}
                 local min  = cfgS.Min or 0
@@ -1055,7 +1031,7 @@ function Library:CreateWindow(cfg)
                 AddCorner(Row, 4)
                 local RowStroke = AddStroke(Row, THEME.Border, 1)
 
-                local Lbl = New("TextLabel", {
+                New("TextLabel", {
                     Size = UDim2.new(1, -90, 0, 16),
                     Position = UDim2.new(0, 10, 0, 2),
                     BackgroundTransparency = 1,
@@ -1161,9 +1137,6 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- TEXTBOX
-            --============================================
             function API:CreateTextbox(cfgB)
                 cfgB = cfgB or {}
                 local Row = MakeRow(cfgB.Name or "Input", 130)
@@ -1198,15 +1171,12 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- DROPDOWN  (ใช้ไอคอน Pin1 หมุนเปิด/ปิด)
-            --============================================
             function API:CreateDropdown(cfgD)
                 cfgD = cfgD or {}
                 local options = cfgD.Options or {}
                 local selected = cfgD.Default or (options[1] or "")
 
-                local Row, _, RowStroke = MakeRow(cfgD.Name or "Dropdown", 120)
+                local Row = MakeRow(cfgD.Name or "Dropdown", 120)
 
                 local Btn = New("TextButton", {
                     Size = UDim2.new(0, 112, 0, 20),
@@ -1252,7 +1222,7 @@ function Library:CreateWindow(cfg)
                 }, Container)
                 AddCorner(List, 4)
                 AddStroke(List, THEME.Blue, 1)
-                local Layout = New("UIListLayout", {
+                New("UIListLayout", {
                     Padding = UDim.new(0, 3),
                     SortOrder = Enum.SortOrder.LayoutOrder,
                     HorizontalAlignment = Enum.HorizontalAlignment.Center,
@@ -1308,9 +1278,6 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- KEYBIND
-            --============================================
             function API:CreateKeybind(cfgK)
                 cfgK = cfgK or {}
                 local key = cfgK.Default or Enum.KeyCode.E
@@ -1332,7 +1299,6 @@ function Library:CreateWindow(cfg)
                 AddStroke(Btn, THEME.Border, 1)
 
                 local listening = false
-                local blink = task.spawn(function() end)
 
                 Btn.MouseButton1Click:Connect(function()
                     listening = not listening
@@ -1363,9 +1329,6 @@ function Library:CreateWindow(cfg)
                 }
             end
 
-            --============================================
-            -- COLOR PICKER
-            --============================================
             function API:CreateColorPicker(cfgC)
                 cfgC = cfgC or {}
                 local color = cfgC.Default or THEME.Blue
@@ -1376,7 +1339,6 @@ function Library:CreateWindow(cfg)
                     Size = UDim2.new(0, 44, 0, 20),
                     Position = UDim2.new(1, -50, 0.5, -10),
                     BackgroundColor3 = color,
-                    BackgroundTransparency = 0,
                     BorderSizePixel = 0,
                     AutoButtonColor = false,
                     Text = "",
@@ -1507,20 +1469,22 @@ function Library:CreateWindow(cfg)
         TS:Create(MainScale, SPRING, { Scale = 1 }):Play()
         TogglePill.Visible = true
 
+        -- ★ Notify ใช้โลโก้ GK
         Library:Notify({
             Title = "GK HUB",
             Text  = "UI Library v" .. Library.Version .. " loaded",
             Duration = 3,
             Color = THEME.Green,
-            Icon = ICON_IDS.Correct,
+            Icon = GK_LOGO_ID,
         })
     end)
 
     return Window
 end
 
-Library.ICON_IDS       = ICON_IDS
+Library.ICON_IDS        = ICON_IDS
+Library.GK_LOGO         = GK_LOGO_ID
 Library.ResolveAssetUrl = ResolveAssetUrl
-Library.FallbackUrl    = FallbackUrl
+Library.FallbackUrl     = FallbackUrl
 
 return Library
