@@ -1,37 +1,40 @@
+return(function(29dtW, ...)
+local BtgEbB = {"5CfvsoZeL";"NOS";"IzKSE";"J3ES1MB2zWdqBe";"YTuzwu";"GGi7A03xj"}
+local RTxzGdgx = function(...)
 if _G.RUNLUA_HUB_ACTIVE and _G.RUNLUA_HUB_CLEANUP then
 pcall(_G.RUNLUA_HUB_CLEANUP)
 end
 _G.RUNLUA_HUB_ACTIVE = true
-local Players              = game:GetService("Players")
-local RunService           = game:GetService("RunService")
-local UserInputService     = game:GetService("UserInputService")
-local TweenService         = game:GetService("TweenService")
-local CoreGui              = game:GetService("CoreGui")
-local GuiService           = game:GetService("GuiService")
-local ContextActionService = game:GetService("ContextActionService")
-local HttpService          = game:GetService("HttpService")
+local Players              = game:GetService(loadstring(base64decode("UGxheWVycw=="))())
+local RunService           = game:GetService(loadstring(base64decode("UnVuU2VydmljZQ=="))())
+local UserInputService     = game:GetService(loadstring(base64decode("VXNlcklucHV0U2VydmljZQ=="))())
+local TweenService         = game:GetService(loadstring(base64decode("VHdlZW5TZXJ2aWNl"))())
+local CoreGui              = game:GetService(loadstring(base64decode("Q29yZUd1aQ=="))())
+local GuiService           = game:GetService(loadstring(base64decode("R3VpU2VydmljZQ=="))())
+local ContextActionService = game:GetService(loadstring(base64decode("Q29udGV4dEFjdGlvblNlcnZpY2U="))())
+local HttpService          = game:GetService(loadstring(base64decode("SHR0cFNlcnZpY2U="))())
 local LocalPlayer = Players.LocalPlayer
 while not LocalPlayer do task.wait() end
-local PLATFORM_NAME = "Unknown"
+local PLATFORM_NAME = loadstring(base64decode("VW5rbm93bg=="))()
 pcall(function()
 local p = UserInputService:GetPlatform()
 if p then PLATFORM_NAME = p.Name end
 end)
 local IS_MOBILE
-if PLATFORM_NAME == "Android" or PLATFORM_NAME == "IOS" then
+if PLATFORM_NAME == loadstring(base64decode("QW5kcm9pZA=="))() or PLATFORM_NAME == loadstring(base64decode("SU9T"))() then
 IS_MOBILE = true
-elseif PLATFORM_NAME == "Windows" or PLATFORM_NAME == "OSX"
-or PLATFORM_NAME == "Linux" or PLATFORM_NAME == "UWP" then
+elseif PLATFORM_NAME == loadstring(base64decode("V2luZG93cw=="))() or PLATFORM_NAME == loadstring(base64decode("T1NY"))()
+or PLATFORM_NAME == loadstring(base64decode("TGludXg="))() or PLATFORM_NAME == loadstring(base64decode("VVdQ"))() then
 IS_MOBILE = false
 else
 IS_MOBILE = UserInputService.TouchEnabled
 and not UserInputService.MouseEnabled
 and not UserInputService.KeyboardEnabled
 end
-if not IS_MOBILE and (PLATFORM_NAME == "Android" or PLATFORM_NAME == "IOS") then
+if not IS_MOBILE and (PLATFORM_NAME == loadstring(base64decode("QW5kcm9pZA=="))() or PLATFORM_NAME == loadstring(base64decode("SU9T"))()) then
 IS_MOBILE = true
 end
-local LOGO_ASSET_ID = "rbxassetid://110783494016876"
+local LOGO_ASSET_ID = loadstring(base64decode("cmJ4YXNzZXRpZDovLzExMDc4MzQ5NDAxNjg3Ng=="))()
 local function loadLogoImage(imageObject)
 if not imageObject then return end
 pcall(function()
@@ -66,14 +69,14 @@ local function ResolveAssetUrl(cid)
 if not RunService:IsStudio() then return nil end
 local url
 pcall(function()
-local objs = game:GetObjects("rbxassetid://" .. cid)
+local objs = game:GetObjects(loadstring(base64decode("cmJ4YXNzZXRpZDovLw=="))() .. cid)
 if objs and #objs > 0 then
 local o = objs[1]
-if o:IsA("Decal") or o:IsA("Texture") then url = o.Texture
-elseif o:IsA("ImageLabel") or o:IsA("ImageButton") then url = o.Image
+if o:IsA(loadstring(base64decode("RGVjYWw="))()) or o:IsA(loadstring(base64decode("VGV4dHVyZQ=="))()) then url = o.Texture
+elseif o:IsA(loadstring(base64decode("SW1hZ2VMYWJlbA=="))()) or o:IsA(loadstring(base64decode("SW1hZ2VCdXR0b24="))()) then url = o.Image
 else
-local d = o:FindFirstChildWhichIsA("Decal", true)
-or o:FindFirstChildWhichIsA("Texture", true)
+local d = o:FindFirstChildWhichIsA(loadstring(base64decode("RGVjYWw="))(), true)
+or o:FindFirstChildWhichIsA(loadstring(base64decode("VGV4dHVyZQ=="))(), true)
 if d then url = d.Texture end
 end
 pcall(function() o:Destroy() end)
@@ -82,7 +85,7 @@ end)
 return url
 end
 local function FallbackUrl(cid)
-return "rbxthumb://type=Asset&id=" .. cid .. "&w=150&h=150"
+return loadstring(base64decode("cmJ4dGh1bWI6Ly90eXBlPUFzc2V0JmlkPQ=="))() .. cid .. loadstring(base64decode("Jnc9MTUwJmg9MTUw"))()
 end
 local IconRegistry = {}
 local function RegisterUrl(numId, cid)
@@ -91,7 +94,7 @@ local rec = { url = nil, images = {}, loading = true }
 IconRegistry[numId] = rec
 task.spawn(function()
 local url = ResolveAssetUrl(cid)
-if not url or url == "" then url = FallbackUrl(cid) end
+if not url or url == loadstring(base64decode(""))() then url = FallbackUrl(cid) end
 rec.url = url
 rec.loading = false
 for _, img in ipairs(rec.images) do SafeImage(img, url) end
@@ -100,7 +103,7 @@ return rec
 end
 local function RegIcon(imageLabel, id)
 if not imageLabel or not id then return end
-local cid = tostring(id):match("%d+")
+local cid = tostring(id):match(loadstring(base64decode("JWQr"))())
 if not cid then return end
 local numId = tonumber(cid) or cid
 SafeImage(imageLabel, FallbackUrl(cid))
@@ -110,7 +113,7 @@ if rec.url and not rec.loading then SafeImage(imageLabel, rec.url) end
 end
 local function PreloadAllIcons()
 for _, id in pairs(ICON_IDS) do
-local cid = tostring(id):match("%d+")
+local cid = tostring(id):match(loadstring(base64decode("JWQr"))())
 if cid then
 local numId = tonumber(cid) or cid
 if not IconRegistry[numId] then RegisterUrl(numId, cid) end
@@ -159,7 +162,7 @@ IconGradEnd   = Color3.fromRGB(0, 195, 255),
 IconGradAngle = -45,
 IconDim       = Color3.fromRGB(120, 135, 165),
 }
-local FONT_FAMILY = "rbxasset://fonts/families/Kanit.json"
+local FONT_FAMILY = loadstring(base64decode("cmJ4YXNzZXQ6Ly9mb250cy9mYW1pbGllcy9LYW5pdC5qc29u"))()
 local FONT_WEIGHTS = {
 Regular   = Enum.FontWeight.Regular,
 Medium    = Enum.FontWeight.Medium,
@@ -173,10 +176,10 @@ local weight = FONT_WEIGHTS[weightName] or FONT_WEIGHTS.Bold
 return Font.new(FONT_FAMILY, weight)
 end
 local Fonts = {
-Bold    = makeFont("Bold"),
-Medium  = makeFont("Medium"),
-Regular = makeFont("Regular"),
-Black   = makeFont("ExtraBold"),
+Bold    = makeFont(loadstring(base64decode("Qm9sZA=="))()),
+Medium  = makeFont(loadstring(base64decode("TWVkaXVt"))()),
+Regular = makeFont(loadstring(base64decode("UmVndWxhcg=="))()),
+Black   = makeFont(loadstring(base64decode("RXh0cmFCb2xk"))()),
 }
 local UserTextScale
 local screenGui
@@ -187,7 +190,7 @@ end
 local function setTextSize(obj, baseSize)
 if not obj then return end
 local n = tonumber(baseSize) or 12
-pcall(function() obj:SetAttribute("RUNLUA_BASE_TEXT_SIZE", n) end)
+pcall(function() obj:SetAttribute(loadstring(base64decode("UlVOTFVBX0JBU0VfVEVYVF9TSVpF"))(), n) end)
 pcall(function() obj.TextSize = math.clamp(n * (UserTextScale or 1), 10, 48) end)
 end
 local function getCamera() return workspace.CurrentCamera end
@@ -198,14 +201,14 @@ table.insert(Connections, conn)
 return conn
 end
 local function cleanupAll()
-for i = #Connections, 1, -1 do
-pcall(function() Connections[i]:Disconnect() end)
-Connections[i] = nil
+for ke0VXC17 = #Connections, 1, -1 do
+pcall(function() Connections[ke0VXC17]:Disconnect() end)
+Connections[ke0VXC17] = nil
 end
 end
 local function getSafeInset()
 local ok, inset = pcall(function() return GuiService:GetGuiInset() end)
-if ok and typeof(inset) == "Vector2" then return inset end
+if ok and typeof(inset) == loadstring(base64decode("VmVjdG9yMg=="))() then return inset end
 return Vector2.new(0, 0)
 end
 local function getViewport()
@@ -213,13 +216,13 @@ local cam = getCamera()
 if cam then return cam.ViewportSize end
 return Vector2.new(1280, 720)
 end
-local SETTINGS_FILE = "RUNLUA_HUB_SETTINGS.json"
+local SETTINGS_FILE = loadstring(base64decode("UlVOTFVBX0hVQl9TRVRUSU5HUy5qc29u"))()
 local DefaultTheme = {}
 for k, v in pairs(Theme) do DefaultTheme[k] = v end
 local DefaultConfig = {
 UserScale = 1.0,
 TextScale = 1.30,
-FontWeight = "Bold",
+FontWeight = loadstring(base64decode("Qm9sZA=="))(),
 }
 local UserScale = DefaultConfig.UserScale
 UserTextScale = DefaultConfig.TextScale or 1.30
@@ -253,12 +256,12 @@ math.floor(c.B * 255 + 0.5),
 end
 local function colorToHex(c)
 local a = colorToArray(c)
-return string.format("#%02X%02X%02X", a[1], a[2], a[3])
+return string.format(loadstring(base64decode("IyUwMlglMDJYJTAyWA=="))(), a[1], a[2], a[3])
 end
 local function hexToColor3(hex, fallback)
-if type(hex) ~= "string" then return fallback end
-hex = hex:gsub("%s+", "")
-if hex:sub(1, 1) == "#" then hex = hex:sub(2) end
+if type(hex) ~= loadstring(base64decode("c3RyaW5n"))() then return fallback end
+hex = hex:gsub(loadstring(base64decode("JXMr"))(), loadstring(base64decode(""))())
+if hex:sub(1, 1) == loadstring(base64decode("Iw=="))() then hex = hex:sub(2) end
 if #hex ~= 6 then return fallback end
 local r = tonumber(hex:sub(1, 2), 16)
 local g = tonumber(hex:sub(3, 4), 16)
@@ -267,14 +270,14 @@ if not (r and g and b) then return fallback end
 return Color3.fromRGB(r, g, b)
 end
 local function hasFileStorage()
-return type(isfile) == "function"
-and type(readfile) == "function"
-and type(writefile) == "function"
+return type(isfile) == loadstring(base64decode("ZnVuY3Rpb24="))()
+and type(readfile) == loadstring(base64decode("ZnVuY3Rpb24="))()
+and type(writefile) == loadstring(base64decode("ZnVuY3Rpb24="))()
 end
 local function bindThemeObject(obj, role)
 if not obj then return obj end
 ThemeObjects[obj] = role
-pcall(function() obj:SetAttribute("RUNLUA_THEME_ROLE", role) end)
+pcall(function() obj:SetAttribute(loadstring(base64decode("UlVOTFVBX1RIRU1FX1JPTEU="))(), role) end)
 return obj
 end
 local function unbindThemeObject(obj)
@@ -288,15 +291,15 @@ end
 local function applyTextScaleAndFont(root)
 if not root then return end
 for _, obj in ipairs(root:GetDescendants()) do
-if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
-local ok, base = pcall(function() return obj:GetAttribute("RUNLUA_BASE_TEXT_SIZE") end)
-if not ok or type(base) ~= "number" or base <= 0 then
+if obj:IsA(loadstring(base64decode("VGV4dExhYmVs"))()) or obj:IsA(loadstring(base64decode("VGV4dEJ1dHRvbg=="))()) or obj:IsA(loadstring(base64decode("VGV4dEJveA=="))()) then
+local ok, base = pcall(function() return obj:GetAttribute(loadstring(base64decode("UlVOTFVBX0JBU0VfVEVYVF9TSVpF"))()) end)
+if not ok or type(base) ~= loadstring(base64decode("bnVtYmVy"))() or base <= 0 then
 base = obj.TextSize
-pcall(function() obj:SetAttribute("RUNLUA_BASE_TEXT_SIZE", base) end)
+pcall(function() obj:SetAttribute(loadstring(base64decode("UlVOTFVBX0JBU0VfVEVYVF9TSVpF"))(), base) end)
 end
 pcall(function() obj.TextSize = math.clamp(base * UserTextScale, 10, 48) end)
 for _, child in ipairs(obj:GetChildren()) do
-if child:IsA("UITextSizeConstraint") then
+if child:IsA(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))()) then
 pcall(function() child.MaxTextSize = math.clamp(base * UserTextScale, 10, 48) end)
 end
 end
@@ -305,40 +308,40 @@ end
 end
 end
 local function colorsEqual(a, b)
-return typeof(a) == "Color3" and typeof(b) == "Color3"
+return typeof(a) == loadstring(base64decode("Q29sb3Iz"))() and typeof(b) == loadstring(base64decode("Q29sb3Iz"))()
 and math.abs(a.R - b.R) < 0.001
 and math.abs(a.G - b.G) < 0.001
 and math.abs(a.B - b.B) < 0.001
 end
 local function paletteRoleColor(role)
-if role == "Background" then return Theme.Background
-elseif role == "Surface" then return Theme.Surface
-elseif role == "SurfaceAlt" then return Theme.SurfaceAlt
-elseif role == "SurfaceHover" then return Theme.SurfaceHover
-elseif role == "Accent" then return Theme.Accent
-elseif role == "AccentLight" then return Theme.AccentLight
-elseif role == "AccentSoft" then return Theme.AccentSoft
-elseif role == "Text" then return Theme.Text
-elseif role == "TextMuted" then return Theme.TextMuted
-elseif role == "Border" then return Theme.Border
-elseif role == "Success" then return Theme.Success
-elseif role == "Danger" then return Theme.Danger
-elseif role == "Warning" then return Theme.Warning
-elseif role == "SwitchOff" then return Theme.SwitchOff
-elseif role == "White" then return Theme.White
-elseif role == "IconDim" then return Theme.IconDim
-elseif role == "ToggleState" then return Theme.Accent
-elseif role == "TabButton" then return Theme.Accent
-elseif role == "SettingsButton" then return Theme.AccentSoft
+if role == loadstring(base64decode("QmFja2dyb3VuZA=="))() then return Theme.Background
+elseif role == loadstring(base64decode("U3VyZmFjZQ=="))() then return Theme.Surface
+elseif role == loadstring(base64decode("U3VyZmFjZUFsdA=="))() then return Theme.SurfaceAlt
+elseif role == loadstring(base64decode("U3VyZmFjZUhvdmVy"))() then return Theme.SurfaceHover
+elseif role == loadstring(base64decode("QWNjZW50"))() then return Theme.Accent
+elseif role == loadstring(base64decode("QWNjZW50TGlnaHQ="))() then return Theme.AccentLight
+elseif role == loadstring(base64decode("QWNjZW50U29mdA=="))() then return Theme.AccentSoft
+elseif role == loadstring(base64decode("VGV4dA=="))() then return Theme.Text
+elseif role == loadstring(base64decode("VGV4dE11dGVk"))() then return Theme.TextMuted
+elseif role == loadstring(base64decode("Qm9yZGVy"))() then return Theme.Border
+elseif role == loadstring(base64decode("U3VjY2Vzcw=="))() then return Theme.Success
+elseif role == loadstring(base64decode("RGFuZ2Vy"))() then return Theme.Danger
+elseif role == loadstring(base64decode("V2FybmluZw=="))() then return Theme.Warning
+elseif role == loadstring(base64decode("U3dpdGNoT2Zm"))() then return Theme.SwitchOff
+elseif role == loadstring(base64decode("V2hpdGU="))() then return Theme.White
+elseif role == loadstring(base64decode("SWNvbkRpbQ=="))() then return Theme.IconDim
+elseif role == loadstring(base64decode("VG9nZ2xlU3RhdGU="))() then return Theme.Accent
+elseif role == loadstring(base64decode("VGFiQnV0dG9u"))() then return Theme.Accent
+elseif role == loadstring(base64decode("U2V0dGluZ3NCdXR0b24="))() then return Theme.AccentSoft
 end
 return nil
 end
 local function remapPaletteColor(c)
-if typeof(c) ~= "Color3" then return c end
+if typeof(c) ~= loadstring(base64decode("Q29sb3Iz"))() then return c end
 for key, oldColor in pairs(PreviousTheme) do
-if typeof(oldColor) == "Color3" and colorsEqual(c, oldColor) then
+if typeof(oldColor) == loadstring(base64decode("Q29sb3Iz"))() and colorsEqual(c, oldColor) then
 local newColor = Theme[key]
-if typeof(newColor) == "Color3" then return newColor end
+if typeof(newColor) == loadstring(base64decode("Q29sb3Iz"))() then return newColor end
 end
 end
 return c
@@ -346,20 +349,20 @@ end
 local function applyThemeBindings()
 if screenGui and screenGui.Parent then
 for _, obj in ipairs(screenGui:GetDescendants()) do
-if obj:IsA("GuiObject") then
+if obj:IsA(loadstring(base64decode("R3VpT2JqZWN0"))()) then
 pcall(function() obj.BackgroundColor3 = remapPaletteColor(obj.BackgroundColor3) end)
 pcall(function() obj.TextColor3 = remapPaletteColor(obj.TextColor3) end)
-elseif obj:IsA("UIStroke") then
+elseif obj:IsA(loadstring(base64decode("VUlTdHJva2U="))()) then
 pcall(function() obj.Color = remapPaletteColor(obj.Color) end)
-elseif obj:IsA("UIGradient") then
+elseif obj:IsA(loadstring(base64decode("VUlHcmFkaWVudA=="))()) then
 pcall(function()
 local keys = obj.Color.Keypoints
 local changed = false
 local out = {}
-for i, keypoint in ipairs(keys) do
+for ke0VXC17, keypoint in ipairs(keys) do
 local nc = remapPaletteColor(keypoint.Value)
 if nc ~= keypoint.Value then changed = true end
-out[i] = ColorSequenceKeypoint.new(keypoint.Time, nc)
+out[ke0VXC17] = ColorSequenceKeypoint.new(keypoint.Time, nc)
 end
 if changed then obj.Color = ColorSequence.new(out) end
 end)
@@ -369,20 +372,20 @@ end
 for obj, role in pairs(ThemeObjects) do
 if obj and obj.Parent then
 local c = paletteRoleColor(role)
-if role == "ToggleState" then
+if role == loadstring(base64decode("VG9nZ2xlU3RhdGU="))() then
 local isOn = false
-pcall(function() isOn = obj:GetAttribute("RUNLUA_TOGGLE_STATE") == true end)
+pcall(function() isOn = obj:GetAttribute(loadstring(base64decode("UlVOTFVBX1RPR0dMRV9TVEFURQ=="))()) == true end)
 c = isOn and Theme.Accent or Theme.SwitchOff
-elseif role == "TabButton" then
+elseif role == loadstring(base64decode("VGFiQnV0dG9u"))() then
 local selected = false
-pcall(function() selected = obj:GetAttribute("RUNLUA_SELECTED") == true end)
+pcall(function() selected = obj:GetAttribute(loadstring(base64decode("UlVOTFVBX1NFTEVDVEVE"))()) == true end)
 c = selected and Theme.Accent or Theme.SurfaceAlt
 end
 if c then
 local binding = ThemeBindings[obj]
 local prop = binding and binding.Property
 if prop then pcall(function() obj[prop] = c end)
-elseif obj:IsA("GuiObject") then pcall(function() obj.BackgroundColor3 = c end) end
+elseif obj:IsA(loadstring(base64decode("R3VpT2JqZWN0"))()) then pcall(function() obj.BackgroundColor3 = c end) end
 end
 end
 end
@@ -399,7 +402,7 @@ if not pill or not pill.dragging then
 TogglePill.Size = UDim2.fromOffset(pillSize, pillSize)
 end
 pillStroke.Color = Theme.Accent
-TogglePill:SetAttribute("RUNLUA_BASE_PILL_SIZE", 54)
+TogglePill:SetAttribute(loadstring(base64decode("UlVOTFVBX0JBU0VfUElMTF9TSVpF"))(), 54)
 end)
 end
 if mainFrame and mainFrame.Parent then
@@ -425,12 +428,12 @@ MainPosition = posData(mainFrame),
 PillPosition = posData(TogglePill),
 }
 for k, v in pairs(Theme) do
-if typeof(v) == "Color3" then data.Theme[k] = colorToArray(v) end
+if typeof(v) == loadstring(base64decode("Q29sb3Iz"))() then data.Theme[k] = colorToArray(v) end
 end
 return data
 end
 local function applyPosition(gui, data)
-if not gui or type(data) ~= "table" then return end
+if not gui or type(data) ~= loadstring(base64decode("dGFibGU="))() then return end
 local xs = tonumber(data.XScale) or gui.Position.X.Scale
 local xo = tonumber(data.XOffset) or gui.Position.X.Offset
 local ys = tonumber(data.YScale) or gui.Position.Y.Scale
@@ -438,17 +441,17 @@ local yo = tonumber(data.YOffset) or gui.Position.Y.Offset
 gui.Position = UDim2.new(xs, xo, ys, yo)
 end
 local function applySettingsData(data)
-if type(data) ~= "table" then return false end
+if type(data) ~= loadstring(base64decode("dGFibGU="))() then return false end
 UserScale = 1.0
 UserTextScale = math.clamp(tonumber(data.TextScale) or DefaultConfig.TextScale, 1.00, 1.60)
 local fw = tostring(data.FontWeight or DefaultConfig.FontWeight)
 if not FONT_WEIGHTS[fw] then fw = DefaultConfig.FontWeight end
 UserFontWeight = fw
-if type(data.Theme) == "table" then
+if type(data.Theme) == loadstring(base64decode("dGFibGU="))() then
 for key, fallback in pairs(DefaultTheme) do
-if typeof(fallback) == "Color3" then
+if typeof(fallback) == loadstring(base64decode("Q29sb3Iz"))() then
 local v = data.Theme[key]
-if type(v) == "table" then
+if type(v) == loadstring(base64decode("dGFibGU="))() then
 Theme[key] = safeColor3(v[1], v[2], v[3], fallback)
 end
 end
@@ -485,30 +488,30 @@ local function saveSettings()
 local data = collectSettings()
 MemorySettings = data
 LastLoadedFromFile = false
-if not hasFileStorage() then return false, "ระบบนี้ไม่มี writefile/isfile; เก็บไว้ในหน่วยความจำของเซสชันนี้" end
+if not hasFileStorage() then return false, loadstring(base64decode("4Lij4Liw4Lia4Lia4LiZ4Li14LmJ4LmE4Lih4LmI4Lih4Li1IHdyaXRlZmlsZS9pc2ZpbGU7IOC5gOC4geC5h+C4muC5hOC4p+C5ieC5g+C4meC4q+C4meC5iOC4p+C4ouC4hOC4p+C4suC4oeC4iOC4s+C4guC4reC4h+C5gOC4i+C4quC4iuC4seC4meC4meC4teC5iQ=="))() end
 local ok, encoded = pcall(function() return HttpService:JSONEncode(data) end)
-if not ok then return false, "แปลงข้อมูลการตั้งค่าเป็น JSON ไม่สำเร็จ" end
+if not ok then return false, loadstring(base64decode("4LmB4Lib4Lil4LiH4LiC4LmJ4Lit4Lih4Li54Lil4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LmA4Lib4LmH4LiZIEpTT04g4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiI"))() end
 local okWrite, err = pcall(function() writefile(SETTINGS_FILE, encoded) end)
-if not okWrite then return false, "เขียนไฟล์ไม่สำเร็จ: " .. tostring(err) end
+if not okWrite then return false, loadstring(base64decode("4LmA4LiC4Li14Lii4LiZ4LmE4Lif4Lil4LmM4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiIOiA="))() .. tostring(err) end
 return true, SETTINGS_FILE
 end
 local function loadSettings()
 if not hasFileStorage() or not isfile(SETTINGS_FILE) then
 if MemorySettings then
 applySettingsData(MemorySettings)
-return true, "หน่วยความจำ"
+return true, loadstring(base64decode("4Lir4LiZ4LmI4Lin4Lii4LiE4Lin4Liy4Lih4LiI4Liz"))()
 end
-return false, "ยังไม่พบไฟล์การตั้งค่า"
+return false, loadstring(base64decode("4Lii4Lix4LiH4LmE4Lih4LmI4Lie4Lia4LmE4Lif4Lil4LmM4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy"))()
 end
 local okRead, raw = pcall(function() return readfile(SETTINGS_FILE) end)
-if not okRead or type(raw) ~= "string" or raw == "" then
-return false, "อ่านไฟล์การตั้งค่าไม่สำเร็จ"
+if not okRead or type(raw) ~= loadstring(base64decode("c3RyaW5n"))() or raw == loadstring(base64decode(""))() then
+return false, loadstring(base64decode("4Lit4LmI4Liy4LiZ4LmE4Lif4Lil4LmM4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiI"))()
 end
 local okDecode, data = pcall(function() return HttpService:JSONDecode(raw) end)
-if not okDecode or type(data) ~= "table" then
-return false, "ไฟล์การตั้งค่ามีรูปแบบไม่ถูกต้อง"
+if not okDecode or type(data) ~= loadstring(base64decode("dGFibGU="))() then
+return false, loadstring(base64decode("4LmE4Lif4Lil4LmM4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4Lih4Li14Lij4Li54Lib4LmB4Lia4Lia4LmE4Lih4LmI4LiW4Li54LiB4LiV4LmJ4Lit4LiH"))()
 end
-if not applySettingsData(data) then return false, "ใช้ข้อมูลการตั้งค่าไม่สำเร็จ" end
+if not applySettingsData(data) then return false, loadstring(base64decode("4LmD4LiK4LmJ4LiC4LmJ4Lit4Lih4Li54Lil4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiI"))() end
 MemorySettings = data
 LastLoadedFromFile = true
 return true, SETTINGS_FILE
@@ -522,7 +525,7 @@ applySettingsVisuals()
 return true
 end
 local function AddGradient(parent, rotation, c1, c2)
-local g = Instance.new("UIGradient")
+local g = Instance.new(loadstring(base64decode("VUlHcmFkaWVudA=="))())
 g.Color = ColorSequence.new({
 ColorSequenceKeypoint.new(0, c1 or Theme.IconGradStart),
 ColorSequenceKeypoint.new(1, c2 or Theme.IconGradEnd),
@@ -533,8 +536,8 @@ return g
 end
 local Icons = {}
 local function makeIconImage(parent, iconId, color, size, useGradient)
-local img = Instance.new("ImageLabel")
-img.Name = "Icon"
+local img = Instance.new(loadstring(base64decode("SW1hZ2VMYWJlbA=="))())
+img.Name = loadstring(base64decode("SWNvbg=="))()
 img.Size = UDim2.fromOffset(size or 16, size or 16)
 img.AnchorPoint = Vector2.new(0.5, 0.5)
 img.Position = UDim2.fromScale(0.5, 0.5)
@@ -543,10 +546,10 @@ img.ScaleType = Enum.ScaleType.Fit
 if useGradient ~= false then
 img.ImageColor3 = Color3.fromRGB(255, 255, 255)
 AddGradient(img, Theme.IconGradAngle, Theme.IconGradStart, Theme.IconGradEnd)
-img:SetAttribute("HasGradient", true)
+img:SetAttribute(loadstring(base64decode("SGFzR3JhZGllbnQ="))(), true)
 else
 img.ImageColor3 = color or Theme.TextMuted
-img:SetAttribute("HasGradient", false)
+img:SetAttribute(loadstring(base64decode("SGFzR3JhZGllbnQ="))(), false)
 end
 img.Parent = parent
 RegIcon(img, iconId)
@@ -607,10 +610,10 @@ Icons.Fishing  = function(p, c) return makeIconImage(p, ICON_IDS.Fishingrod, c, 
 Icons.Spoon    = function(p, c) return makeIconImage(p, ICON_IDS.spoon, c, 16) end
 local function tintIconHolder(holder, color, isActive)
 for _, child in ipairs(holder:GetDescendants()) do
-if child:IsA("Frame") then
+if child:IsA(loadstring(base64decode("RnJhbWU="))()) then
 child.BackgroundColor3 = color
-elseif child:IsA("ImageLabel") then
-if child:GetAttribute("HasGradient") then
+elseif child:IsA(loadstring(base64decode("SW1hZ2VMYWJlbA=="))()) then
+if child:GetAttribute(loadstring(base64decode("SGFzR3JhZGllbnQ="))()) then
 child.ImageColor3 = (isActive == false)
 and Theme.IconDim or Color3.fromRGB(255, 255, 255)
 else
@@ -619,24 +622,24 @@ end
 end
 end
 end
-screenGui = Instance.new("ScreenGui")
-screenGui.Name = "RUNLUA_HUB_Gui"
+screenGui = Instance.new(loadstring(base64decode("U2NyZWVuR3Vp"))())
+screenGui.Name = loadstring(base64decode("UlVOTFVBX0hVQl9HdWk="))()
 screenGui.ResetOnSpawn = false
 screenGui.IgnoreGuiInset = true
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 do
 local ok = pcall(function() screenGui.Parent = CoreGui end)
 if not ok or not screenGui.Parent then
-screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+screenGui.Parent = LocalPlayer:WaitForChild(loadstring(base64decode("UGxheWVyR3Vp"))())
 end
 end
-local notifContainer = Instance.new("Frame")
-notifContainer.Name = "Notifications"
+local notifContainer = Instance.new(loadstring(base64decode("RnJhbWU="))())
+notifContainer.Name = loadstring(base64decode("Tm90aWZpY2F0aW9ucw=="))()
 notifContainer.BackgroundTransparency = 1
 notifContainer.Size = UDim2.new(0, 260, 1, -40)
 notifContainer.Position = UDim2.new(1, -280, 0, 20)
 notifContainer.Parent = screenGui
-local notifLayout = Instance.new("UIListLayout")
+local notifLayout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 notifLayout.SortOrder = Enum.SortOrder.LayoutOrder
 notifLayout.Padding = UDim.new(0, 6)
 notifLayout.VerticalAlignment = Enum.VerticalAlignment.Top
@@ -652,55 +655,55 @@ local data = table.remove(notifQueue, 1)
 if activeNotifs >= Config.MaxNotifications then
 local frames = {}
 for _, c in ipairs(notifContainer:GetChildren()) do
-if c:IsA("Frame") then table.insert(frames, c) end
+if c:IsA(loadstring(base64decode("RnJhbWU="))()) then table.insert(frames, c) end
 end
 if #frames > 0 then
 frames[1]:Destroy()
 activeNotifs = math.max(0, activeNotifs - 1)
 end
 end
-local card = Instance.new("Frame")
-card.Name = "Notif"
+local card = Instance.new(loadstring(base64decode("RnJhbWU="))())
+card.Name = loadstring(base64decode("Tm90aWY="))()
 card.Size = UDim2.new(1, 0, 0, 56)
 card.BackgroundColor3 = Theme.Surface
 card.BorderSizePixel = 0
 card.BackgroundTransparency = 1
 card.Parent = notifContainer
-Instance.new("UICorner", card).CornerRadius = UDim.new(0, Theme.CornerRadius)
-local stroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), card).CornerRadius = UDim.new(0, Theme.CornerRadius)
+local stroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 stroke.Color = data.Color or Theme.Accent
 stroke.Thickness = 1.5
 stroke.Transparency = 1
 stroke.Parent = card
-local accent = Instance.new("Frame")
+local accent = Instance.new(loadstring(base64decode("RnJhbWU="))())
 accent.Size = UDim2.new(0, 3, 0.7, 0)
 accent.Position = UDim2.new(0, 0, 0.15, 0)
 accent.BackgroundColor3 = data.Color or Theme.Accent
 accent.BorderSizePixel = 0
 accent.Parent = card
-Instance.new("UICorner", accent).CornerRadius = UDim.new(1, 0)
-local iconHolder = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), accent).CornerRadius = UDim.new(1, 0)
+local iconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 iconHolder.Size = UDim2.fromOffset(18, 18)
 iconHolder.Position = UDim2.new(0, 10, 0, 19)
 iconHolder.BackgroundTransparency = 1
 iconHolder.Parent = card
 pcall(function() data.Icon(iconHolder, data.Color or Theme.Accent) end)
-local title = Instance.new("TextLabel")
+local title = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 title.Size = UDim2.new(1, -40, 0, 18)
 title.Position = UDim2.new(0, 36, 0, 8)
 title.BackgroundTransparency = 1
-title.Text = data.Title or "แจ้งเตือน"
+title.Text = data.Title or loadstring(base64decode("4LmB4LiI4LmJ4LiH4LmA4LiV4Li34Lit4LiZ"))()
 title.TextColor3 = Theme.Text
 setTextSize(title, 12)
 applyFont(title, Fonts.Bold)
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.TextTruncate = Enum.TextTruncate.AtEnd
 title.Parent = card
-local sub = Instance.new("TextLabel")
+local sub = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 sub.Size = UDim2.new(1, -40, 0, 16)
 sub.Position = UDim2.new(0, 36, 0, 28)
 sub.BackgroundTransparency = 1
-sub.Text = data.Message or ""
+sub.Text = data.Message or loadstring(base64decode(""))()
 sub.TextColor3 = Theme.TextMuted
 setTextSize(sub, 10)
 applyFont(sub, Fonts.Regular)
@@ -728,8 +731,8 @@ local function Notify(opts)
 opts = opts or {}
 if not state.uiAlive then return end
 table.insert(notifQueue, {
-Title = opts.Title or "แจ้งเตือน",
-Message = opts.Message or "",
+Title = opts.Title or loadstring(base64decode("4LmB4LiI4LmJ4LiH4LmA4LiV4Li34Lit4LiZ"))(),
+Message = opts.Message or loadstring(base64decode(""))(),
 Duration = opts.Duration or 3,
 Color = opts.Color or Theme.Accent,
 Icon = opts.Icon or Icons.Home,
@@ -766,7 +769,7 @@ end
 local function isPointOverButton(h, pos)
 if not h then return false end
 for _, child in ipairs(h:GetDescendants()) do
-if child:IsA("GuiButton") and child.Visible and child.Active ~= false then
+if child:IsA(loadstring(base64decode("R3VpQnV0dG9u"))()) and child.Visible and child.Active ~= false then
 local ap = child.AbsolutePosition
 local as = child.AbsoluteSize
 if pos.X >= ap.X and pos.X <= ap.X + as.X
@@ -787,7 +790,7 @@ if input.UserInputType ~= Enum.UserInputType.Touch then return end
 if not isPointIn(touchHandle, pos) then return end
 if isPointOverButton(touchHandle, pos) then return end
 drag.activeInput   = input
-drag.dragMode      = "touch"
+drag.dragMode      = loadstring(base64decode("dG91Y2g="))()
 drag.dragStart     = input.Position
 drag.startPos      = frame.Position
 drag.startAbsPos   = pos
@@ -797,7 +800,7 @@ if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 if not isPointIn(mouseHandle, pos) then return end
 if isPointOverButton(mouseHandle, pos) then return end
 drag.activeInput   = input
-drag.dragMode      = "mouse"
+drag.dragMode      = loadstring(base64decode("bW91c2U="))()
 drag.dragStart     = input.Position
 drag.startPos      = frame.Position
 drag.startAbsPos   = pos
@@ -808,9 +811,9 @@ track(UserInputService.InputChanged:Connect(function(input, gp)
 if not drag.activeInput or not drag.dragMode then return end
 local it = input.UserInputType
 local valid
-if drag.dragMode == "mouse" then
+if drag.dragMode == loadstring(base64decode("bW91c2U="))() then
 valid = (it == Enum.UserInputType.MouseMovement)
-elseif drag.dragMode == "touch" then
+elseif drag.dragMode == loadstring(base64decode("dG91Y2g="))() then
 if gp then return end
 valid = (input == drag.activeInput and it == Enum.UserInputType.Touch)
 end
@@ -836,9 +839,9 @@ track(UserInputService.InputEnded:Connect(function(input)
 if not drag.activeInput or not drag.dragMode then return end
 local it = input.UserInputType
 local ends
-if drag.dragMode == "mouse" then
+if drag.dragMode == loadstring(base64decode("bW91c2U="))() then
 ends = (it == Enum.UserInputType.MouseButton1)
-elseif drag.dragMode == "touch" then
+elseif drag.dragMode == loadstring(base64decode("dG91Y2g="))() then
 ends = (input == drag.activeInput and it == Enum.UserInputType.Touch)
 end
 if not ends then return end
@@ -848,13 +851,13 @@ track(screenGui.Destroying:Connect(resetDrag))
 end
 local Components = {}
 function Components.CreateDivider(parent, order)
-local holder = Instance.new("Frame")
-holder.Name = "Divider"
+local holder = Instance.new(loadstring(base64decode("RnJhbWU="))())
+holder.Name = loadstring(base64decode("RGl2aWRlcg=="))()
 holder.Size = UDim2.new(1, 0, 0, 16)
 holder.BackgroundTransparency = 1
 holder.LayoutOrder = order or 0
 holder.Parent = parent
-local line = Instance.new("Frame")
+local line = Instance.new(loadstring(base64decode("RnJhbWU="))())
 line.AnchorPoint = Vector2.new(0.5, 0.5)
 line.Position = UDim2.fromScale(0.5, 0.5)
 line.Size = UDim2.new(1, -16, 0, 1)
@@ -866,19 +869,19 @@ return holder
 end
 function Components.CreateSection(parent, opts)
 opts = opts or {}
-local section = Instance.new("Frame")
-section.Name = opts.Name or "Section"
+local section = Instance.new(loadstring(base64decode("RnJhbWU="))())
+section.Name = opts.Name or loadstring(base64decode("U2VjdGlvbg=="))()
 section.BackgroundTransparency = 1
 section.Size = UDim2.new(1, 0, 0, 0)
 section.AutomaticSize = Enum.AutomaticSize.Y
 section.LayoutOrder = opts.Order or 0
 section.Parent = parent
-local layout = Instance.new("UIListLayout")
+local layout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Padding = UDim.new(0, Config.RowSpacing)
 layout.Parent = section
 if opts.Title then
-local title = Instance.new("TextLabel")
+local title = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 title.Size = UDim2.new(1, 0, 0, 26)
 title.BackgroundTransparency = 1
 title.Text = opts.Title
@@ -889,7 +892,7 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 title.TextYAlignment = Enum.TextYAlignment.Bottom
 title.LayoutOrder = -100
 title.Parent = section
-local u = Instance.new("UITextSizeConstraint")
+local u = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u.MaxTextSize = math.clamp(13 * (UserTextScale or 1), 12, 24)
 u.Parent = title
 end
@@ -901,25 +904,25 @@ rowCount = rowCount + 1
 return rowCount
 end
 local function makeRow(parent, name, height, order)
-local row = Instance.new("Frame")
+local row = Instance.new(loadstring(base64decode("RnJhbWU="))())
 row.Name = name
 row.Size = UDim2.new(1, 0, 0, height)
 row.BackgroundColor3 = Theme.Surface
-bindThemeObject(row, "Surface")
+bindThemeObject(row, loadstring(base64decode("U3VyZmFjZQ=="))())
 row.BorderSizePixel = 0
 row.LayoutOrder = order or nextOrder()
 row.Parent = parent
-Instance.new("UICorner", row).CornerRadius = UDim.new(0, 7)
-local stroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), row).CornerRadius = UDim.new(0, 7)
+local stroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 stroke.Color = Theme.Border
-bindThemeProperty(stroke, "Border", "Color")
+bindThemeProperty(stroke, loadstring(base64decode("Qm9yZGVy"))(), loadstring(base64decode("Q29sb3I="))())
 stroke.Thickness = 1
 stroke.Transparency = 0.5
 stroke.Parent = row
 return row, stroke
 end
 local function makeRowIcon(row, iconDraw, posY, color)
-local iconHolder = Instance.new("Frame")
+local iconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 iconHolder.Size = UDim2.fromOffset(20, 20)
 iconHolder.Position = UDim2.new(0, 12, 0, posY or 12)
 iconHolder.BackgroundTransparency = 1
@@ -929,37 +932,37 @@ return iconHolder
 end
 local function makeRowTitle(row, title, desc, leftPad)
 leftPad = leftPad or 42
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Text = title
 titleLabel.TextColor3 = Theme.Text
-bindThemeProperty(titleLabel, "Text", "TextColor3")
+bindThemeProperty(titleLabel, loadstring(base64decode("VGV4dA=="))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(titleLabel, Fonts.Medium)
 setTextSize(titleLabel, 13)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.TextYAlignment = Enum.TextYAlignment.Center
 titleLabel.Parent = row
-local u1 = Instance.new("UITextSizeConstraint")
+local u1 = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u1.MaxTextSize = math.clamp(15 * (UserTextScale or 1), 13, 30)
 u1.Parent = titleLabel
 if desc then
 titleLabel.Position = UDim2.new(0, leftPad, 0, 10)
 titleLabel.Size = UDim2.new(1, -(leftPad + 90), 0, 20)
-local descLabel = Instance.new("TextLabel")
+local descLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 descLabel.BackgroundTransparency = 1
 descLabel.Position = UDim2.new(0, leftPad, 0, 36)
 descLabel.Size = UDim2.new(1, -(leftPad + 90), 0, 18)
 descLabel.Text = desc
 descLabel.TextColor3 = Theme.TextMuted
-bindThemeProperty(descLabel, "TextMuted", "TextColor3")
+bindThemeProperty(descLabel, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(descLabel, Fonts.Regular)
 setTextSize(descLabel, 11)
 descLabel.TextXAlignment = Enum.TextXAlignment.Left
 descLabel.TextTruncate = Enum.TextTruncate.AtEnd
 descLabel.TextYAlignment = Enum.TextYAlignment.Top
 descLabel.Parent = row
-local u2 = Instance.new("UITextSizeConstraint")
+local u2 = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u2.MaxTextSize = math.clamp(13 * (UserTextScale or 1), 11, 22)
 u2.Parent = descLabel
 else
@@ -982,33 +985,33 @@ end))
 end
 function Components.CreateToggle(parent, opts)
 opts = opts or {}
-local title    = opts.Name or "สวิตช์"
+local title    = opts.Name or loadstring(base64decode("4Liq4Lin4Li04LiV4LiK4LmM"))()
 local desc     = opts.Description
-local default  = (type(opts.Default) == "boolean") and opts.Default or false
+local default  = (type(opts.Default) == loadstring(base64decode("Ym9vbGVhbg=="))()) and opts.Default or false
 local callback = opts.Callback or function() end
 local iconDraw = opts.Icon or Icons.Settings
 local rowHeight = desc and Config.RowHeightDesc or Config.RowHeight
-local row = makeRow(parent, "Toggle_" .. title, rowHeight, opts.Order)
+local row = makeRow(parent, loadstring(base64decode("VG9nZ2xlXw=="))() .. title, rowHeight, opts.Order)
 local iconHolder = makeRowIcon(row, iconDraw, desc and 12 or (rowHeight / 2 - 10))
 makeRowTitle(row, title, desc, 42)
 local SWITCH_W, SWITCH_H = 38, 20
 local KNOB, PAD = 14, 3
-local switch = Instance.new("Frame")
-switch.Name = "Switch"
+local switch = Instance.new(loadstring(base64decode("RnJhbWU="))())
+switch.Name = loadstring(base64decode("U3dpdGNo"))()
 switch.Size = UDim2.fromOffset(SWITCH_W, SWITCH_H)
 switch.Position = UDim2.new(1, -(SWITCH_W + 12), 0.5, -SWITCH_H / 2)
 switch.BackgroundColor3 = Theme.SwitchOff
-bindThemeObject(switch, "ToggleState")
+bindThemeObject(switch, loadstring(base64decode("VG9nZ2xlU3RhdGU="))())
 switch.BorderSizePixel = 0
 switch.Parent = row
-Instance.new("UICorner", switch).CornerRadius = UDim.new(1, 0)
-local knob = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), switch).CornerRadius = UDim.new(1, 0)
+local knob = Instance.new(loadstring(base64decode("RnJhbWU="))())
 knob.Size = UDim2.fromOffset(KNOB, KNOB)
 knob.Position = UDim2.new(0, PAD, 0.5, -KNOB / 2)
 knob.BackgroundColor3 = Color3.fromRGB(150, 160, 180)
 knob.BorderSizePixel = 0
 knob.Parent = switch
-Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), knob).CornerRadius = UDim.new(1, 0)
 local OFF_POS = UDim2.new(0, PAD, 0.5, -KNOB / 2)
 local ON_POS  = UDim2.new(0, SWITCH_W - KNOB - PAD, 0.5, -KNOB / 2)
 local toggleState = default
@@ -1017,7 +1020,7 @@ local floatingPanel, floatingModeButton
 local function applyState(animate)
 local targetPos  = toggleState and ON_POS or OFF_POS
 local targetBg   = toggleState and Theme.Accent or Theme.SwitchOff
-switch:SetAttribute("RUNLUA_TOGGLE_STATE", toggleState)
+switch:SetAttribute(loadstring(base64decode("UlVOTFVBX1RPR0dMRV9TVEFURQ=="))(), toggleState)
 local targetKnob = toggleState and Color3.fromRGB(255,255,255) or Color3.fromRGB(150,160,180)
 if animate then
 TweenService:Create(knob, TweenInfo.new(Config.AnimNormal, Enum.EasingStyle.Quad), {
@@ -1035,21 +1038,21 @@ tintIconHolder(iconHolder, Theme.TextMuted, toggleState)
 if floatingSwitch and floatingSwitch.Parent then
 floatingSwitch.BackgroundColor3 = toggleState and Theme.Accent or Theme.SwitchOff
 floatingKnob.Position = toggleState and UDim2.new(1, -18, 0.5, -7) or UDim2.new(0, 4, 0.5, -7)
-floatingLabel.Text = toggleState and "เปิด" or "ปิด"
+floatingLabel.Text = toggleState and loadstring(base64decode("4LmA4Lib4Li04LiU"))() or loadstring(base64decode("4Lib4Li04LiU"))()
 floatingLabel.TextColor3 = toggleState and Theme.AccentLight or Theme.TextMuted
 end
 if floatingModeButton and floatingModeButton.Parent and floatingPanel then
 local visible = floatingPanel.Visible
-floatingModeButton.Text = visible and "ลอย✓" or "ลอย"
+floatingModeButton.Text = visible and loadstring(base64decode("4Lil4Lit4Lii4pyT"))() or loadstring(base64decode("4Lil4Lit4Lii"))()
 floatingModeButton.BackgroundColor3 = visible and Theme.Accent or Theme.SwitchOff
 floatingModeButton.TextColor3 = visible and Theme.White or Theme.TextMuted
 end
 end
 applyState(false)
-local click = Instance.new("TextButton")
+local click = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 click.Size = UDim2.new(1, 0, 1, 0)
 click.BackgroundTransparency = 1
-click.Text = ""
+click.Text = loadstring(base64decode(""))()
 click.ZIndex = 1
 click.Parent = row
 attachRowHover(row, click)
@@ -1059,22 +1062,22 @@ applyState(true)
 pcall(callback, toggleState)
 end))
 if opts.Floating == true or opts.FloatButton == true then
-floatingModeButton = Instance.new("TextButton")
-floatingModeButton.Name = "FloatingModeButton"
+floatingModeButton = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+floatingModeButton.Name = loadstring(base64decode("RmxvYXRpbmdNb2RlQnV0dG9u"))()
 floatingModeButton.Size = UDim2.fromOffset(48, 26)
 floatingModeButton.Position = UDim2.new(1, -(SWITCH_W + 68), 0.5, -13)
 floatingModeButton.BackgroundColor3 = Theme.SwitchOff
 floatingModeButton.TextColor3 = Theme.TextMuted
-floatingModeButton.Text = "ลอย"
+floatingModeButton.Text = loadstring(base64decode("4Lil4Lit4Lii"))()
 floatingModeButton.TextSize = 11
 floatingModeButton.Font = Enum.Font.GothamBold
 floatingModeButton.AutoButtonColor = false
 floatingModeButton.ZIndex = 3
 floatingModeButton.Parent = row
-Instance.new("UICorner", floatingModeButton).CornerRadius = UDim.new(0, 5)
-floatingPanel = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), floatingModeButton).CornerRadius = UDim.new(0, 5)
+floatingPanel = Instance.new(loadstring(base64decode("RnJhbWU="))())
 local panel = floatingPanel
-panel.Name = "FloatingToggle_" .. tostring(title)
+panel.Name = loadstring(base64decode("RmxvYXRpbmdUb2dnbGVf"))() .. tostring(title)
 panel.Size = UDim2.fromOffset(250, 76)
 panel.AnchorPoint = Vector2.new(0.5, 0.5)
 panel.Position = UDim2.fromScale(0.5, 0.5)
@@ -1083,13 +1086,13 @@ panel.BorderSizePixel = 0
 panel.ZIndex = 150
 panel.Visible = false
 panel.Parent = screenGui
-Instance.new("UICorner", panel).CornerRadius = UDim.new(0, 10)
-local outline = Instance.new("UIStroke", panel)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), panel).CornerRadius = UDim.new(0, 10)
+local outline = Instance.new(loadstring(base64decode("VUlTdHJva2U="))(), panel)
 outline.Color = Theme.Accent
 outline.Transparency = 0.18
 outline.Thickness = 1.4
-local top = Instance.new("TextButton")
-top.Name = "DragHeader"
+local top = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+top.Name = loadstring(base64decode("RHJhZ0hlYWRlcg=="))()
 top.Size = UDim2.new(1, -16, 0, 28)
 top.Position = UDim2.fromOffset(8, 6)
 top.BackgroundTransparency = 1
@@ -1101,40 +1104,40 @@ top.TextXAlignment = Enum.TextXAlignment.Left
 top.TextTruncate = Enum.TextTruncate.AtEnd
 top.ZIndex = 151
 top.Parent = panel
-floatingLabel = Instance.new("TextLabel")
-floatingLabel.Name = "StateLabel"
+floatingLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
+floatingLabel.Name = loadstring(base64decode("U3RhdGVMYWJlbA=="))()
 floatingLabel.BackgroundTransparency = 1
 floatingLabel.Position = UDim2.new(0, 10, 0, 40)
 floatingLabel.Size = UDim2.new(1, -110, 0, 22)
-floatingLabel.Text = "ปิด"
+floatingLabel.Text = loadstring(base64decode("4Lib4Li04LiU"))()
 floatingLabel.TextColor3 = Theme.TextMuted
 floatingLabel.TextSize = 13
 floatingLabel.Font = Enum.Font.Gotham
 floatingLabel.TextXAlignment = Enum.TextXAlignment.Left
 floatingLabel.ZIndex = 151
 floatingLabel.Parent = panel
-floatingSwitch = Instance.new("Frame")
-floatingSwitch.Name = "Switch"
+floatingSwitch = Instance.new(loadstring(base64decode("RnJhbWU="))())
+floatingSwitch.Name = loadstring(base64decode("U3dpdGNo"))()
 floatingSwitch.Size = UDim2.fromOffset(46, 24)
 floatingSwitch.Position = UDim2.new(1, -56, 0, 39)
 floatingSwitch.BackgroundColor3 = Theme.SwitchOff
 floatingSwitch.BorderSizePixel = 0
 floatingSwitch.ZIndex = 151
 floatingSwitch.Parent = panel
-Instance.new("UICorner", floatingSwitch).CornerRadius = UDim.new(1, 0)
-floatingKnob = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), floatingSwitch).CornerRadius = UDim.new(1, 0)
+floatingKnob = Instance.new(loadstring(base64decode("RnJhbWU="))())
 floatingKnob.Size = UDim2.fromOffset(16, 16)
 floatingKnob.Position = UDim2.new(0, 4, 0.5, -8)
 floatingKnob.BackgroundColor3 = Theme.White
 floatingKnob.BorderSizePixel = 0
 floatingKnob.ZIndex = 152
 floatingKnob.Parent = floatingSwitch
-Instance.new("UICorner", floatingKnob).CornerRadius = UDim.new(1, 0)
-local floatClick = Instance.new("TextButton")
-floatClick.Name = "ToggleButton"
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), floatingKnob).CornerRadius = UDim.new(1, 0)
+local floatClick = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+floatClick.Name = loadstring(base64decode("VG9nZ2xlQnV0dG9u"))()
 floatClick.Size = UDim2.new(1, 0, 1, 0)
 floatClick.BackgroundTransparency = 1
-floatClick.Text = ""
+floatClick.Text = loadstring(base64decode(""))()
 floatClick.ZIndex = 153
 floatClick.Parent = floatingSwitch
 track(floatClick.Activated:Connect(function()
@@ -1161,27 +1164,27 @@ local size = panel.AbsoluteSize
 local halfW, halfH = size.X / 2, size.Y / 2
 local startX = panelStart.X.Scale * vp.X + panelStart.X.Offset
 local startY = panelStart.Y.Scale * vp.Y + panelStart.Y.Offset
-local x = math.clamp(startX + delta.X, halfW + 8, math.max(halfW + 8, vp.X - halfW - 8))
-local y = math.clamp(startY + delta.Y, halfH + 8, math.max(halfH + 8, vp.Y - halfH - 8))
-panel.Position = UDim2.fromOffset(x, y)
+local L4Hr1lhr = math.clamp(startX + delta.X, halfW + 8, math.max(halfW + 8, vp.X - halfW - 8))
+local oJobOEao = math.clamp(startY + delta.Y, halfH + 8, math.max(halfH + 8, vp.Y - halfH - 8))
+panel.Position = UDim2.fromOffset(L4Hr1lhr, oJobOEao)
 end))
 track(UserInputService.InputEnded:Connect(function(input)
 if dragInput and (input == dragInput or input.UserInputType == Enum.UserInputType.MouseButton1) then dragInput = nil end
 end))
-local resize = Instance.new("TextButton")
-resize.Name = "ResizeBottomRight"
+local resize = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+resize.Name = loadstring(base64decode("UmVzaXplQm90dG9tUmlnaHQ="))()
 resize.AnchorPoint = Vector2.new(1, 1)
 resize.Position = UDim2.new(1, -4, 1, -4)
 resize.Size = UDim2.fromOffset(20, 20)
 resize.BackgroundColor3 = Theme.Accent
 resize.BackgroundTransparency = 0.1
-resize.Text = "◢"
+resize.Text = loadstring(base64decode("4pei"))()
 resize.TextColor3 = Theme.White
 resize.TextSize = 12
 resize.BorderSizePixel = 0
 resize.ZIndex = 154
 resize.Parent = panel
-Instance.new("UICorner", resize).CornerRadius = UDim.new(0, 4)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), resize).CornerRadius = UDim.new(0, 4)
 local resizing, resizeStartPos, resizeStartSize, resizeStartPanelPos, resizeInput = false, nil, nil, nil, nil
 track(resize.InputBegan:Connect(function(input)
 if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -1209,7 +1212,7 @@ end
 end))
 track(floatingModeButton.Activated:Connect(function()
 panel.Visible = not panel.Visible
-floatingModeButton.Text = panel.Visible and "ลอย✓" or "ลอย"
+floatingModeButton.Text = panel.Visible and loadstring(base64decode("4Lil4Lit4Lii4pyT"))() or loadstring(base64decode("4Lil4Lit4Lii"))()
 floatingModeButton.BackgroundColor3 = panel.Visible and Theme.Accent or Theme.SwitchOff
 floatingModeButton.TextColor3 = panel.Visible and Theme.White or Theme.TextMuted
 end))
@@ -1224,62 +1227,62 @@ end
 end
 function Components.CreateButton(parent, opts)
 opts = opts or {}
-local title    = opts.Name or "ปุ่ม"
+local title    = opts.Name or loadstring(base64decode("4Lib4Li44LmI4Lih"))()
 local desc     = opts.Description
 local callback = opts.Callback or function() end
 local color    = opts.Color or Theme.Accent
 local iconDraw = opts.Icon or Icons.Action
 local rowHeight = desc and Config.RowHeightDesc or Config.RowHeight
-local row = makeRow(parent, "Button_" .. title, rowHeight, opts.Order)
+local row = makeRow(parent, loadstring(base64decode("QnV0dG9uXw=="))() .. title, rowHeight, opts.Order)
 makeRowIcon(row, iconDraw, desc and 12 or (rowHeight / 2 - 10), color)
-local accent = Instance.new("Frame")
+local accent = Instance.new(loadstring(base64decode("RnJhbWU="))())
 accent.Size = UDim2.new(0, 3, 0.6, 0)
 accent.Position = UDim2.new(0, 0, 0.2, 0)
 accent.BackgroundColor3 = color
 accent.BorderSizePixel = 0
 accent.Parent = row
-Instance.new("UICorner", accent).CornerRadius = UDim.new(1, 0)
-local titleLabel = Instance.new("TextLabel")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), accent).CornerRadius = UDim.new(1, 0)
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Text = title
 titleLabel.TextColor3 = Theme.Text
-bindThemeProperty(titleLabel, "Text", "TextColor3")
+bindThemeProperty(titleLabel, loadstring(base64decode("VGV4dA=="))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(titleLabel, Fonts.Bold)
 setTextSize(titleLabel, 13)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.TextYAlignment = Enum.TextYAlignment.Center
 titleLabel.Parent = row
-local u1 = Instance.new("UITextSizeConstraint")
+local u1 = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u1.MaxTextSize = math.clamp(15 * (UserTextScale or 1), 13, 30)
 u1.Parent = titleLabel
 if desc then
 titleLabel.Position = UDim2.new(0, 42, 0, 10)
 titleLabel.Size = UDim2.new(1, -54, 0, 20)
-local descLabel = Instance.new("TextLabel")
+local descLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 descLabel.BackgroundTransparency = 1
 descLabel.Position = UDim2.new(0, 42, 0, 36)
 descLabel.Size = UDim2.new(1, -54, 0, 18)
 descLabel.Text = desc
 descLabel.TextColor3 = Theme.TextMuted
-bindThemeProperty(descLabel, "TextMuted", "TextColor3")
+bindThemeProperty(descLabel, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(descLabel, Fonts.Regular)
 setTextSize(descLabel, 11)
 descLabel.TextXAlignment = Enum.TextXAlignment.Left
 descLabel.TextTruncate = Enum.TextTruncate.AtEnd
 descLabel.TextYAlignment = Enum.TextYAlignment.Top
 descLabel.Parent = row
-local u2 = Instance.new("UITextSizeConstraint")
+local u2 = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u2.MaxTextSize = math.clamp(13 * (UserTextScale or 1), 11, 22)
 u2.Parent = descLabel
 else
 titleLabel.Position = UDim2.new(0, 42, 0, 0)
 titleLabel.Size = UDim2.new(1, -54, 1, 0)
 end
-local click = Instance.new("TextButton")
+local click = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 click.Size = UDim2.new(1, 0, 1, 0)
 click.BackgroundTransparency = 1
-click.Text = ""
+click.Text = loadstring(base64decode(""))()
 click.Parent = row
 attachRowHover(row, click)
 track(click.Activated:Connect(function()
@@ -1295,18 +1298,18 @@ return row
 end
 function Components.CreateSlider(parent, opts)
 opts = opts or {}
-local title    = opts.Name or "ตัวเลื่อน"
+local title    = opts.Name or loadstring(base64decode("4LiV4Lix4Lin4LmA4Lil4Li34LmI4Lit4LiZ"))()
 local minVal   = tonumber(opts.Min) or 0
 local maxVal   = tonumber(opts.Max) or 100
 local step     = tonumber(opts.Step) or 1
 local default  = tonumber(opts.Default) or minVal
-local suffix   = opts.Suffix or ""
+local suffix   = opts.Suffix or loadstring(base64decode(""))()
 local callback = opts.Callback or function() end
 local iconDraw = opts.Icon or Icons.Slider
 local displayFormat = opts.Format or function(v) return tostring(v) .. suffix end
-local row = makeRow(parent, "Slider_" .. title, 58, opts.Order)
+local row = makeRow(parent, loadstring(base64decode("U2xpZGVyXw=="))() .. title, 58, opts.Order)
 makeRowIcon(row, iconDraw, 8)
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 42, 0, 10)
 titleLabel.Size = UDim2.new(1, -140, 0, 18)
@@ -1317,7 +1320,7 @@ setTextSize(titleLabel, 12)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.Parent = row
-local valueLabel = Instance.new("TextLabel")
+local valueLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 valueLabel.BackgroundTransparency = 1
 valueLabel.Position = UDim2.new(1, -96, 0, 10)
 valueLabel.Size = UDim2.new(0, 86, 0, 18)
@@ -1327,34 +1330,34 @@ applyFont(valueLabel, Fonts.Bold)
 setTextSize(valueLabel, 12)
 valueLabel.TextXAlignment = Enum.TextXAlignment.Right
 valueLabel.Parent = row
-local trackBg = Instance.new("Frame")
-trackBg.Name = "Track"
+local trackBg = Instance.new(loadstring(base64decode("RnJhbWU="))())
+trackBg.Name = loadstring(base64decode("VHJhY2s="))()
 trackBg.Size = UDim2.new(1, -24, 0, 8)
 trackBg.Position = UDim2.new(0, 12, 1, -20)
 trackBg.BackgroundColor3 = Theme.SwitchOff
 trackBg.BorderSizePixel = 0
 trackBg.Parent = row
-Instance.new("UICorner", trackBg).CornerRadius = UDim.new(1, 0)
-local fill = Instance.new("Frame")
-fill.Name = "Fill"
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), trackBg).CornerRadius = UDim.new(1, 0)
+local fill = Instance.new(loadstring(base64decode("RnJhbWU="))())
+fill.Name = loadstring(base64decode("RmlsbA=="))()
 fill.Size = UDim2.new(0, 0, 1, 0)
 fill.BackgroundColor3 = Theme.Accent
 fill.BorderSizePixel = 0
 fill.Parent = trackBg
-Instance.new("UICorner", fill).CornerRadius = UDim.new(1, 0)
-local knob = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), fill).CornerRadius = UDim.new(1, 0)
+local knob = Instance.new(loadstring(base64decode("RnJhbWU="))())
 knob.Size = UDim2.fromOffset(14, 14)
 knob.AnchorPoint = Vector2.new(0.5, 0.5)
 knob.Position = UDim2.new(1, 0, 0.5, 0)
 knob.BackgroundColor3 = Theme.White
 knob.BorderSizePixel = 0
 knob.Parent = fill
-Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
-local clickArea = Instance.new("TextButton")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), knob).CornerRadius = UDim.new(1, 0)
+local clickArea = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 clickArea.Size = UDim2.new(1, 0, 0, 28)
 clickArea.Position = UDim2.new(0, 0, 1, -28)
 clickArea.BackgroundTransparency = 1
-clickArea.Text = ""
+clickArea.Text = loadstring(base64decode(""))()
 clickArea.Parent = row
 local currentValue = math.clamp(default, minVal, maxVal)
 local dragging = false
@@ -1407,15 +1410,15 @@ end
 end
 function Components.CreateInput(parent, opts)
 opts = opts or {}
-local title        = opts.Name or "ช่องข้อความ"
-local placeholder  = opts.Placeholder or "พิมพ์..."
-local default      = opts.Default or ""
+local title        = opts.Name or loadstring(base64decode("4LiK4LmI4Lit4LiH4LiC4LmJ4Lit4LiE4Lin4Liy4Lih"))()
+local placeholder  = opts.Placeholder or loadstring(base64decode("4Lie4Li04Lih4Lie4LmMLi4u"))()
+local default      = opts.Default or loadstring(base64decode(""))()
 local callback     = opts.Callback or function() end
 local iconDraw     = opts.Icon or Icons.Pencil
 local clearOnFocus = opts.ClearOnFocus or false
-local row = makeRow(parent, "Input_" .. title, 52, opts.Order)
+local row = makeRow(parent, loadstring(base64decode("SW5wdXRf"))() .. title, 52, opts.Order)
 makeRowIcon(row, iconDraw, 16)
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 42, 0, 0)
 titleLabel.Size = UDim2.new(0.36, -50, 1, 0)
@@ -1427,19 +1430,19 @@ setTextSize(titleLabel, 12)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.Parent = row
-local box = Instance.new("Frame")
+local box = Instance.new(loadstring(base64decode("RnJhbWU="))())
 box.Size = UDim2.new(0.60, -10, 0, 32)
 box.Position = UDim2.new(0.40, 0, 0.5, -16)
 box.BackgroundColor3 = Theme.SurfaceAlt
 box.BorderSizePixel = 0
 box.Parent = row
-Instance.new("UICorner", box).CornerRadius = UDim.new(0, 6)
-local boxStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), box).CornerRadius = UDim.new(0, 6)
+local boxStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 boxStroke.Color = Theme.Border
 boxStroke.Thickness = 1
 boxStroke.Transparency = 0.5
 boxStroke.Parent = box
-local textBox = Instance.new("TextBox")
+local textBox = Instance.new(loadstring(base64decode("VGV4dEJveA=="))())
 textBox.Size = UDim2.new(1, -20, 1, 0)
 textBox.Position = UDim2.new(0, 10, 0, 0)
 textBox.TextYAlignment = Enum.TextYAlignment.Center
@@ -1463,18 +1466,18 @@ TweenService:Create(boxStroke, TweenInfo.new(Config.AnimFast), { Color = Theme.B
 pcall(callback, textBox.Text)
 end))
 return row, function() return textBox.Text end, function(v)
-textBox.Text = tostring(v or "")
+textBox.Text = tostring(v or loadstring(base64decode(""))())
 end
 end
 function Components.CreateKeybind(parent, opts)
 opts = opts or {}
-local title    = opts.Name or "ปุ่มลัด"
+local title    = opts.Name or loadstring(base64decode("4Lib4Li44LmI4Lih4Lil4Lix4LiU"))()
 local default  = opts.Default or Enum.KeyCode.E
 local callback = opts.Callback or function() end
 local iconDraw = opts.Icon or Icons.Keybind
-local row = makeRow(parent, "Keybind_" .. title, 48, opts.Order)
+local row = makeRow(parent, loadstring(base64decode("S2V5YmluZF8="))() .. title, 48, opts.Order)
 makeRowIcon(row, iconDraw, 14)
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 42, 0, 0)
 titleLabel.Size = UDim2.new(1, -150, 1, 0)
@@ -1485,7 +1488,7 @@ setTextSize(titleLabel, 12)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.Parent = row
-local keyBtn = Instance.new("TextButton")
+local keyBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 keyBtn.Size = UDim2.new(0, 90, 0, 30)
 keyBtn.Position = UDim2.new(1, -102, 0.5, -15)
 keyBtn.BackgroundColor3 = Theme.SurfaceAlt
@@ -1495,8 +1498,8 @@ applyFont(keyBtn, Fonts.Bold)
 setTextSize(keyBtn, 12)
 keyBtn.AutoButtonColor = false
 keyBtn.Parent = row
-Instance.new("UICorner", keyBtn).CornerRadius = UDim.new(0, 6)
-local keyStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), keyBtn).CornerRadius = UDim.new(0, 6)
+local keyStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 keyStroke.Color = Theme.Border
 keyStroke.Thickness = 1
 keyStroke.Transparency = 0.5
@@ -1524,7 +1527,7 @@ end
 track(keyBtn.Activated:Connect(function()
 if listening then stopListening() return end
 listening = true
-keyBtn.Text = "..."
+keyBtn.Text = loadstring(base64decode("Li4u"))()
 TweenService:Create(keyStroke, TweenInfo.new(Config.AnimFast), { Color = Theme.Accent, Transparency = 0 }):Play()
 TweenService:Create(keyBtn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.SurfaceHover }):Play()
 inputConn = UserInputService.InputBegan:Connect(function(input, gp)
@@ -1542,43 +1545,43 @@ end
 end
 function Components.CreateDropdown(parent, opts)
 opts = opts or {}
-local title    = opts.Name or "ตัวเลือก"
+local title    = opts.Name or loadstring(base64decode("4LiV4Lix4Lin4LmA4Lil4Li34Lit4LiB"))()
 local options  = opts.Options or {}
 local default  = (opts.Default ~= nil) and opts.Default or options[1]
 local callback = opts.Callback or function() end
 local iconDraw = opts.Icon or Icons.Dropdown
-local wrapper = Instance.new("Frame")
-wrapper.Name = "Dropdown_" .. title
+local wrapper = Instance.new(loadstring(base64decode("RnJhbWU="))())
+wrapper.Name = loadstring(base64decode("RHJvcGRvd25f"))() .. title
 wrapper.Size = UDim2.new(1, 0, 0, 0)
 wrapper.AutomaticSize = Enum.AutomaticSize.Y
 wrapper.BackgroundTransparency = 1
 wrapper.LayoutOrder = opts.Order or nextOrder()
 wrapper.ClipsDescendants = false
 wrapper.Parent = parent
-local wrapperLayout = Instance.new("UIListLayout")
+local wrapperLayout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 wrapperLayout.SortOrder = Enum.SortOrder.LayoutOrder
 wrapperLayout.Padding = UDim.new(0, 4)
 wrapperLayout.Parent = wrapper
-local row = Instance.new("Frame")
-row.Name = "Header"
+local row = Instance.new(loadstring(base64decode("RnJhbWU="))())
+row.Name = loadstring(base64decode("SGVhZGVy"))()
 row.Size = UDim2.new(1, 0, 0, 46)
 row.BackgroundColor3 = Theme.Surface
 row.BorderSizePixel = 0
 row.LayoutOrder = 1
 row.Parent = wrapper
-Instance.new("UICorner", row).CornerRadius = UDim.new(0, 7)
-local stroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), row).CornerRadius = UDim.new(0, 7)
+local stroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 stroke.Color = Theme.Border
 stroke.Thickness = 1
 stroke.Transparency = 0.5
 stroke.Parent = row
-local iconHolder = Instance.new("Frame")
+local iconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 iconHolder.Size = UDim2.fromOffset(18, 18)
 iconHolder.Position = UDim2.new(0, 12, 0.5, -9)
 iconHolder.BackgroundTransparency = 1
 iconHolder.Parent = row
 iconDraw(iconHolder, Theme.TextMuted)
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 42, 0, 0)
 titleLabel.Size = UDim2.new(0.42, -46, 1, 0)
@@ -1589,11 +1592,11 @@ setTextSize(titleLabel, 12)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextYAlignment = Enum.TextYAlignment.Center
 titleLabel.Parent = row
-local valueLabel = Instance.new("TextLabel")
+local valueLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 valueLabel.BackgroundTransparency = 1
 valueLabel.Position = UDim2.new(0.42, 0, 0, 0)
 valueLabel.Size = UDim2.new(1, -110, 1, 0)
-valueLabel.Text = tostring(default or "เลือก...")
+valueLabel.Text = tostring(default or loadstring(base64decode("4LmA4Lil4Li34Lit4LiBLi4u"))())
 valueLabel.TextColor3 = Theme.AccentLight
 applyFont(valueLabel, Fonts.Medium)
 setTextSize(valueLabel, 12)
@@ -1601,18 +1604,18 @@ valueLabel.TextXAlignment = Enum.TextXAlignment.Right
 valueLabel.TextYAlignment = Enum.TextYAlignment.Center
 valueLabel.TextTruncate = Enum.TextTruncate.AtEnd
 valueLabel.Parent = row
-local arrow = Instance.new("TextLabel")
+local arrow = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 arrow.BackgroundTransparency = 1
 arrow.Position = UDim2.new(1, -28, 0, 0)
 arrow.Size = UDim2.new(0, 20, 1, 0)
-arrow.Text = "▼"
+arrow.Text = loadstring(base64decode("4pa8"))()
 arrow.TextColor3 = Theme.TextMuted
 applyFont(arrow, Fonts.Bold)
 setTextSize(arrow, 11)
 arrow.TextYAlignment = Enum.TextYAlignment.Center
 arrow.Parent = row
-local listFrame = Instance.new("Frame")
-listFrame.Name = "List"
+local listFrame = Instance.new(loadstring(base64decode("RnJhbWU="))())
+listFrame.Name = loadstring(base64decode("TGlzdA=="))()
 listFrame.Size = UDim2.new(1, 0, 0, 0)
 listFrame.BackgroundColor3 = Theme.SurfaceAlt
 listFrame.BorderSizePixel = 0
@@ -1620,17 +1623,17 @@ listFrame.ClipsDescendants = true
 listFrame.Visible = false
 listFrame.LayoutOrder = 2
 listFrame.Parent = wrapper
-Instance.new("UICorner", listFrame).CornerRadius = UDim.new(0, 7)
-local listStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), listFrame).CornerRadius = UDim.new(0, 7)
+local listStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 listStroke.Color = Theme.Border
 listStroke.Thickness = 1
 listStroke.Transparency = 0.4
 listStroke.Parent = listFrame
-local listLayout = Instance.new("UIListLayout")
+local listLayout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 listLayout.SortOrder = Enum.SortOrder.LayoutOrder
 listLayout.Padding = UDim.new(0, 3)
 listLayout.Parent = listFrame
-local listPadding = Instance.new("UIPadding")
+local listPadding = Instance.new(loadstring(base64decode("VUlQYWRkaW5n"))())
 listPadding.PaddingTop = UDim.new(0, 6)
 listPadding.PaddingBottom = UDim.new(0, 6)
 listPadding.PaddingLeft = UDim.new(0, 6)
@@ -1654,8 +1657,8 @@ listFrame.Visible = true
 local targetH = 12 + #options * (OPTION_H + 3)
 TweenService:Create(listFrame, TweenInfo.new(Config.AnimFast), { Size = UDim2.new(1, 0, 0, targetH) }):Play()
 end
-for i, opt in ipairs(options) do
-local optionBtn = Instance.new("TextButton")
+for ke0VXC17, opt in ipairs(options) do
+local optionBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 optionBtn.Size = UDim2.new(1, 0, 0, OPTION_H)
 optionBtn.BackgroundColor3 = Theme.SurfaceAlt
 optionBtn.Text = tostring(opt)
@@ -1663,9 +1666,9 @@ optionBtn.TextColor3 = Theme.Text
 applyFont(optionBtn, Fonts.Regular)
 setTextSize(optionBtn, 12)
 optionBtn.AutoButtonColor = false
-optionBtn.LayoutOrder = i
+optionBtn.LayoutOrder = ke0VXC17
 optionBtn.Parent = listFrame
-Instance.new("UICorner", optionBtn).CornerRadius = UDim.new(0, 6)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), optionBtn).CornerRadius = UDim.new(0, 6)
 track(optionBtn.MouseEnter:Connect(function()
 TweenService:Create(optionBtn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.SurfaceHover }):Play()
 end))
@@ -1679,10 +1682,10 @@ collapse()
 pcall(callback, opt)
 end))
 end
-local click = Instance.new("TextButton")
+local click = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 click.Size = UDim2.new(1, 0, 1, 0)
 click.BackgroundTransparency = 1
-click.Text = ""
+click.Text = loadstring(base64decode(""))()
 click.Parent = row
 attachRowHover(row, click)
 track(click.Activated:Connect(function()
@@ -1695,10 +1698,10 @@ end
 end
 function Components.CreateLabel(parent, opts)
 opts = opts or {}
-local label = Instance.new("TextLabel")
+local label = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 label.Size = UDim2.new(1, 0, 0, opts.Height or 22)
 label.BackgroundTransparency = 1
-label.Text = opts.Text or ""
+label.Text = opts.Text or loadstring(base64decode(""))()
 label.TextColor3 = opts.Color or Theme.Text
 applyFont(label, opts.Bold and Fonts.Bold or Fonts.Medium)
 setTextSize(label, opts.Size or 12)
@@ -1706,7 +1709,7 @@ label.TextXAlignment = opts.Align or Enum.TextXAlignment.Left
 label.TextTruncate = Enum.TextTruncate.AtEnd
 label.LayoutOrder = opts.Order or nextOrder()
 label.Parent = parent
-local u = Instance.new("UITextSizeConstraint")
+local u = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u.MaxTextSize = math.clamp((opts.Size or 12) * (UserTextScale or 1), 10, 32)
 u.Parent = label
 return label
@@ -1714,11 +1717,11 @@ end
 function Components.CreateParagraph(parent, opts)
 opts = opts or {}
 local size = opts.Size or 12
-local label = Instance.new("TextLabel")
+local label = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 label.Size = UDim2.new(1, 0, 0, 0)
 label.AutomaticSize = Enum.AutomaticSize.Y
 label.BackgroundTransparency = 1
-label.Text = opts.Text or ""
+label.Text = opts.Text or loadstring(base64decode(""))()
 label.TextColor3 = opts.Color or Theme.TextMuted
 applyFont(label, Fonts.Regular)
 setTextSize(label, size)
@@ -1728,10 +1731,10 @@ label.TextWrapped = true
 label.LineHeight = 1.2
 label.LayoutOrder = opts.Order or nextOrder()
 label.Parent = parent
-local u = Instance.new("UITextSizeConstraint")
+local u = Instance.new(loadstring(base64decode("VUlUZXh0U2l6ZUNvbnN0cmFpbnQ="))())
 u.MaxTextSize = math.clamp(size * (UserTextScale or 1), 10, 32)
 u.Parent = label
-local pad = Instance.new("UIPadding")
+local pad = Instance.new(loadstring(base64decode("VUlQYWRkaW5n"))())
 pad.PaddingTop = UDim.new(0, 4)
 pad.PaddingBottom = UDim.new(0, 4)
 pad.Parent = label
@@ -1741,14 +1744,14 @@ function Components.CreatePlayerList(parent, opts)
 opts = opts or {}
 local onSelect = opts.OnSelect or function() end
 local accentColor = opts.AccentColor or Theme.Accent
-local wrapper = Instance.new("Frame")
-wrapper.Name = "PlayerList"
+local wrapper = Instance.new(loadstring(base64decode("RnJhbWU="))())
+wrapper.Name = loadstring(base64decode("UGxheWVyTGlzdA=="))()
 wrapper.Size = UDim2.new(1, 0, 0, 220)
 wrapper.BackgroundTransparency = 1
 wrapper.LayoutOrder = opts.Order or nextOrder()
 wrapper.ClipsDescendants = false
 wrapper.Parent = parent
-local scroll = Instance.new("ScrollingFrame")
+local scroll = Instance.new(loadstring(base64decode("U2Nyb2xsaW5nRnJhbWU="))())
 scroll.Size = UDim2.new(1, 0, 1, 0)
 scroll.BackgroundTransparency = 1
 scroll.BorderSizePixel = 0
@@ -1757,27 +1760,27 @@ scroll.ScrollBarImageColor3 = Theme.Accent
 scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 scroll.Parent = wrapper
-local layout = Instance.new("UIListLayout")
+local layout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Padding = UDim.new(0, 6)
 layout.Parent = scroll
-local padding = Instance.new("UIPadding")
+local padding = Instance.new(loadstring(base64decode("VUlQYWRkaW5n"))())
 padding.PaddingRight = UDim.new(0, 5)
 padding.PaddingLeft = UDim.new(0, 2)
 padding.Parent = scroll
 local selectedPlayer = nil
 local cardConnections = {}
 local function disconnectCards()
-for i = #cardConnections, 1, -1 do
-pcall(function() cardConnections[i]:Disconnect() end)
-cardConnections[i] = nil
+for ke0VXC17 = #cardConnections, 1, -1 do
+pcall(function() cardConnections[ke0VXC17]:Disconnect() end)
+cardConnections[ke0VXC17] = nil
 end
 end
 local function rebuild()
 if not wrapper.Parent then return end
 disconnectCards()
 for _, child in ipairs(scroll:GetChildren()) do
-if child:IsA("Frame") then child:Destroy() end
+if child:IsA(loadstring(base64decode("RnJhbWU="))()) then child:Destroy() end
 end
 local players = Players:GetPlayers()
 table.sort(players, function(a, b)
@@ -1785,26 +1788,26 @@ return (a.DisplayName or a.Name) < (b.DisplayName or b.Name)
 end)
 for _, player in ipairs(players) do
 if player ~= LocalPlayer then
-local card = Instance.new("Frame")
-card.Name = "Card_" .. player.Name
+local card = Instance.new(loadstring(base64decode("RnJhbWU="))())
+card.Name = loadstring(base64decode("Q2FyZF8="))() .. player.Name
 card.Size = UDim2.new(1, -5, 0, 72)
 card.BackgroundColor3 = (selectedPlayer == player) and accentColor or Theme.SurfaceAlt
 card.BorderSizePixel = 0
 card.Parent = scroll
-Instance.new("UICorner", card).CornerRadius = UDim.new(0, 7)
-local cStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), card).CornerRadius = UDim.new(0, 7)
+local cStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 cStroke.Color = Theme.Border
 cStroke.Thickness = 1
 cStroke.Transparency = 0.5
 cStroke.Parent = card
-local avatar = Instance.new("ImageLabel")
+local avatar = Instance.new(loadstring(base64decode("SW1hZ2VMYWJlbA=="))())
 avatar.Size = UDim2.fromOffset(42, 42)
 avatar.Position = UDim2.new(0, 8, 0, 8)
 avatar.BackgroundColor3 = Theme.Background
-avatar.Image = "rbxthumb://type=AvatarHeadShot&id=" .. player.UserId .. "&w=150&h=150"
+avatar.Image = loadstring(base64decode("cmJ4dGh1bWI6Ly90eXBlPUF2YXRhckhlYWRTaG90JmlkPQ=="))() .. player.UserId .. loadstring(base64decode("Jnc9MTUwJmg9MTUw"))()
 avatar.Parent = card
-Instance.new("UICorner", avatar).CornerRadius = UDim.new(1, 0)
-local nameLbl = Instance.new("TextLabel")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), avatar).CornerRadius = UDim.new(1, 0)
+local nameLbl = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 nameLbl.BackgroundTransparency = 1
 nameLbl.Position = UDim2.new(0, 58, 0, 8)
 nameLbl.Size = UDim2.new(1, -66, 0, 18)
@@ -1815,66 +1818,66 @@ setTextSize(nameLbl, 12)
 nameLbl.TextXAlignment = Enum.TextXAlignment.Left
 nameLbl.TextTruncate = Enum.TextTruncate.AtEnd
 nameLbl.Parent = card
-local uname = Instance.new("TextLabel")
+local uname = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 uname.BackgroundTransparency = 1
 uname.Position = UDim2.new(0, 58, 0, 27)
 uname.Size = UDim2.new(1, -66, 0, 14)
-uname.Text = "@" .. player.Name
+uname.Text = loadstring(base64decode("QA=="))() .. player.Name
 uname.TextColor3 = Theme.TextMuted
 applyFont(uname, Fonts.Regular)
 setTextSize(uname, 10)
 uname.TextXAlignment = Enum.TextXAlignment.Left
 uname.TextTruncate = Enum.TextTruncate.AtEnd
 uname.Parent = card
-local playerHealthText = Instance.new("TextLabel")
-playerHealthText.Name = "Health"
+local playerHealthText = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
+playerHealthText.Name = loadstring(base64decode("SGVhbHRo"))()
 playerHealthText.BackgroundTransparency = 1
 playerHealthText.Position = UDim2.new(0, 58, 0, 44)
 playerHealthText.Size = UDim2.new(1, -66, 0, 12)
-playerHealthText.Text = "เลือด -- / --"
+playerHealthText.Text = loadstring(base64decode("4LmA4Lil4Li34Lit4LiUIC0tIC8gLS0="))()
 playerHealthText.TextColor3 = Theme.TextMuted
-bindThemeProperty(playerHealthText, "TextMuted", "TextColor3")
+bindThemeProperty(playerHealthText, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(playerHealthText, Fonts.Regular)
 setTextSize(playerHealthText, 10)
 playerHealthText.TextXAlignment = Enum.TextXAlignment.Left
 playerHealthText.TextTruncate = Enum.TextTruncate.AtEnd
 playerHealthText.Parent = card
-local healthTrack = Instance.new("Frame")
-healthTrack.Name = "HealthTrack"
+local healthTrack = Instance.new(loadstring(base64decode("RnJhbWU="))())
+healthTrack.Name = loadstring(base64decode("SGVhbHRoVHJhY2s="))()
 healthTrack.Size = UDim2.new(1, -66, 0, 5)
 healthTrack.Position = UDim2.new(0, 58, 0, 60)
 healthTrack.BackgroundColor3 = Theme.SwitchOff
-bindThemeObject(healthTrack, "SwitchOff")
+bindThemeObject(healthTrack, loadstring(base64decode("U3dpdGNoT2Zm"))())
 healthTrack.BorderSizePixel = 0
 healthTrack.Parent = card
-Instance.new("UICorner", healthTrack).CornerRadius = UDim.new(1, 0)
-local healthFill = Instance.new("Frame")
-healthFill.Name = "HealthFill"
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), healthTrack).CornerRadius = UDim.new(1, 0)
+local healthFill = Instance.new(loadstring(base64decode("RnJhbWU="))())
+healthFill.Name = loadstring(base64decode("SGVhbHRoRmlsbA=="))()
 healthFill.Size = UDim2.fromScale(0, 1)
 healthFill.BackgroundColor3 = Theme.Success
 healthFill.BorderSizePixel = 0
 healthFill.Parent = healthTrack
-Instance.new("UICorner", healthFill).CornerRadius = UDim.new(1, 0)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), healthFill).CornerRadius = UDim.new(1, 0)
 local function refreshPlayerHealth()
 if not playerHealthText.Parent then return end
 local character = player.Character
-local hum = character and character:FindFirstChildOfClass("Humanoid")
+local hum = character and character:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))())
 if not hum then
-playerHealthText.Text = "เลือด -- / --"
+playerHealthText.Text = loadstring(base64decode("4LmA4Lil4Li34Lit4LiUIC0tIC8gLS0="))()
 healthFill.Size = UDim2.fromScale(0, 1)
 return
 end
 local maxHealth = math.max(hum.MaxHealth, 1)
 local health = math.clamp(hum.Health, 0, maxHealth)
 local ratio = math.clamp(health / maxHealth, 0, 1)
-playerHealthText.Text = string.format("เลือด %d / %d", math.floor(health + 0.5), math.floor(maxHealth + 0.5))
+playerHealthText.Text = string.format(loadstring(base64decode("4LmA4Lil4Li34Lit4LiUICVkIC8gJWQ="))(), math.floor(health + 0.5), math.floor(maxHealth + 0.5))
 healthFill.Size = UDim2.new(ratio, 0, 1, 0)
 healthFill.BackgroundColor3 = ratio > 0.5 and Theme.Success or (ratio > 0.2 and Theme.Warning or Theme.Danger)
 end
 task.spawn(function()
-local hum = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+local hum = player.Character and player.Character:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))())
 if not hum and player.Character then
-pcall(function() hum = player.Character:WaitForChild("Humanoid", 5) end)
+pcall(function() hum = player.Character:WaitForChild(loadstring(base64decode("SHVtYW5vaWQ="))(), 5) end)
 end
 if hum and playerHealthText.Parent then
 table.insert(cardConnections, hum.HealthChanged:Connect(refreshPlayerHealth))
@@ -1883,9 +1886,9 @@ refreshPlayerHealth()
 end)
 table.insert(cardConnections, player.CharacterAdded:Connect(function(character)
 task.spawn(function()
-local hum = character:FindFirstChildOfClass("Humanoid")
+local hum = character:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))())
 if not hum then
-pcall(function() hum = character:WaitForChild("Humanoid", 5) end)
+pcall(function() hum = character:WaitForChild(loadstring(base64decode("SHVtYW5vaWQ="))(), 5) end)
 end
 if hum and playerHealthText.Parent then
 table.insert(cardConnections, hum.HealthChanged:Connect(refreshPlayerHealth))
@@ -1893,16 +1896,16 @@ end
 refreshPlayerHealth()
 end)
 end))
-local click = Instance.new("TextButton")
+local click = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 click.Size = UDim2.new(1, 0, 1, 0)
 click.BackgroundTransparency = 1
-click.Text = ""
+click.Text = loadstring(base64decode(""))()
 click.Parent = card
 local conn = click.Activated:Connect(function()
 if not card.Parent then return end
 selectedPlayer = player
 for _, c in ipairs(scroll:GetChildren()) do
-if c:IsA("Frame") then c.BackgroundColor3 = Theme.SurfaceAlt end
+if c:IsA(loadstring(base64decode("RnJhbWU="))()) then c.BackgroundColor3 = Theme.SurfaceAlt end
 end
 if card.Parent then card.BackgroundColor3 = accentColor end
 pcall(onSelect, player)
@@ -1914,52 +1917,52 @@ end
 rebuild()
 return wrapper, rebuild, function() return selectedPlayer end
 end
-mainFrame = Instance.new("Frame")
-mainFrame.Name = "MainFrame"
+mainFrame = Instance.new(loadstring(base64decode("RnJhbWU="))())
+mainFrame.Name = loadstring(base64decode("TWFpbkZyYW1l"))()
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 mainFrame.Size = UDim2.fromOffset(Config.WindowSize.X, Config.WindowSize.Y)
 mainFrame.BackgroundColor3 = Theme.Background
-bindThemeObject(mainFrame, "Background")
+bindThemeObject(mainFrame, loadstring(base64decode("QmFja2dyb3VuZA=="))())
 mainFrame.BorderSizePixel = 0
 mainFrame.Parent = screenGui
-Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
-local mainStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), mainFrame).CornerRadius = UDim.new(0, 12)
+local mainStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 mainStroke.Color = Theme.Accent
-bindThemeProperty(mainStroke, "Accent", "Color")
+bindThemeProperty(mainStroke, loadstring(base64decode("QWNjZW50"))(), loadstring(base64decode("Q29sb3I="))())
 mainStroke.Thickness = 1.2
 mainStroke.Transparency = 0.55
 mainStroke.Parent = mainFrame
-local mainConstraint = Instance.new("UISizeConstraint")
+local mainConstraint = Instance.new(loadstring(base64decode("VUlTaXplQ29uc3RyYWludA=="))())
 mainConstraint.MinSize = Vector2.new(420, 300)
 mainConstraint.Parent = mainFrame
-uiScale = Instance.new("UIScale")
+uiScale = Instance.new(loadstring(base64decode("VUlTY2FsZQ=="))())
 uiScale.Parent = mainFrame
-resizeHandle = Instance.new("TextButton")
-resizeHandle.Name = "ResizeHandle"
+resizeHandle = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+resizeHandle.Name = loadstring(base64decode("UmVzaXplSGFuZGxl"))()
 resizeHandle.AnchorPoint = Vector2.new(1, 1)
 resizeHandle.Position = UDim2.new(1, -3, 1, -3)
 resizeHandle.Size = UDim2.fromOffset(30, 30)
 resizeHandle.BackgroundColor3 = Theme.Accent
 resizeHandle.BackgroundTransparency = 0.08
 resizeHandle.BorderSizePixel = 0
-resizeHandle.Text = ""
+resizeHandle.Text = loadstring(base64decode(""))()
 resizeHandle.AutoButtonColor = false
 resizeHandle.Active = true
-resizeHandle:SetAttribute("Hint", "ลากเพื่อปรับขนาด UI")
+resizeHandle:SetAttribute(loadstring(base64decode("SGludA=="))(), loadstring(base64decode("4Lil4Liy4LiB4LmA4Lie4Li34LmI4Lit4Lib4Lij4Lix4Lia4LiC4LiZ4Liy4LiUIFVJ"))())
 resizeHandle.ZIndex = 100
 resizeHandle.Parent = mainFrame
-Instance.new("UICorner", resizeHandle).CornerRadius = UDim.new(0, 6)
-local resizeStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), resizeHandle).CornerRadius = UDim.new(0, 6)
+local resizeStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 resizeStroke.Color = Theme.White
 resizeStroke.Transparency = 0.35
 resizeStroke.Thickness = 1
 resizeStroke.Parent = resizeHandle
-local resizeGlyph = Instance.new("TextLabel")
+local resizeGlyph = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 resizeGlyph.BackgroundTransparency = 1
 resizeGlyph.Size = UDim2.fromScale(1, 1)
-resizeGlyph.Text = "⤢"
-resizeGlyph.Name = "DragResizeIcon"
+resizeGlyph.Text = loadstring(base64decode("4qSi"))()
+resizeGlyph.Name = loadstring(base64decode("RHJhZ1Jlc2l6ZUljb24="))()
 resizeGlyph.TextScaled = false
 resizeGlyph.TextXAlignment = Enum.TextXAlignment.Center
 resizeGlyph.TextYAlignment = Enum.TextYAlignment.Center
@@ -2037,9 +2040,9 @@ local maxX = math.max(minX, vp.X - size.X * (1 - anchor.X) - margin)
 local minY = size.Y * anchor.Y + margin
 local maxY = math.max(minY, vp.Y - size.Y * (1 - anchor.Y) - margin)
 local p = gui.AbsolutePosition
-local x = math.clamp(p.X + size.X * anchor.X, minX, maxX)
-local y = math.clamp(p.Y + size.Y * anchor.Y, minY, maxY)
-gui.Position = UDim2.fromOffset(x, y)
+local L4Hr1lhr = math.clamp(p.X + size.X * anchor.X, minX, maxX)
+local oJobOEao = math.clamp(p.Y + size.Y * anchor.Y, minY, maxY)
+gui.Position = UDim2.fromOffset(L4Hr1lhr, oJobOEao)
 end
 local Tabs = {}
 local sidebar, content
@@ -2112,85 +2115,85 @@ TweenService:Create(uiScale, TweenInfo.new(Config.AnimNormal, Enum.EasingStyle.B
 Scale = math.clamp(computeScale(), 0.55, 1.8)
 }):Play()
 end
-local header = Instance.new("Frame")
-header.Name = "Header"
+local header = Instance.new(loadstring(base64decode("RnJhbWU="))())
+header.Name = loadstring(base64decode("SGVhZGVy"))()
 header.Size = UDim2.new(1, 0, 0, Config.HeaderHeight)
 header.BackgroundColor3 = Theme.Surface
-bindThemeObject(header, "Surface")
+bindThemeObject(header, loadstring(base64decode("U3VyZmFjZQ=="))())
 header.BorderSizePixel = 0
 header.Parent = mainFrame
-Instance.new("UICorner", header).CornerRadius = UDim.new(0, 12)
-local headerCover = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), header).CornerRadius = UDim.new(0, 12)
+local headerCover = Instance.new(loadstring(base64decode("RnJhbWU="))())
 headerCover.Size = UDim2.new(1, 0, 0, 12)
 headerCover.Position = UDim2.new(0, 0, 1, -12)
 headerCover.BackgroundColor3 = Theme.Surface
-bindThemeObject(headerCover, "Surface")
+bindThemeObject(headerCover, loadstring(base64decode("U3VyZmFjZQ=="))())
 headerCover.BorderSizePixel = 0
 headerCover.Parent = header
-local logoImage = Instance.new("ImageLabel")
-logoImage.Name = "LogoImage"
+local logoImage = Instance.new(loadstring(base64decode("SW1hZ2VMYWJlbA=="))())
+logoImage.Name = loadstring(base64decode("TG9nb0ltYWdl"))()
 logoImage.Size = UDim2.fromOffset(30, 30)
 logoImage.Position = UDim2.new(0, 12, 0.5, -15)
 logoImage.BackgroundTransparency = 1
 logoImage.BorderSizePixel = 0
 logoImage.ScaleType = Enum.ScaleType.Crop
 logoImage.Parent = header
-Instance.new("UICorner", logoImage).CornerRadius = UDim.new(1, 0)
-local logoStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), logoImage).CornerRadius = UDim.new(1, 0)
+local logoStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 logoStroke.Color = Theme.Accent
-bindThemeProperty(logoStroke, "Accent", "Color")
+bindThemeProperty(logoStroke, loadstring(base64decode("QWNjZW50"))(), loadstring(base64decode("Q29sb3I="))())
 logoStroke.Thickness = 1.5
 logoStroke.Transparency = 0.2
 logoStroke.Parent = logoImage
 loadLogoImage(logoImage)
-local titleLabel = Instance.new("TextLabel")
+local titleLabel = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 titleLabel.Position = UDim2.new(0, 50, 0, 8)
 titleLabel.Size = UDim2.new(0, 210, 0, 18)
 titleLabel.BackgroundTransparency = 1
-titleLabel.Text = "RUNLUA HUB"
+titleLabel.Text = loadstring(base64decode("UlVOTFVBIEhVQg=="))()
 titleLabel.TextColor3 = Theme.Text
-bindThemeProperty(titleLabel, "Text", "TextColor3")
+bindThemeProperty(titleLabel, loadstring(base64decode("VGV4dA=="))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 setTextSize(titleLabel, 14)
 applyFont(titleLabel, Fonts.Bold)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.TextTruncate = Enum.TextTruncate.AtEnd
 titleLabel.Parent = header
-local subtitle = Instance.new("TextLabel")
+local subtitle = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 subtitle.Position = UDim2.new(0, 50, 0, 26)
 subtitle.Size = UDim2.new(0, 210, 0, 14)
 subtitle.BackgroundTransparency = 1
-subtitle.Text = IS_MOBILE and "MOBILE INTERFACE" or "DESKTOP INTERFACE"
+subtitle.Text = IS_MOBILE and loadstring(base64decode("TU9CSUxFIElOVEVSRkFDRQ=="))() or loadstring(base64decode("REVTS1RPUCBJTlRFUkZBQ0U="))()
 subtitle.TextColor3 = Theme.AccentLight
-bindThemeProperty(subtitle, "AccentLight", "TextColor3")
+bindThemeProperty(subtitle, loadstring(base64decode("QWNjZW50TGlnaHQ="))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 setTextSize(subtitle, 10)
 applyFont(subtitle, Fonts.Regular)
 subtitle.TextXAlignment = Enum.TextXAlignment.Left
 subtitle.TextTruncate = Enum.TextTruncate.AtEnd
 subtitle.Parent = header
-local minBtn = Instance.new("TextButton")
+local minBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 minBtn.Size = UDim2.fromOffset(28, 28)
 minBtn.Position = UDim2.new(1, -70, 0.5, -14)
 minBtn.BackgroundColor3 = Theme.SurfaceAlt
-bindThemeObject(minBtn, "SurfaceAlt")
-minBtn.Text = ""
+bindThemeObject(minBtn, loadstring(base64decode("U3VyZmFjZUFsdA=="))())
+minBtn.Text = loadstring(base64decode(""))()
 minBtn.AutoButtonColor = false
 minBtn.Parent = header
-Instance.new("UICorner", minBtn).CornerRadius = UDim.new(0, 6)
-local minIconHolder = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), minBtn).CornerRadius = UDim.new(0, 6)
+local minIconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 minIconHolder.Size = UDim2.new(1, 0, 1, 0)
 minIconHolder.BackgroundTransparency = 1
 minIconHolder.Parent = minBtn
 Icons.Minimize(minIconHolder, Theme.Text)
-local closeBtn = Instance.new("TextButton")
+local closeBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
 closeBtn.Size = UDim2.fromOffset(28, 28)
 closeBtn.Position = UDim2.new(1, -38, 0.5, -14)
 closeBtn.BackgroundColor3 = Theme.Danger
-bindThemeObject(closeBtn, "Danger")
-closeBtn.Text = ""
+bindThemeObject(closeBtn, loadstring(base64decode("RGFuZ2Vy"))())
+closeBtn.Text = loadstring(base64decode(""))()
 closeBtn.AutoButtonColor = false
 closeBtn.Parent = header
-Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 6)
-local closeIconHolder = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), closeBtn).CornerRadius = UDim.new(0, 6)
+local closeIconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 closeIconHolder.Size = UDim2.new(1, 0, 1, 0)
 closeIconHolder.BackgroundTransparency = 1
 closeIconHolder.Parent = closeBtn
@@ -2219,7 +2222,7 @@ MakeDraggable(mainFrame, {
 TouchHandle = header,
 MouseHandle = header,
 })
-local WINDOW_CAMBLOCK_ACTION = "RUNLUA_WINDOW_CAMBLOCK_V3"
+local WINDOW_CAMBLOCK_ACTION = loadstring(base64decode("UlVOTFVBX1dJTkRPV19DQU1CTE9DS19WMw=="))()
 local windowCamBlockActive = false
 local function isPointInHeader(pos)
 if not header or not header.Parent then return false end
@@ -2263,12 +2266,12 @@ ContextActionService:UnbindAction(WINDOW_CAMBLOCK_ACTION)
 end)
 end
 bindWindowCamBlock()
-sidebar = Instance.new("ScrollingFrame")
-sidebar.Name = "Sidebar"
+sidebar = Instance.new(loadstring(base64decode("U2Nyb2xsaW5nRnJhbWU="))())
+sidebar.Name = loadstring(base64decode("U2lkZWJhcg=="))()
 sidebar.Size = UDim2.new(0, Config.SidebarWidth, 1, -(Config.HeaderHeight + 12))
 sidebar.Position = UDim2.new(0, 10, 0, Config.HeaderHeight + 6)
 sidebar.BackgroundColor3 = Theme.Surface
-bindThemeObject(sidebar, "Surface")
+bindThemeObject(sidebar, loadstring(base64decode("U3VyZmFjZQ=="))())
 sidebar.BorderSizePixel = 0
 sidebar.ScrollBarThickness = 3
 sidebar.ScrollBarImageColor3 = Theme.Accent
@@ -2280,51 +2283,51 @@ sidebar.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 sidebar.ElasticBehavior = Enum.ElasticBehavior.WhenScrollable
 sidebar.ClipsDescendants = true
 sidebar.Parent = mainFrame
-Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 9)
-local sideStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), sidebar).CornerRadius = UDim.new(0, 9)
+local sideStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 sideStroke.Color = Theme.Border
-bindThemeProperty(sideStroke, "Border", "Color")
+bindThemeProperty(sideStroke, loadstring(base64decode("Qm9yZGVy"))(), loadstring(base64decode("Q29sb3I="))())
 sideStroke.Thickness = 1
 sideStroke.Transparency = 0.6
 sideStroke.Parent = sidebar
-local sidebarLayout = Instance.new("UIListLayout")
+local sidebarLayout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 sidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
 sidebarLayout.Padding = UDim.new(0, 5)
 sidebarLayout.Parent = sidebar
-local sidebarPadding = Instance.new("UIPadding")
+local sidebarPadding = Instance.new(loadstring(base64decode("VUlQYWRkaW5n"))())
 sidebarPadding.PaddingTop = UDim.new(0, 8)
 sidebarPadding.PaddingBottom = UDim.new(0, 10)
 sidebarPadding.PaddingLeft = UDim.new(0, 6)
 sidebarPadding.PaddingRight = UDim.new(0, 6)
 sidebarPadding.Parent = sidebar
-profileCard = Instance.new("Frame")
-profileCard.Name = "PlayerProfile"
+profileCard = Instance.new(loadstring(base64decode("RnJhbWU="))())
+profileCard.Name = loadstring(base64decode("UGxheWVyUHJvZmlsZQ=="))()
 profileCard.Size = UDim2.new(1, 0, 0, 100)
 profileCard.BackgroundColor3 = Theme.SurfaceAlt
-bindThemeObject(profileCard, "SurfaceAlt")
+bindThemeObject(profileCard, loadstring(base64decode("U3VyZmFjZUFsdA=="))())
 profileCard.BorderSizePixel = 0
 profileCard.LayoutOrder = -100000
 profileCard.Parent = sidebar
-Instance.new("UICorner", profileCard).CornerRadius = UDim.new(0, 8)
-local profileStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), profileCard).CornerRadius = UDim.new(0, 8)
+local profileStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 profileStroke.Color = Theme.Border
-bindThemeProperty(profileStroke, "Border", "Color")
+bindThemeProperty(profileStroke, loadstring(base64decode("Qm9yZGVy"))(), loadstring(base64decode("Q29sb3I="))())
 profileStroke.Thickness = 1
 profileStroke.Transparency = 0.45
 profileStroke.Parent = profileCard
-profileAvatar = Instance.new("ImageLabel")
-profileAvatar.Name = "Avatar"
+profileAvatar = Instance.new(loadstring(base64decode("SW1hZ2VMYWJlbA=="))())
+profileAvatar.Name = loadstring(base64decode("QXZhdGFy"))()
 profileAvatar.Size = UDim2.fromOffset(42, 42)
 profileAvatar.Position = UDim2.fromOffset(10, 10)
 profileAvatar.BackgroundColor3 = Theme.Background
-bindThemeObject(profileAvatar, "Background")
+bindThemeObject(profileAvatar, loadstring(base64decode("QmFja2dyb3VuZA=="))())
 profileAvatar.BorderSizePixel = 0
 profileAvatar.ScaleType = Enum.ScaleType.Crop
 profileAvatar.Parent = profileCard
-Instance.new("UICorner", profileAvatar).CornerRadius = UDim.new(1, 0)
-local profileAvatarStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), profileAvatar).CornerRadius = UDim.new(1, 0)
+local profileAvatarStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 profileAvatarStroke.Color = Theme.Accent
-bindThemeProperty(profileAvatarStroke, "Accent", "Color")
+bindThemeProperty(profileAvatarStroke, loadstring(base64decode("QWNjZW50"))(), loadstring(base64decode("Q29sb3I="))())
 profileAvatarStroke.Thickness = 1.3
 profileAvatarStroke.Transparency = 0.1
 profileAvatarStroke.Parent = profileAvatar
@@ -2340,68 +2343,68 @@ if ok and profileAvatar and profileAvatar.Parent then
 profileAvatar.Image = image
 end
 end)
-profileName = Instance.new("TextLabel")
-profileName.Name = "DisplayName"
+profileName = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
+profileName.Name = loadstring(base64decode("RGlzcGxheU5hbWU="))()
 profileName.BackgroundTransparency = 1
 profileName.Position = UDim2.fromOffset(60, 10)
 profileName.Size = UDim2.new(1, -68, 0, 20)
 profileName.Text = LocalPlayer.DisplayName or LocalPlayer.Name
 profileName.TextColor3 = Theme.Text
-bindThemeProperty(profileName, "Text", "TextColor3")
+bindThemeProperty(profileName, loadstring(base64decode("VGV4dA=="))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(profileName, Fonts.Bold)
 setTextSize(profileName, 12)
 profileName.TextXAlignment = Enum.TextXAlignment.Left
 profileName.TextTruncate = Enum.TextTruncate.AtEnd
 profileName.Parent = profileCard
-profileUsername = Instance.new("TextLabel")
-profileUsername.Name = "Username"
+profileUsername = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
+profileUsername.Name = loadstring(base64decode("VXNlcm5hbWU="))()
 profileUsername.BackgroundTransparency = 1
 profileUsername.Position = UDim2.fromOffset(60, 30)
 profileUsername.Size = UDim2.new(1, -68, 0, 16)
-profileUsername.Text = "@" .. LocalPlayer.Name
+profileUsername.Text = loadstring(base64decode("QA=="))() .. LocalPlayer.Name
 profileUsername.TextColor3 = Theme.TextMuted
-bindThemeProperty(profileUsername, "TextMuted", "TextColor3")
+bindThemeProperty(profileUsername, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(profileUsername, Fonts.Regular)
 setTextSize(profileUsername, 10)
 profileUsername.TextXAlignment = Enum.TextXAlignment.Left
 profileUsername.TextTruncate = Enum.TextTruncate.AtEnd
 profileUsername.Parent = profileCard
-profileHealthText = Instance.new("TextLabel")
-profileHealthText.Name = "HealthText"
+profileHealthText = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
+profileHealthText.Name = loadstring(base64decode("SGVhbHRoVGV4dA=="))()
 profileHealthText.BackgroundTransparency = 1
 profileHealthText.Position = UDim2.fromOffset(10, 58)
 profileHealthText.Size = UDim2.new(1, -20, 0, 14)
-profileHealthText.Text = "เลือด  -- / --"
+profileHealthText.Text = loadstring(base64decode("4LmA4Lil4Li34Lit4LiUICAtLSAvIC0t"))()
 profileHealthText.TextColor3 = Theme.TextMuted
-bindThemeProperty(profileHealthText, "TextMuted", "TextColor3")
+bindThemeProperty(profileHealthText, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 applyFont(profileHealthText, Fonts.Medium)
 setTextSize(profileHealthText, 10)
 profileHealthText.TextXAlignment = Enum.TextXAlignment.Left
 profileHealthText.Parent = profileCard
-profileHealthTrack = Instance.new("Frame")
-profileHealthTrack.Name = "HealthTrack"
+profileHealthTrack = Instance.new(loadstring(base64decode("RnJhbWU="))())
+profileHealthTrack.Name = loadstring(base64decode("SGVhbHRoVHJhY2s="))()
 profileHealthTrack.Size = UDim2.new(1, -20, 0, 6)
 profileHealthTrack.Position = UDim2.fromOffset(10, 80)
 profileHealthTrack.BackgroundColor3 = Theme.SwitchOff
-bindThemeObject(profileHealthTrack, "SwitchOff")
+bindThemeObject(profileHealthTrack, loadstring(base64decode("U3dpdGNoT2Zm"))())
 profileHealthTrack.BorderSizePixel = 0
 profileHealthTrack.Parent = profileCard
-Instance.new("UICorner", profileHealthTrack).CornerRadius = UDim.new(1, 0)
-profileHealthFill = Instance.new("Frame")
-profileHealthFill.Name = "HealthFill"
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), profileHealthTrack).CornerRadius = UDim.new(1, 0)
+profileHealthFill = Instance.new(loadstring(base64decode("RnJhbWU="))())
+profileHealthFill.Name = loadstring(base64decode("SGVhbHRoRmlsbA=="))()
 profileHealthFill.Size = UDim2.fromScale(1, 1)
 profileHealthFill.BackgroundColor3 = Theme.Success
 profileHealthFill.BorderSizePixel = 0
 profileHealthFill.Parent = profileHealthTrack
-Instance.new("UICorner", profileHealthFill).CornerRadius = UDim.new(1, 0)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), profileHealthFill).CornerRadius = UDim.new(1, 0)
 local function updateLocalPlayerProfile()
 local character = LocalPlayer.Character
-local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+local humanoid = character and character:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))())
 if not humanoid or not profileCard or not profileCard.Parent then return end
 local maxHealth = math.max(humanoid.MaxHealth, 1)
 local health = math.clamp(humanoid.Health, 0, maxHealth)
 local ratio = math.clamp(health / maxHealth, 0, 1)
-profileHealthText.Text = string.format("เลือด  %d / %d", math.floor(health + 0.5), math.floor(maxHealth + 0.5))
+profileHealthText.Text = string.format(loadstring(base64decode("4LmA4Lil4Li34Lit4LiUICAlZCAvICVk"))(), math.floor(health + 0.5), math.floor(maxHealth + 0.5))
 profileHealthFill.Size = UDim2.new(ratio, 0, 1, 0)
 profileHealthFill.BackgroundColor3 = ratio > 0.5 and Theme.Success or (ratio > 0.2 and Theme.Warning or Theme.Danger)
 end
@@ -2413,9 +2416,9 @@ profileHealthConn = nil
 end
 local humanoid = nil
 if character then
-humanoid = character:FindFirstChildOfClass("Humanoid")
+humanoid = character:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))())
 if not humanoid then
-pcall(function() humanoid = character:WaitForChild("Humanoid", 5) end)
+pcall(function() humanoid = character:WaitForChild(loadstring(base64decode("SHVtYW5vaWQ="))(), 5) end)
 end
 end
 if humanoid then
@@ -2430,15 +2433,15 @@ end))
 if LocalPlayer.Character then
 task.defer(function() hookLocalPlayerHealth(LocalPlayer.Character) end)
 end
-content = Instance.new("Frame")
-content.Name = "Content"
+content = Instance.new(loadstring(base64decode("RnJhbWU="))())
+content.Name = loadstring(base64decode("Q29udGVudA=="))()
 content.BackgroundTransparency = 1
 content.Size = UDim2.new(1, -(Config.SidebarWidth + 30), 1, -(Config.HeaderHeight + 14))
 content.Position = UDim2.new(0, Config.SidebarWidth + 20, 0, Config.HeaderHeight + 6)
 content.ClipsDescendants = false
 content.Parent = mainFrame
-local pagesFolder = Instance.new("Folder")
-pagesFolder.Name = "Pages"
+local pagesFolder = Instance.new(loadstring(base64decode("Rm9sZGVy"))())
+pagesFolder.Name = loadstring(base64decode("UGFnZXM="))()
 pagesFolder.Parent = content
 local tabCounter = 0
 local activeTab = nil
@@ -2448,25 +2451,25 @@ for _, t in ipairs(Tabs) do
 if t.Page then t.Page.Visible = (t == tab) end
 local btn, ind, lbl, iconHolder = t.Button, t.Indicator, t.Label, t.IconHolder
 if t == tab then
-btn:SetAttribute("RUNLUA_SELECTED", true)
-if btn:GetAttribute("RUNLUA_IS_SETTINGS") then
-bindThemeObject(btn, "SettingsButton")
+btn:SetAttribute(loadstring(base64decode("UlVOTFVBX1NFTEVDVEVE"))(), true)
+if btn:GetAttribute(loadstring(base64decode("UlVOTFVBX0lTX1NFVFRJTkdT"))()) then
+bindThemeObject(btn, loadstring(base64decode("U2V0dGluZ3NCdXR0b24="))())
 TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.AccentSoft }):Play()
 else
-bindThemeObject(btn, "TabButton")
+bindThemeObject(btn, loadstring(base64decode("VGFiQnV0dG9u"))())
 TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = Theme.Accent }):Play()
 end
 TweenService:Create(ind, TweenInfo.new(Config.AnimFast), { BackgroundTransparency = 0 }):Play()
 lbl.TextColor3 = Theme.White
 tintIconHolder(iconHolder, Theme.White, true)
 else
-btn:SetAttribute("RUNLUA_SELECTED", false)
-if btn:GetAttribute("RUNLUA_IS_SETTINGS") then
-bindThemeObject(btn, "SettingsButton")
+btn:SetAttribute(loadstring(base64decode("UlVOTFVBX1NFTEVDVEVE"))(), false)
+if btn:GetAttribute(loadstring(base64decode("UlVOTFVBX0lTX1NFVFRJTkdT"))()) then
+bindThemeObject(btn, loadstring(base64decode("U2V0dGluZ3NCdXR0b24="))())
 else
-bindThemeObject(btn, "TabButton")
+bindThemeObject(btn, loadstring(base64decode("VGFiQnV0dG9u"))())
 end
-TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = btn:GetAttribute("RUNLUA_IS_SETTINGS") and Theme.Background or Theme.SurfaceAlt }):Play()
+TweenService:Create(btn, TweenInfo.new(Config.AnimFast), { BackgroundColor3 = btn:GetAttribute(loadstring(base64decode("UlVOTFVBX0lTX1NFVFRJTkdT"))()) and Theme.Background or Theme.SurfaceAlt }):Play()
 TweenService:Create(ind, TweenInfo.new(Config.AnimFast), { BackgroundTransparency = 1 }):Play()
 lbl.TextColor3 = Theme.TextMuted
 tintIconHolder(iconHolder, Theme.TextMuted, false)
@@ -2476,12 +2479,12 @@ activeTab = tab
 end
 local function CreateTab(opts)
 opts = opts or {}
-local name = opts.Name or "แท็บ"
+local name = opts.Name or loadstring(base64decode("4LmB4LiX4LmH4Lia"))()
 local iconDraw = opts.Icon or Icons.Home
 tabCounter = tabCounter + 1
 local thisIndex = tabCounter
-local page = Instance.new("ScrollingFrame")
-page.Name = name .. "Page"
+local page = Instance.new(loadstring(base64decode("U2Nyb2xsaW5nRnJhbWU="))())
+page.Name = name .. loadstring(base64decode("UGFnZQ=="))()
 page.Size = UDim2.new(1, 0, 1, 0)
 page.BackgroundTransparency = 1
 page.BorderSizePixel = 0
@@ -2491,50 +2494,50 @@ page.CanvasSize = UDim2.new(0, 0, 0, 0)
 page.AutomaticCanvasSize = Enum.AutomaticSize.Y
 page.Visible = false
 page.Parent = pagesFolder
-local pagePadding = Instance.new("UIPadding")
+local pagePadding = Instance.new(loadstring(base64decode("VUlQYWRkaW5n"))())
 pagePadding.PaddingTop = UDim.new(0, 8)
 pagePadding.PaddingBottom = UDim.new(0, 10)
 pagePadding.PaddingLeft = UDim.new(0, 8)
 pagePadding.PaddingRight = UDim.new(0, 10)
 pagePadding.Parent = page
-local pageLayout = Instance.new("UIListLayout")
+local pageLayout = Instance.new(loadstring(base64decode("VUlMaXN0TGF5b3V0"))())
 pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
 pageLayout.Padding = UDim.new(0, 12)
 pageLayout.Parent = page
-local btn = Instance.new("TextButton")
-btn.Name = "Tab_" .. name
+local btn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+btn.Name = loadstring(base64decode("VGFiXw=="))() .. name
 btn.Size = UDim2.new(1, 0, 0, 42)
 btn.BackgroundColor3 = opts.IsSettings and Theme.Background or Theme.SurfaceAlt
-bindThemeObject(btn, opts.IsSettings and "SettingsButton" or "TabButton")
-btn:SetAttribute("RUNLUA_SELECTED", false)
-btn:SetAttribute("RUNLUA_IS_SETTINGS", opts.IsSettings == true)
-btn.Text = ""
+bindThemeObject(btn, opts.IsSettings and loadstring(base64decode("U2V0dGluZ3NCdXR0b24="))() or loadstring(base64decode("VGFiQnV0dG9u"))())
+btn:SetAttribute(loadstring(base64decode("UlVOTFVBX1NFTEVDVEVE"))(), false)
+btn:SetAttribute(loadstring(base64decode("UlVOTFVBX0lTX1NFVFRJTkdT"))(), opts.IsSettings == true)
+btn.Text = loadstring(base64decode(""))()
 btn.AutoButtonColor = false
 btn.LayoutOrder = opts.Order or thisIndex
 btn.Parent = sidebar
-Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
-local indicator = Instance.new("Frame")
-indicator.Name = "Indicator"
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), btn).CornerRadius = UDim.new(0, 6)
+local indicator = Instance.new(loadstring(base64decode("RnJhbWU="))())
+indicator.Name = loadstring(base64decode("SW5kaWNhdG9y"))()
 indicator.Size = UDim2.new(0, 3, 0.5, 0)
 indicator.Position = UDim2.new(0, 0, 0.25, 0)
 indicator.BackgroundColor3 = Theme.AccentLight
 indicator.BorderSizePixel = 0
 indicator.BackgroundTransparency = 1
 indicator.Parent = btn
-Instance.new("UICorner", indicator).CornerRadius = UDim.new(1, 0)
-local iconHolder = Instance.new("Frame")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), indicator).CornerRadius = UDim.new(1, 0)
+local iconHolder = Instance.new(loadstring(base64decode("RnJhbWU="))())
 iconHolder.Size = UDim2.fromOffset(18, 18)
 iconHolder.Position = UDim2.new(0, 12, 0.5, -9)
 iconHolder.BackgroundTransparency = 1
 iconHolder.Parent = btn
 iconDraw(iconHolder, Theme.TextMuted)
-local label = Instance.new("TextLabel")
+local label = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 label.BackgroundTransparency = 1
 label.Position = UDim2.new(0, 38, 0, 0)
 label.Size = UDim2.new(1, -44, 1, 0)
 label.Text = name
 label.TextColor3 = Theme.TextMuted
-bindThemeProperty(label, "TextMuted", "TextColor3")
+bindThemeProperty(label, loadstring(base64decode("VGV4dE11dGVk"))(), loadstring(base64decode("VGV4dENvbG9yMw=="))())
 setTextSize(label, 12)
 applyFont(label, Fonts.Medium)
 label.TextXAlignment = Enum.TextXAlignment.Left
@@ -2546,17 +2549,17 @@ Button = btn, Indicator = indicator, Label = label, IconHolder = iconHolder,
 IsSettings = opts.IsSettings == true,
 }
 if tab.IsSettings then
-local sep = Instance.new("Frame")
-sep.Name = "SettingsSeparator"
+local sep = Instance.new(loadstring(base64decode("RnJhbWU="))())
+sep.Name = loadstring(base64decode("U2V0dGluZ3NTZXBhcmF0b3I="))()
 sep.Size = UDim2.new(1, 0, 0, 8)
 sep.BackgroundTransparency = 1
 sep.LayoutOrder = 999998
 sep.Parent = sidebar
-local line = Instance.new("Frame")
+local line = Instance.new(loadstring(base64decode("RnJhbWU="))())
 line.Size = UDim2.new(1, -10, 0, 1)
 line.Position = UDim2.new(0, 5, 0.5, 0)
 line.BackgroundColor3 = Theme.Border
-bindThemeProperty(line, "Border", "BackgroundColor3")
+bindThemeProperty(line, loadstring(base64decode("Qm9yZGVy"))(), loadstring(base64decode("QmFja2dyb3VuZENvbG9yMw=="))())
 line.BorderSizePixel = 0
 line.BackgroundTransparency = 0.25
 line.Parent = sep
@@ -2584,7 +2587,7 @@ end
 return tab
 end
 local SettingsTab = CreateTab({
-Name = "ตั้งค่า GUI",
+Name = loadstring(base64decode("4LiV4Lix4LmJ4LiH4LiE4LmI4LiyIEdVSQ=="))(),
 Icon = Icons.Settings,
 IsSettings = true,
 Order = 999999,
@@ -2606,23 +2609,23 @@ end
 local function refreshSettingsControls()
 if settingsState.textScaleSetter then
 local scale = tonumber(UserTextScale) or 1.30
-local preset = (math.abs(scale - 1.00) < math.abs(scale - 1.30) and math.abs(scale - 1.00) < math.abs(scale - 1.45)) and "พอดี"
-or ((math.abs(scale - 1.45) < math.abs(scale - 1.30)) and "ใหญ่" or "กลาง")
+local preset = (math.abs(scale - 1.00) < math.abs(scale - 1.30) and math.abs(scale - 1.00) < math.abs(scale - 1.45)) and loadstring(base64decode("4Lie4Lit4LiU4Li1"))()
+or ((math.abs(scale - 1.45) < math.abs(scale - 1.30)) and loadstring(base64decode("4LmD4Lir4LiN4LmI"))() or loadstring(base64decode("4LiB4Lil4Liy4LiH"))())
 pcall(settingsState.textScaleSetter, preset)
 end
 if settingsState.weightSetter then pcall(settingsState.weightSetter, UserFontWeight) end
 end
 local settingsGeneral = Components.CreateSection(SettingsTab.Page, {
-Title = "รูปลักษณ์หลัก",
+Title = loadstring(base64decode("4Lij4Li54Lib4Lil4Lix4LiB4Lip4LiT4LmM4Lir4Lil4Lix4LiB"))(),
 Order = 1,
 })
 local textSizePresets = {
-["พอดี"] = 1.00,
-["กลาง"] = 1.30,
-["ใหญ่"] = 1.45,
+[loadstring(base64decode("4Lie4Lit4LiU4Li1"))()] = 1.00,
+[loadstring(base64decode("4LiB4Lil4Liy4LiH"))()] = 1.30,
+[loadstring(base64decode("4LmD4Lir4LiN4LmI"))()] = 1.45,
 }
 local function getTextSizePreset()
-local bestName, bestDiff = "กลาง", math.huge
+local bestName, bestDiff = loadstring(base64decode("4LiB4Lil4Liy4LiH"))(), math.huge
 for name, value in pairs(textSizePresets) do
 local diff = math.abs((tonumber(UserTextScale) or 1.30) - value)
 if diff < bestDiff then bestName, bestDiff = name, diff end
@@ -2630,8 +2633,8 @@ end
 return bestName
 end
 local _, _, setTextScale = Components.CreateDropdown(settingsGeneral, {
-Name = "ขนาดตัวอักษร",
-Options = {"พอดี", "กลาง", "ใหญ่"},
+Name = loadstring(base64decode("4LiC4LiZ4Liy4LiU4LiV4Lix4Lin4Lit4Lix4LiB4Lip4Lij"))(),
+Options = {loadstring(base64decode("4Lie4Lit4LiU4Li1"))(), loadstring(base64decode("4LiB4Lil4Liy4LiH"))(), loadstring(base64decode("4LmD4Lir4LiN4LmI"))()},
 Default = getTextSizePreset(),
 Icon = Icons.Book,
 Callback = function(v)
@@ -2639,14 +2642,14 @@ local preset = textSizePresets[tostring(v)]
 if preset then
 UserTextScale = preset
 applySettingsVisuals()
-updateSettingsStatus("ตั้งขนาดตัวอักษรเป็น " .. tostring(v) .. " แล้ว", Theme.Success)
+updateSettingsStatus(loadstring(base64decode("4LiV4Lix4LmJ4LiH4LiC4LiZ4Liy4LiU4LiV4Lix4Lin4Lit4Lix4LiB4Lip4Lij4LmA4Lib4LmH4LiZIA=="))() .. tostring(v) .. loadstring(base64decode("IOC5geC4peC5ieC4pw=="))(), Theme.Success)
 end
 end,
 })
 settingsState.textScaleSetter = setTextScale
 local _, _, setWeight = Components.CreateDropdown(settingsGeneral, {
-Name = "ความหนาอักษร",
-Options = {"Regular", "Medium", "SemiBold", "Bold", "ExtraBold", "Heavy"},
+Name = loadstring(base64decode("4LiE4Lin4Liy4Lih4Lir4LiZ4Liy4Lit4Lix4LiB4Lip4Lij"))(),
+Options = {loadstring(base64decode("UmVndWxhcg=="))(), loadstring(base64decode("TWVkaXVt"))(), loadstring(base64decode("U2VtaUJvbGQ="))(), loadstring(base64decode("Qm9sZA=="))(), loadstring(base64decode("RXh0cmFCb2xk"))(), loadstring(base64decode("SGVhdnk="))()},
 Default = UserFontWeight,
 Icon = Icons.Pencil,
 Callback = function(v)
@@ -2654,27 +2657,27 @@ local value = tostring(v)
 if FONT_WEIGHTS[value] then
 UserFontWeight = value
 applySettingsVisuals()
-updateSettingsStatus("เปลี่ยนความหนาอักษรแล้ว • " .. value, Theme.Success)
+updateSettingsStatus(loadstring(base64decode("4LmA4Lib4Lil4Li14LmI4Lii4LiZ4LiE4Lin4Liy4Lih4Lir4LiZ4Liy4Lit4Lix4LiB4Lip4Lij4LmB4Lil4LmJ4LinIOKAoiA="))() .. value, Theme.Success)
 end
 end,
 })
 settingsState.weightSetter = setWeight
 local settingsColor = Components.CreateSection(SettingsTab.Page, {
-Title = "สีและธีม",
+Title = loadstring(base64decode("4Liq4Li14LmB4Lil4Liw4LiY4Li14Lih"))(),
 Order = 2,
 })
 local ColorPresets = {
-["น้ำเงินฟ้า"] = {Accent = Color3.fromRGB(0,132,255), AccentSoft = Color3.fromRGB(0,90,190), AccentLight = Color3.fromRGB(90,180,255)},
-["ม่วงไฟฟ้า"] = {Accent = Color3.fromRGB(145,70,255), AccentSoft = Color3.fromRGB(100,45,190), AccentLight = Color3.fromRGB(190,145,255)},
-["เขียวมรกต"] = {Accent = Color3.fromRGB(0,205,140), AccentSoft = Color3.fromRGB(0,145,100), AccentLight = Color3.fromRGB(110,240,190)},
-["แดงคริมสัน"] = {Accent = Color3.fromRGB(235,55,85), AccentSoft = Color3.fromRGB(175,30,55), AccentLight = Color3.fromRGB(255,125,145)},
-["ทอง"] = {Accent = Color3.fromRGB(235,175,45), AccentSoft = Color3.fromRGB(165,115,20), AccentLight = Color3.fromRGB(255,215,100)},
-["ขาวดำ"] = {Accent = Color3.fromRGB(230,230,230), AccentSoft = Color3.fromRGB(150,150,150), AccentLight = Color3.fromRGB(255,255,255)},
+[loadstring(base64decode("4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ4Lif4LmJ4Liy"))()] = {Accent = Color3.fromRGB(0,132,255), AccentSoft = Color3.fromRGB(0,90,190), AccentLight = Color3.fromRGB(90,180,255)},
+[loadstring(base64decode("4Lih4LmI4Lin4LiH4LmE4Lif4Lif4LmJ4Liy"))()] = {Accent = Color3.fromRGB(145,70,255), AccentSoft = Color3.fromRGB(100,45,190), AccentLight = Color3.fromRGB(190,145,255)},
+[loadstring(base64decode("4LmA4LiC4Li14Lii4Lin4Lih4Lij4LiB4LiV"))()] = {Accent = Color3.fromRGB(0,205,140), AccentSoft = Color3.fromRGB(0,145,100), AccentLight = Color3.fromRGB(110,240,190)},
+[loadstring(base64decode("4LmB4LiU4LiH4LiE4Lij4Li04Lih4Liq4Lix4LiZ"))()] = {Accent = Color3.fromRGB(235,55,85), AccentSoft = Color3.fromRGB(175,30,55), AccentLight = Color3.fromRGB(255,125,145)},
+[loadstring(base64decode("4LiX4Lit4LiH"))()] = {Accent = Color3.fromRGB(235,175,45), AccentSoft = Color3.fromRGB(165,115,20), AccentLight = Color3.fromRGB(255,215,100)},
+[loadstring(base64decode("4LiC4Liy4Lin4LiU4Liz"))()] = {Accent = Color3.fromRGB(230,230,230), AccentSoft = Color3.fromRGB(150,150,150), AccentLight = Color3.fromRGB(255,255,255)},
 }
 Components.CreateDropdown(settingsColor, {
-Name = "ชุดสีหลัก",
-Options = {"น้ำเงินฟ้า", "ม่วงไฟฟ้า", "เขียวมรกต", "แดงคริมสัน", "ทอง", "ขาวดำ"},
-Default = "น้ำเงินฟ้า",
+Name = loadstring(base64decode("4LiK4Li44LiU4Liq4Li14Lir4Lil4Lix4LiB"))(),
+Options = {loadstring(base64decode("4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ4Lif4LmJ4Liy"))(), loadstring(base64decode("4Lih4LmI4Lin4LiH4LmE4Lif4Lif4LmJ4Liy"))(), loadstring(base64decode("4LmA4LiC4Li14Lii4Lin4Lih4Lij4LiB4LiV"))(), loadstring(base64decode("4LmB4LiU4LiH4LiE4Lij4Li04Lih4Liq4Lix4LiZ"))(), loadstring(base64decode("4LiX4Lit4LiH"))(), loadstring(base64decode("4LiC4Liy4Lin4LiU4Liz"))()},
+Default = loadstring(base64decode("4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ4Lif4LmJ4Liy"))(),
 Icon = Icons.Diamond,
 Callback = function(v)
 local preset = ColorPresets[tostring(v)]
@@ -2683,44 +2686,44 @@ Theme.Accent = preset.Accent
 Theme.AccentSoft = preset.AccentSoft
 Theme.AccentLight = preset.AccentLight
 applySettingsVisuals()
-updateSettingsStatus("ใช้ชุดสี: " .. tostring(v), Theme.Success)
+updateSettingsStatus(loadstring(base64decode("4LmD4LiK4LmJ4LiK4Li44LiU4Liq4Li1OiA="))() .. tostring(v), Theme.Success)
 end
 end,
 })
 local function createColorSwatches(parent, title, colors, selectedColor, onPick, order)
 local section = Components.CreateSection(parent, {Title = title, Order = order})
-local grid = Instance.new("Frame")
-grid.Name = "ColorSwatches"
+local grid = Instance.new(loadstring(base64decode("RnJhbWU="))())
+grid.Name = loadstring(base64decode("Q29sb3JTd2F0Y2hlcw=="))()
 grid.BackgroundTransparency = 1
 grid.Size = UDim2.new(1, 0, 0, 82)
 grid.LayoutOrder = 1
 grid.Parent = section
-local gridLayout = Instance.new("UIGridLayout")
+local gridLayout = Instance.new(loadstring(base64decode("VUlHcmlkTGF5b3V0"))())
 gridLayout.CellSize = UDim2.fromOffset(42, 32)
 gridLayout.CellPadding = UDim2.fromOffset(10, 10)
 gridLayout.FillDirectionMaxCells = 6
 gridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 gridLayout.Parent = grid
 for index, item in ipairs(colors) do
-local swatch = Instance.new("TextButton")
-swatch.Name = "Swatch_" .. tostring(index)
+local swatch = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))())
+swatch.Name = loadstring(base64decode("U3dhdGNoXw=="))() .. tostring(index)
 swatch.LayoutOrder = index
 swatch.Size = UDim2.fromOffset(42, 32)
 swatch.BackgroundColor3 = item.Color
 swatch.BorderSizePixel = 0
-swatch.Text = ""
+swatch.Text = loadstring(base64decode(""))()
 swatch.AutoButtonColor = false
 swatch.Parent = grid
-Instance.new("UICorner", swatch).CornerRadius = UDim.new(0, 7)
-local stroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), swatch).CornerRadius = UDim.new(0, 7)
+local stroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 stroke.Color = colorsEqual(item.Color, selectedColor) and Theme.White or Theme.Border
 stroke.Thickness = colorsEqual(item.Color, selectedColor) and 2 or 1
 stroke.Transparency = colorsEqual(item.Color, selectedColor) and 0 or 0.25
 stroke.Parent = swatch
-local tick = Instance.new("TextLabel")
+local tick = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))())
 tick.BackgroundTransparency = 1
 tick.Size = UDim2.fromScale(1, 1)
-tick.Text = colorsEqual(item.Color, selectedColor) and "✓" or ""
+tick.Text = colorsEqual(item.Color, selectedColor) and loadstring(base64decode("4pyT"))() or loadstring(base64decode(""))()
 tick.TextColor3 = Theme.White
 tick.Font = Enum.Font.GothamBold
 tick.TextSize = 16
@@ -2728,12 +2731,12 @@ tick.Parent = swatch
 track(swatch.Activated:Connect(function()
 selectedColor = item.Color
 for _, child in ipairs(grid:GetChildren()) do
-if child:IsA("TextButton") then
-local st = child:FindFirstChildOfClass("UIStroke")
-local label = child:FindFirstChildOfClass("TextLabel")
+if child:IsA(loadstring(base64decode("VGV4dEJ1dHRvbg=="))()) then
+local st = child:FindFirstChildOfClass(loadstring(base64decode("VUlTdHJva2U="))())
+local label = child:FindFirstChildOfClass(loadstring(base64decode("VGV4dExhYmVs"))())
 local isSelected = child == swatch
 if st then st.Color = isSelected and Theme.White or Theme.Border; st.Thickness = isSelected and 2 or 1; st.Transparency = isSelected and 0 or 0.25 end
-if label then label.Text = isSelected and "✓" or "" end
+if label then label.Text = isSelected and loadstring(base64decode("4pyT"))() or loadstring(base64decode(""))() end
 end
 end
 onPick(item.Color, item.Name)
@@ -2742,71 +2745,71 @@ end
 return section
 end
 local accentColors = {
-{Name="ฟ้า", Color=Color3.fromRGB(0,132,255)},
-{Name="ม่วง", Color=Color3.fromRGB(145,70,255)},
-{Name="เขียว", Color=Color3.fromRGB(0,205,140)},
-{Name="แดง", Color=Color3.fromRGB(235,55,85)},
-{Name="ทอง", Color=Color3.fromRGB(235,175,45)},
-{Name="ชมพู", Color=Color3.fromRGB(255,85,170)},
-{Name="ฟ้าอ่อน", Color=Color3.fromRGB(70,210,255)},
-{Name="ขาว", Color=Color3.fromRGB(230,230,230)},
-{Name="ส้ม", Color=Color3.fromRGB(255,135,45)},
-{Name="เขียวอ่อน", Color=Color3.fromRGB(150,240,100)},
-{Name="แดงเข้ม", Color=Color3.fromRGB(175,35,65)},
-{Name="น้ำเงิน", Color=Color3.fromRGB(45,75,200)},
+{Name=loadstring(base64decode("4Lif4LmJ4Liy"))(), Color=Color3.fromRGB(0,132,255)},
+{Name=loadstring(base64decode("4Lih4LmI4Lin4LiH"))(), Color=Color3.fromRGB(145,70,255)},
+{Name=loadstring(base64decode("4LmA4LiC4Li14Lii4Lin"))(), Color=Color3.fromRGB(0,205,140)},
+{Name=loadstring(base64decode("4LmB4LiU4LiH"))(), Color=Color3.fromRGB(235,55,85)},
+{Name=loadstring(base64decode("4LiX4Lit4LiH"))(), Color=Color3.fromRGB(235,175,45)},
+{Name=loadstring(base64decode("4LiK4Lih4Lie4Li5"))(), Color=Color3.fromRGB(255,85,170)},
+{Name=loadstring(base64decode("4Lif4LmJ4Liy4Lit4LmI4Lit4LiZ"))(), Color=Color3.fromRGB(70,210,255)},
+{Name=loadstring(base64decode("4LiC4Liy4Lin"))(), Color=Color3.fromRGB(230,230,230)},
+{Name=loadstring(base64decode("4Liq4LmJ4Lih"))(), Color=Color3.fromRGB(255,135,45)},
+{Name=loadstring(base64decode("4LmA4LiC4Li14Lii4Lin4Lit4LmI4Lit4LiZ"))(), Color=Color3.fromRGB(150,240,100)},
+{Name=loadstring(base64decode("4LmB4LiU4LiH4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(175,35,65)},
+{Name=loadstring(base64decode("4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ"))(), Color=Color3.fromRGB(45,75,200)},
 }
-createColorSwatches(settingsColor, "เลือกสีหลัก", accentColors, Theme.Accent, function(c, name)
+createColorSwatches(settingsColor, loadstring(base64decode("4LmA4Lil4Li34Lit4LiB4Liq4Li14Lir4Lil4Lix4LiB"))(), accentColors, Theme.Accent, function(c, name)
 Theme.Accent = c
 Theme.AccentLight = c:Lerp(Color3.fromRGB(255,255,255), 0.35)
 Theme.AccentSoft = c:Lerp(Color3.fromRGB(0,0,0), 0.35)
 applySettingsVisuals()
-updateSettingsStatus("เปลี่ยนสีหลักเป็น " .. name, Theme.Success)
+updateSettingsStatus(loadstring(base64decode("4LmA4Lib4Lil4Li14LmI4Lii4LiZ4Liq4Li14Lir4Lil4Lix4LiB4LmA4Lib4LmH4LiZIA=="))() .. name, Theme.Success)
 end, 3)
 local backgroundColors = {
-{Name="กรมท่า", Color=Color3.fromRGB(10,16,32)},
-{Name="ดำ", Color=Color3.fromRGB(12,12,16)},
-{Name="เทาเข้ม", Color=Color3.fromRGB(30,32,38)},
-{Name="ม่วงเข้ม", Color=Color3.fromRGB(24,15,38)},
-{Name="น้ำเงินเข้ม", Color=Color3.fromRGB(8,24,48)},
-{Name="เขียวเข้ม", Color=Color3.fromRGB(10,32,28)},
-{Name="แดงเข้ม", Color=Color3.fromRGB(38,14,22)},
-{Name="เทาน้ำเงิน", Color=Color3.fromRGB(28,38,54)},
+{Name=loadstring(base64decode("4LiB4Lij4Lih4LiX4LmI4Liy"))(), Color=Color3.fromRGB(10,16,32)},
+{Name=loadstring(base64decode("4LiU4Liz"))(), Color=Color3.fromRGB(12,12,16)},
+{Name=loadstring(base64decode("4LmA4LiX4Liy4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(30,32,38)},
+{Name=loadstring(base64decode("4Lih4LmI4Lin4LiH4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(24,15,38)},
+{Name=loadstring(base64decode("4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(8,24,48)},
+{Name=loadstring(base64decode("4LmA4LiC4Li14Lii4Lin4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(10,32,28)},
+{Name=loadstring(base64decode("4LmB4LiU4LiH4LmA4LiC4LmJ4Lih"))(), Color=Color3.fromRGB(38,14,22)},
+{Name=loadstring(base64decode("4LmA4LiX4Liy4LiZ4LmJ4Liz4LmA4LiH4Li04LiZ"))(), Color=Color3.fromRGB(28,38,54)},
 }
-createColorSwatches(settingsColor, "เลือกสีพื้นหลัง", backgroundColors, Theme.Background, function(c, name)
+createColorSwatches(settingsColor, loadstring(base64decode("4LmA4Lil4Li34Lit4LiB4Liq4Li14Lie4Li34LmJ4LiZ4Lir4Lil4Lix4LiH"))(), backgroundColors, Theme.Background, function(c, name)
 Theme.Background = c
 applySettingsVisuals()
-updateSettingsStatus("เปลี่ยนสีพื้นหลังเป็น " .. name, Theme.Success)
+updateSettingsStatus(loadstring(base64decode("4LmA4Lib4Lil4Li14LmI4Lii4LiZ4Liq4Li14Lie4Li34LmJ4LiZ4Lir4Lil4Lix4LiH4LmA4Lib4LmH4LiZIA=="))() .. name, Theme.Success)
 end, 4)
 local settingsStorage = Components.CreateSection(SettingsTab.Page, {
-Title = "บันทึก / คืนค่า",
+Title = loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiBIC8g4LiE4Li34LiZ4LiE4LmI4Liy"))(),
 Order = 3,
 })
 settingsState.statusLabel = Components.CreateParagraph(settingsStorage, {
-Text = "สถานะ: พร้อมใช้งาน",
+Text = loadstring(base64decode("4Liq4LiW4Liy4LiZ4LiwOiDguJ7guKPguYnguK3guKHguYPguIrguYnguIfguLLguJk="))(),
 Color = Theme.TextMuted,
 Size = 11,
 Order = 1,
 })
 Components.CreateButton(settingsStorage, {
-Name = "บันทึกการตั้งค่า",
-Description = "เซฟสี ขนาดตัวอักษร และความหนาอักษรลงไฟล์",
+Name = loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiB4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy"))(),
+Description = loadstring(base64decode("4LmA4LiL4Lif4Liq4Li1IOC4guC4meC4suC4lOC4leC4seC4p+C4reC4seC4geC4qeC4oyDguYHguKXguLDguITguKfguLLguKHguKvguJnguLLguK3guLHguIHguKnguKPguKXguIfguYTguJ/guKXguYw="))(),
 Icon = Icons.Save,
 Color = Theme.Success,
 Order = 2,
 Callback = function()
 local ok, msg = saveSettings()
 if ok then
-updateSettingsStatus("บันทึกสำเร็จ • " .. tostring(msg), Theme.Success)
-Notify({Title = "บันทึกสำเร็จ", Message = "เก็บการตั้งค่า GUI เรียบร้อยแล้ว", Color = Theme.Success, Icon = Icons.Save})
+updateSettingsStatus(loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiB4Liq4Liz4LmA4Lij4LmH4LiIIOKAoiA="))() .. tostring(msg), Theme.Success)
+Notify({Title = loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiB4Liq4Liz4LmA4Lij4LmH4LiI"))(), Message = loadstring(base64decode("4LmA4LiB4LmH4Lia4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4LiyIEdVSSDguYDguKPguLXguKLguJrguKPguYnguK3guKLguYHguKXguYnguKc="))(), Color = Theme.Success, Icon = Icons.Save})
 else
-updateSettingsStatus("บันทึกแบบถาวรไม่ได้ • " .. tostring(msg), Theme.Warning)
-Notify({Title = "บันทึกแบบไฟล์ไม่ได้", Message = tostring(msg), Color = Theme.Warning, Icon = Icons.Save})
+updateSettingsStatus(loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiB4LmB4Lia4Lia4LiW4Liy4Lin4Lij4LmE4Lih4LmI4LmE4LiU4LmJIOKAoiA="))() .. tostring(msg), Theme.Warning)
+Notify({Title = loadstring(base64decode("4Lia4Lix4LiZ4LiX4Li24LiB4LmB4Lia4Lia4LmE4Lif4Lil4LmM4LmE4Lih4LmI4LmE4LiU4LmJ"))(), Message = tostring(msg), Color = Theme.Warning, Icon = Icons.Save})
 end
 end,
 })
 Components.CreateButton(settingsStorage, {
-Name = "โหลดการตั้งค่า",
-Description = "โหลดค่าล่าสุดจาก RUNLUA_HUB_SETTINGS.json",
+Name = loadstring(base64decode("4LmC4Lir4Lil4LiU4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy"))(),
+Description = loadstring(base64decode("4LmC4Lir4Lil4LiU4LiE4LmI4Liy4Lil4LmI4Liy4Liq4Li44LiU4LiI4Liy4LiBIFJVTkxVQV9IVUJfU0VUVElOR1MuanNvbg=="))(),
 Icon = Icons.Cloud,
 Color = Theme.Accent,
 Order = 3,
@@ -2814,31 +2817,31 @@ Callback = function()
 local ok, msg = loadSettings()
 refreshSettingsControls()
 if ok then
-updateSettingsStatus("โหลดสำเร็จ • " .. tostring(msg), Theme.Success)
-Notify({Title = "โหลดสำเร็จ", Message = "นำการตั้งค่าที่บันทึกไว้มาใช้แล้ว", Color = Theme.Success, Icon = Icons.Cloud})
+updateSettingsStatus(loadstring(base64decode("4LmC4Lir4Lil4LiU4Liq4Liz4LmA4Lij4LmH4LiIIOKAoiA="))() .. tostring(msg), Theme.Success)
+Notify({Title = loadstring(base64decode("4LmC4Lir4Lil4LiU4Liq4Liz4LmA4Lij4LmH4LiI"))(), Message = loadstring(base64decode("4LiZ4Liz4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LiX4Li14LmI4Lia4Lix4LiZ4LiX4Li24LiB4LmE4Lin4LmJ4Lih4Liy4LmD4LiK4LmJ4LmB4Lil4LmJ4Lin"))(), Color = Theme.Success, Icon = Icons.Cloud})
 else
-updateSettingsStatus("โหลดไม่สำเร็จ • " .. tostring(msg), Theme.Danger)
-Notify({Title = "โหลดไม่สำเร็จ", Message = tostring(msg), Color = Theme.Danger, Icon = Icons.Cloud})
+updateSettingsStatus(loadstring(base64decode("4LmC4Lir4Lil4LiU4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiIIOKAoiA="))() .. tostring(msg), Theme.Danger)
+Notify({Title = loadstring(base64decode("4LmC4Lir4Lil4LiU4LmE4Lih4LmI4Liq4Liz4LmA4Lij4LmH4LiI"))(), Message = tostring(msg), Color = Theme.Danger, Icon = Icons.Cloud})
 end
 end,
 })
 Components.CreateButton(settingsStorage, {
-Name = "รีเซ็ตกลับค่าเดิม",
-Description = "คืนสี ขนาดตัวอักษร และความหนาเป็นค่าเริ่มต้น",
+Name = loadstring(base64decode("4Lij4Li14LmA4LiL4LmH4LiV4LiB4Lil4Lix4Lia4LiE4LmI4Liy4LmA4LiU4Li04Lih"))(),
+Description = loadstring(base64decode("4LiE4Li34LiZ4Liq4Li1IOC4guC4meC4suC4lOC4leC4seC4p+C4reC4seC4geC4qeC4oyDguYHguKXguLDguITguKfguLLguKHguKvguJnguLLguYDguJvguYfguJnguITguYjguLLguYDguKPguLTguYjguKHguJXguYnguJk="))(),
 Icon = Icons.Reset,
 Color = Theme.Warning,
 Order = 4,
 Callback = function()
 resetSettings()
 refreshSettingsControls()
-updateSettingsStatus("รีเซ็ตเป็นค่าเดิมเรียบร้อย", Theme.Success)
-Notify({Title = "รีเซ็ตแล้ว", Message = "GUI กลับเป็นค่ามาตรฐานแล้ว", Color = Theme.Warning, Icon = Icons.Action})
+updateSettingsStatus(loadstring(base64decode("4Lij4Li14LmA4LiL4LmH4LiV4LmA4Lib4LmH4LiZ4LiE4LmI4Liy4LmA4LiU4Li04Lih4LmA4Lij4Li14Lii4Lia4Lij4LmJ4Lit4Lii"))(), Theme.Success)
+Notify({Title = loadstring(base64decode("4Lij4Li14LmA4LiL4LmH4LiV4LmB4Lil4LmJ4Lin"))(), Message = loadstring(base64decode("R1VJIOC4geC4peC4seC4muC5gOC4m+C5h+C4meC4hOC5iOC4suC4oeC4suC4leC4o+C4kOC4suC4meC5geC4peC5ieC4pw=="))(), Color = Theme.Warning, Icon = Icons.Action})
 end,
 })
 pillSize    = math.max(36, 54)
 pillSizeMin = math.max(32, 46)
-TogglePill = Instance.new("ImageButton")
-TogglePill.Name = "TogglePill"
+TogglePill = Instance.new(loadstring(base64decode("SW1hZ2VCdXR0b24="))())
+TogglePill.Name = loadstring(base64decode("VG9nZ2xlUGlsbA=="))()
 TogglePill.BackgroundTransparency = 1
 TogglePill.BorderSizePixel = 0
 TogglePill.ClipsDescendants = false
@@ -2852,8 +2855,8 @@ TogglePill.Visible = true
 TogglePill.Parent = screenGui
 TogglePill.ImageTransparency = 0.05
 TogglePill.ScaleType = Enum.ScaleType.Crop
-Instance.new("UICorner", TogglePill).CornerRadius = UDim.new(0, 12)
-pillStroke = Instance.new("UIStroke")
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), TogglePill).CornerRadius = UDim.new(0, 12)
+pillStroke = Instance.new(loadstring(base64decode("VUlTdHJva2U="))())
 pillStroke.Color = Color3.fromRGB(0, 191, 255)
 pillStroke.Thickness = 2.5
 pillStroke.Parent = TogglePill
@@ -2877,7 +2880,7 @@ TogglePill.Position = UDim2.new(1, -16, 0, 16)
 end
 end
 refreshSettingsControls()
-updateSettingsStatus(initialLoadOK and "โหลดการตั้งค่าเดิมอัตโนมัติแล้ว" or "สถานะ: ใช้ค่าเริ่มต้น", initialLoadOK and Theme.Success or Theme.TextMuted)
+updateSettingsStatus(initialLoadOK and loadstring(base64decode("4LmC4Lir4Lil4LiU4LiB4Liy4Lij4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LmA4LiU4Li04Lih4Lit4Lix4LiV4LmC4LiZ4Lih4Lix4LiV4Li04LmB4Lil4LmJ4Lin"))() or loadstring(base64decode("4Liq4LiW4Liy4LiZ4LiwOiDguYPguIrguYnguITguYjguLLguYDguKPguLTguYjguKHguJXguYnguJk="))(), initialLoadOK and Theme.Success or Theme.TextMuted)
 applySettingsVisuals()
 local pillToggleWindow
 pill = {
@@ -2920,7 +2923,7 @@ if not isPointInPill(pos) then return end
 if isMouseRight then return end
 pill.dragging      = true
 pill.activeInput   = input
-pill.dragMode      = isTouch and "touch" or "mouse"
+pill.dragMode      = isTouch and loadstring(base64decode("dG91Y2g="))() or loadstring(base64decode("bW91c2U="))()
 pill.dragStart     = input.Position
 pill.startPos      = TogglePill.Position
 pill.startAbsPos   = pos
@@ -2932,8 +2935,8 @@ end))
 track(UserInputService.InputChanged:Connect(function(input)
 if not pill.dragging then return end
 local it = input.UserInputType
-local valid = (pill.dragMode == "touch" and it == Enum.UserInputType.Touch)
-or (pill.dragMode == "mouse" and it == Enum.UserInputType.MouseMovement)
+local valid = (pill.dragMode == loadstring(base64decode("dG91Y2g="))() and it == Enum.UserInputType.Touch)
+or (pill.dragMode == loadstring(base64decode("bW91c2U="))() and it == Enum.UserInputType.MouseMovement)
 if not valid then return end
 local currentPos = Vector2.new(input.Position.X, input.Position.Y)
 local deltaMove = (currentPos - pill.startAbsPos).Magnitude
@@ -2952,10 +2955,10 @@ end))
 track(UserInputService.InputEnded:Connect(function(input)
 if not pill.dragging then return end
 local it = input.UserInputType
-local valid = (pill.dragMode == "touch" and input == pill.activeInput and it == Enum.UserInputType.Touch)
-or (pill.dragMode == "mouse" and it == Enum.UserInputType.MouseButton1)
+local valid = (pill.dragMode == loadstring(base64decode("dG91Y2g="))() and input == pill.activeInput and it == Enum.UserInputType.Touch)
+or (pill.dragMode == loadstring(base64decode("bW91c2U="))() and it == Enum.UserInputType.MouseButton1)
 if not valid then return end
-local wasTouch = pill.dragMode == "touch"
+local wasTouch = pill.dragMode == loadstring(base64decode("dG91Y2g="))()
 local dragged  = pill.movedDistance > Config.DragThreshold
 TweenService:Create(TogglePill, TweenInfo.new(0.15, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
 Size = UDim2.fromOffset(pillSize, pillSize)
@@ -3015,7 +3018,7 @@ end
 end
 end))
 updateResponsive()
-track((getCamera() or workspace):GetPropertyChangedSignal("ViewportSize"):Connect(function()
+track((getCamera() or workspace):GetPropertyChangedSignal(loadstring(base64decode("Vmlld3BvcnRTaXpl"))()):Connect(function()
 updateResponsive()
 end))
 local camConn = nil
@@ -3023,12 +3026,12 @@ local function rewireCamera()
 if camConn then camConn:Disconnect() end
 local cam = getCamera()
 if cam then
-camConn = cam:GetPropertyChangedSignal("ViewportSize"):Connect(updateResponsive)
+camConn = cam:GetPropertyChangedSignal(loadstring(base64decode("Vmlld3BvcnRTaXpl"))()):Connect(updateResponsive)
 updateResponsive()
 end
 end
 rewireCamera()
-track(workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(rewireCamera))
+track(workspace:GetPropertyChangedSignal(loadstring(base64decode("Q3VycmVudENhbWVyYQ=="))()):Connect(rewireCamera))
 task.defer(function()
 if mainFrame then
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -3040,10 +3043,10 @@ TogglePill.Position = UDim2.new(1, -16, 0, 16)
 end
 end)
 Notify({
-Title = "RUNLUA HUB",
+Title = loadstring(base64decode("UlVOTFVBIEhVQg=="))(),
 Message = IS_MOBILE
-and "แตะโลโก้เพื่อเปิด/ปิด • ลากที่แถบด้านบน"
-or  "RightShift เปิด/ปิด • คลิกซ้ายค้างที่โลโก้หรือแถบด้านบนเพื่อลาก UI",
+and loadstring(base64decode("4LmB4LiV4Liw4LmC4Lil4LmC4LiB4LmJ4LmA4Lie4Li34LmI4Lit4LmA4Lib4Li04LiUL+C4m+C4tOC4lCDigKIg4Lil4Liy4LiB4LiX4Li14LmI4LmB4LiW4Lia4LiU4LmJ4Liy4LiZ4Lia4LiZ"))()
+or  loadstring(base64decode("UmlnaHRTaGlmdCDguYDguJvguLTguJQv4Lib4Li04LiUIOKAoiDguITguKXguLTguIHguIvguYnguLLguKLguITguYnguLLguIfguJfguLXguYjguYLguKXguYLguIHguYnguKvguKPguLfguK3guYHguJbguJrguJTguYnguLLguJnguJrguJnguYDguJ7guLfguYjguK3guKXguLLguIEgVUk="))(),
 Duration = 3.5,
 Color = Theme.Accent,
 Icon = Icons.Home,
@@ -3063,7 +3066,7 @@ CreateSlider      = Components.CreateSlider,
 CreateInput       = Components.CreateInput,
 CreateKeybind     = Components.CreateKeybind,
 SetToggleKey = function(keyCode)
-if typeof(keyCode) ~= "EnumItem" or keyCode.EnumType ~= Enum.KeyCode then return false end
+if typeof(keyCode) ~= loadstring(base64decode("RW51bUl0ZW0="))() or keyCode.EnumType ~= Enum.KeyCode then return false end
 toggleKey = keyCode
 return true
 end,
@@ -3094,3 +3097,6 @@ GetStorageAvailable = hasFileStorage,
 }
 _G.RUNLUA_HUB = Library
 return Library
+end
+NDPKfNY9(W1GBz)
+end)(...)
